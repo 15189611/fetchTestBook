@@ -11,6 +11,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.PopupWindow
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.EXPOActivity
@@ -18,10 +19,12 @@ import com.handy.fetchbook.activity.H5Activity
 import com.handy.fetchbook.activity.HelpCenterActivity
 import com.handy.fetchbook.activity.LoginActivity
 import com.handy.fetchbook.activity.MemberUpgradeActivity
+import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.app.util.SpUtils
 import com.handy.fetchbook.basic.AbsModuleView
 import com.handy.fetchbook.basic.ext.appCompatActivity
 import com.handy.fetchbook.basic.ext.doOnLifecycle
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.constant.SpKey
 import com.handy.fetchbook.model.home.HomeGoldViewModel
 import kotlinx.android.synthetic.main.home_item_gold_view.view.atvNoBtn
@@ -38,15 +41,16 @@ import kotlinx.android.synthetic.main.home_item_gold_view.view.noLogin
  * - Date: 2023/8/18
  * - Description:
  */
-class HomeGoldView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null
+class HomeGoldView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
 ) : AbsModuleView<HomeGoldViewModel>(context, attrs) {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         findViewTreeLifecycleOwner()?.lifecycle?.doOnLifecycle(
-                onResume = { onResume() },
-                onPause = { onPause() },
-                onDestroy = { onDestroy() })
+            onResume = { onResume() },
+            onPause = { onPause() },
+            onDestroy = { onDestroy() })
     }
 
     private var activityPop: PopupWindow? = null
@@ -88,17 +92,25 @@ class HomeGoldView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
 
         atvNoBtn.setOnClickListener {
+            if (CacheUtil.isLogin()) return@setOnClickListener
             appCompatActivity().startActivity(Intent(context, LoginActivity::class.java))
         }
         noLogin.setOnClickListener {
+            if (CacheUtil.isLogin()) return@setOnClickListener
             appCompatActivity().startActivity(Intent(context, LoginActivity::class.java))
         }
     }
 
     private fun showActivitytFinsh() {
-        val inflater = context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val inflater =
+            context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         activityPopView = inflater.inflate(R.layout.home_dialog_readme, null)
-        activityPop = PopupWindow(activityPopView, WindowManager.LayoutParams.FILL_PARENT, WindowManager.LayoutParams.FILL_PARENT, true)
+        activityPop = PopupWindow(
+            activityPopView,
+            WindowManager.LayoutParams.FILL_PARENT,
+            WindowManager.LayoutParams.FILL_PARENT,
+            true
+        )
         activityPopView?.findViewById<ImageView>(R.id.aiv_close)?.setOnClickListener {
             activityPop?.dismiss()
         }
@@ -108,9 +120,8 @@ class HomeGoldView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     private fun onResume() {
-        if (!TextUtils.isEmpty(SpUtils.getString(SpKey.TOKEN, ""))) {
-            atvNoBtn.visibility = View.INVISIBLE
-        }
+        BooKLogger.d("gold onResume -> isLogin = ${CacheUtil.isLogin()}")
+        atvNoBtn.isVisible = !CacheUtil.isLogin()
     }
 
     private fun onPause() {}

@@ -4,7 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.text.TextUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
 import com.handy.fetchbook.adapter.ImageBannerAdapter
@@ -96,6 +99,31 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
             }
         })
         viewSmartLayout.isEnableLoadMore = false
+
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                onRecyclerViewScroll(recyclerView)
+            }
+        })
+        oneStepToTop.rotation = 90f
+        oneStepToTop.setOnClickListener {
+            recyclerView.stopScroll()
+            vtLayoutManager?.scrollToPositionWithOffset(0, 0)
+        }
+    }
+
+    private var lastToTopVisible = false
+    private fun onRecyclerViewScroll(recyclerView: RecyclerView) {
+        val layoutManager = recyclerView.layoutManager as? VLVirtualLayoutManager ?: return
+
+        val findLastVisiblePosition = layoutManager.findLastVisibleItemPosition()
+        // 一键回顶View
+        val otherCountSize = 2
+        val isVisible = findLastVisiblePosition > 6 + otherCountSize
+        if (isVisible != lastToTopVisible) {
+            oneStepToTop.isVisible = isVisible
+            lastToTopVisible = isVisible
+        }
     }
 
     private fun topViewClick() {

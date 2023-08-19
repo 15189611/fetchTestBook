@@ -34,7 +34,7 @@ public final class SmartLayoutManager {
             @NonNull
             @Override
             public RefreshFooter createRefreshFooter(@NonNull Context context, @NonNull RefreshLayout refreshLayout) {
-                return new ClassicsFooter(context).setDrawableSize(10);
+                return new ClassicsFooter(context).setDrawableSize(15);
             }
         });
     }

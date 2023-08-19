@@ -17,6 +17,7 @@ import com.handy.fetchbook.activity.*
 import com.handy.fetchbook.adapter.HelpCenterAdapter
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.ext.languageSet
+import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.app.util.SpUtils
 import com.handy.fetchbook.constant.SpKey
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
@@ -203,9 +204,9 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         )
         logoutPopView!!.findViewById<TextView>(R.id.atvOpen).setOnClickListener {
             logoutPop!!.dismiss()
+            CacheUtil.setIsLogin(false)
             var intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
-
         }
 
 

@@ -12,6 +12,7 @@ import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.app.network.ApiService
 import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.app.util.SpUtils
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.constant.SpKey
 import com.handy.fetchbook.databinding.MeActivityLoginBinding
 import com.handy.fetchbook.net.Configuration
@@ -60,7 +61,7 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
             override fun onResultsClick(result: String) {
                 //todo 二次校验回调结果
                 val s = result
-                android.util.Log.e("wuyan", "result:" + result);
+                BooKLogger.d("pointJson result = $result -> token = ${Configuration.token}")
                 mViewModel.token.value = Configuration.token
                 mViewModel.pointJson.value = s
                 mViewModel.login()
