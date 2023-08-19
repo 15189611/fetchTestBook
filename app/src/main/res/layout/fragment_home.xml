@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/common_bg"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+                    android:id="@+id/crrlSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/common_btn_login">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/task_查询景点"
+                        android:textColor="@color/common_color_282828"
+                        android:textSize="12sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="64dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/common_btn_login_gradient"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/common_search"
+                        android:textColor="@color/common_color_282828"
+                        android:textSize="13sp" />
+                </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivInfoCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_notifications" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivLang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_lanugage" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_share" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+
+        <com.youth.banner.Banner
+            android:id="@+id/vBanner"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:banner_loop_time="4500"
+            tools:ignore="MissingClass" />
+
+        <LinearLayout
+            android:id="@+id/marqueeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/common_color_FBB403"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/home_announcement" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_notice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:gravity="center|start"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/common_color_ffffff"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+                <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+                    android:id="@+id/noLogin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/home_nologin_bg">
+
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/home_nologin"
+                        android:textColor="@color/common_color_CFA25B"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atvNoBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="20dp"
+                        android:background="@drawable/home_nobtn"
+                        android:gravity="center"
+                        android:text="@string/home_nologin_btn"
+                        android:textColor="@color/common_color_202930"
+                        android:textSize="12dp"
+                        android:textStyle="bold" />
+
+                </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/home_grid_bg"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item1" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/home_item1"
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item2" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/home_item2"
+
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|bottom"
+                            android:layout_weight="1"
+                            android:gravity="center|bottom"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item3" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home_item3"
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item6" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/home_item6"
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+                    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:visibility="gone">
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item4" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/home_item4"
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+                        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                            android:id="@+id/crllItem5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            android:visibility="visible">
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="10dp"
+                                app:srcCompat="@drawable/home_item5" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:maxLines="1"
+                                android:singleLine="true"
+                                android:text="@string/home_item5"
+                                android:textColor="@color/common_color_353535"
+                                android:textSize="16dp"
+                                android:textStyle="bold" />
+
+
+                        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+
+                    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        app:tabGravity="center"
+                        app:tabIndicatorColor="#333333"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabIndicatorHeight="4dp"
+                        app:tabMode="scrollable"
+                        app:tabSelectedTextColor="#333333"
+                        app:tabTextColor="#333333"
+                        app:tabUnboundedRipple="true" />
+
+                    <!--
+                        tabIndicatorColor  指示器颜色
+                        tabIndicatorHeight 指示器高度
+                        tabIndicatorFullWidth  设置为false 则指示器跟文本宽度一致
+                        tabUnboundedRipple 设置为true点击时会有一个水波纹效果
+                        tabGravity 可设置center或fill；center指的是居中显示，fill指的是沾满全屏。
+                        tabMode 可设置fixed和 scrollable；fixed：指的是固定tab；scrollable指的是tab可滑动。
+                        tabTextColor tab文字颜色
+                        tabSelectedTextColor 选中时的tab颜色
+                    -->
+
+                    <!-- ViewPager2内部通过RecyclerView
+                         所以需要通过orientation来设置页面切换方向-->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewPager2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+
+                </LinearLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+</layout>

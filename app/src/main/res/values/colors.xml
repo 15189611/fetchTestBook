@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="colorPrimary">#566AFF</color>
+    <color name="colorPrimaryDark">#BCC4EC</color>
+    <color name="colorAccent">#EFEEEE</color>
+    <!--  主题色  -->
+    <color name="common_theme">#566AFF</color>
+    <!--  次要主题色  -->
+    <color name="common_minor_theme">#BCC4EC</color>
+    <!--  背景色  -->
+    <color name="common_background">#EFEEEE</color>
+
+
+    <color name="common_color_6A7180">#6A7180</color>
+    <color name="common_color_282828">#282828</color>
+
+
+    <color name="common_color_ffffff">#FFFFFF</color>
+    <color name="common_color_FDDB08">#FDDB08</color>
+    <color name="common_color_FBB403">#FBB403</color>
+    <color name="common_color_00FFFFFF">#00FFFFFF</color>
+    <color name="common_color_ABABAB">#ABABAB</color>
+    <color name="common_color_F3F4F6">#F3F4F6</color>
+
+
+    <color name="common_color_FEF3F0">#FEF3F0</color>
+
+    <color name="common_color_F0F8FE">#F0F8FE</color>
+    <color name="common_color_ECFBF8">#ECFBF8</color>
+    <color name="common_color_f25252">#f25252</color>
+    <color name="common_color_000000">#000000</color>
+    <color name="common_color_FED502">#FED502</color>
+    <color name="common_color_FF8B00">#FF8B00</color>
+    <color name="common_color_FF7700">#FF7700</color>
+    <color name="common_color_BBBBBB">#BBBBBB</color>
+    <color name="common_color_636674">#636674</color>
+    <color name="common_color_242B3D">#242B3D</color>
+    <color name="common_color_212121">#212121</color>
+    <color name="common_color_00D125">#00D125</color>
+
+    <color name="common_color_353535">#353535</color>
+    <color name="common_color_363636">#363636</color>
+    <color name="common_color_CFA25B">#CFA25B</color>
+    <color name="common_color_202930">#202930</color>
+    <color name="common_color_5CFFFFFF">#5CFFFFFF</color>
+
+
+
+</resources>

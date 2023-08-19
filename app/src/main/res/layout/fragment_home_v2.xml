@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/common_bg"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+                    android:id="@+id/crrlSearch"
+                    android:layout_width="match_parent"
+                    android:layout_height="42dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/common_btn_login">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/task_查询景点"
+                        android:textColor="@color/common_color_282828"
+                        android:textSize="12sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="64dp"
+                        android:layout_height="37dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/common_btn_login_gradient"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="@string/common_search"
+                        android:textColor="@color/common_color_282828"
+                        android:textSize="13sp" />
+                </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivInfoCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_notifications" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivLang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_lanugage" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivShare"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    app:srcCompat="@drawable/home_share" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+        <com.youth.banner.Banner
+            android:id="@+id/vBanner"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            app:banner_loop_time="4500"
+            tools:ignore="MissingClass" />
+
+        <LinearLayout
+            android:id="@+id/marqueeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/common_color_FBB403"
+            android:gravity="center_vertical">
+
+            <androidx.appcompat.widget.AppCompatImageView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/home_announcement" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_notice"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="3dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:ellipsize="marquee"
+                android:gravity="center|start"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="@color/common_color_ffffff"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <com.handy.fetchbook.basic.widget.ViewSmartLayout
+            android:id="@+id/viewSmartLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipChildren="false"
+                android:clipToPadding="false" />
+
+        </com.handy.fetchbook.basic.widget.ViewSmartLayout>
+
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+</layout>
