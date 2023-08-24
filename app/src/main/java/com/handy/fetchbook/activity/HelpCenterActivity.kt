@@ -3,29 +3,15 @@ package com.handy.fetchbook.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.blankj.utilcode.util.ActivityUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.HelpCenterAdapter
-import com.handy.fetchbook.adapter.RegionAdapter
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
-import com.handy.fetchbook.databinding.ActivitySplashBinding
 import com.handy.fetchbook.databinding.MeActivityHelpCenterBinding
-import com.handy.fetchbook.databinding.MeActivityQrBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import com.handy.fetchbook.viewModel.state.MainViewModel
-import kotlinx.android.synthetic.main.expo_activity.*
 import kotlinx.android.synthetic.main.me_activity_help_center.*
-import kotlinx.android.synthetic.main.me_activity_qr.*
 import kotlinx.android.synthetic.main.me_activity_qr.back
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**

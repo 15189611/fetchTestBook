@@ -25,7 +25,7 @@ import com.handy.fetchbook.adapter.ImageBannerAdapter
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.ext.languageSet
 import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
+import com.handy.fetchbook.app.util.SpKey
 import com.handy.fetchbook.data.bean.home.Banner
 import com.handy.fetchbook.databinding.FragmentHomeBinding
 import com.handy.fetchbook.viewModel.request.RequestHomeViewModel
@@ -87,8 +87,6 @@ class HomeFragment : BaseFragment<HomeViewModel, FragmentHomeBinding>() {
         aivLang.setOnClickListener {
             languageSet(aivLang)
         }
-
-
 
         crrlSearch.setOnClickListener {
             startActivity(Intent(context, SearchActivity::class.java))

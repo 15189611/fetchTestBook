@@ -17,7 +17,7 @@ class LoginViewModel : BaseViewModel() {
     val pointJson = MutableLiveData("123123")
 
 
-    var loginResult = MutableLiveData<ResultState<String>>()
+    var loginResult = MutableLiveData<ResultState<Any>>()
 
 
     fun login() {

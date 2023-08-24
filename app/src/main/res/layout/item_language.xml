@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll_temp"
     android:layout_width="match_parent"
@@ -7,28 +8,39 @@
     android:layout_gravity="center"
     android:background="@color/common_color_ffffff"
     android:gravity="center"
-    android:paddingStart="10dp"
-    android:paddingTop="5dp"
-    android:paddingEnd="10dp"
-    android:paddingBottom="5dp"
     tools:ignore="UseCompoundDrawables">
 
-
-    <ImageView
-        android:id="@+id/iv_image"
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        tools:ignore="ContentDescription" />
+    <View
+        android:id="@+id/splitFirst"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/common_color_ABABAB"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:layout_margin="10dp"
         android:id="@+id/tv_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ellipsize="end"
+        android:paddingVertical="10dp"
         android:singleLine="true"
         android:textColor="@color/common_color_000000"
         android:textSize="@dimen/sp_16"
+        app:layout_constraintBottom_toTopOf="@+id/splitSecond"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/splitFirst"
         tools:ignore="RelativeOverlap"
         tools:text="简体中文" />
-</LinearLayout>
+
+    <View
+        android:id="@+id/splitSecond"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/common_color_ABABAB"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

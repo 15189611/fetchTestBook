@@ -1,6 +1,7 @@
 package com.handy.fetchbook.view.home
 
 import android.content.Context
+import android.content.Intent
 import android.util.AttributeSet
 import android.widget.ImageView
 import com.handy.fetchbook.R
@@ -8,6 +9,7 @@ import com.handy.fetchbook.basic.AbsModuleView
 import com.handy.fetchbook.data.bean.home.Items
 import kotlinx.android.synthetic.main.home_item_senics.view.aivTitle
 import coil.load
+import com.handy.fetchbook.activity.HomeDetailActivity
 import kotlinx.android.synthetic.main.home_item_senics.view.aivImg
 import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel1
 import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel2
@@ -49,6 +51,11 @@ class HomeProductItemView @JvmOverloads constructor(
         }
         if (showCount > 80) {
             aivLevel5.setImageResource(R.drawable.home_level_y)
+        }
+        this.setOnClickListener {
+            val intent = Intent(context, HomeDetailActivity::class.java)
+            intent.putExtra("id", model.uuid)
+            context.startActivity(intent)
         }
     }
 }

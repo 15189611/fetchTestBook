@@ -10,5 +10,7 @@ import kotlinx.android.parcel.Parcelize
 @SuppressLint("ParcelCreator")
 @Parcelize
 data class TokenInfoModel(
-    var token: String = "",
+    val token: String? = null,
+    val userName: String? = null,
+    val userPassword: String? = null
 ) : Parcelable

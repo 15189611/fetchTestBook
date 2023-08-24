@@ -2,6 +2,7 @@ package com.handy.fetchbook.activity
 
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.navigation.NavigationBarView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.ViewPagerAdapter
 import com.handy.fetchbook.app.base.BaseActivity
@@ -12,8 +13,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 /**
  * 首页
  *
- * @author Handy
- * @since 2023/7/28 9:50 下午
  */
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     override fun layoutId(): Int = R.layout.activity_main
@@ -24,6 +23,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     private val mVPAdapter by lazy(mode = LazyThreadSafetyMode.NONE) {
         ViewPagerAdapter(this, mViewModel.fragments)
     }
+
     companion object {
         const val INDEX_HOME = 0
         const val INDEX_DRAW = 1
@@ -36,7 +36,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
         // 底部导航栏设置
         vBottomNavigationView.run {
             itemIconTintList = null
-            setOnNavigationItemSelectedListener {
+            setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.vNavHome -> vViewPager.currentItem = INDEX_HOME
                     R.id.vNavDraw -> vViewPager.currentItem = INDEX_DRAW
@@ -57,18 +57,13 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                     val menu = vBottomNavigationView.menu
                     when (position) {
                         INDEX_HOME -> menu.getItem(INDEX_HOME).isChecked = true
-                        INDEX_DRAW ->
-                            menu.getItem(INDEX_DRAW).isChecked = true
-                        INDEX_TASK ->
-                            menu.getItem(INDEX_TASK).isChecked = true
+                        INDEX_DRAW -> menu.getItem(INDEX_DRAW).isChecked = true
+                        INDEX_TASK -> menu.getItem(INDEX_TASK).isChecked = true
                         INDEX_ME -> menu.getItem(INDEX_ME).isChecked = true
                     }
                 }
             })
-
         }
-
     }
-
 
 }

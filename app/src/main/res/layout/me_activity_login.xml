@@ -126,6 +126,7 @@
                     android:textSize="16sp" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/login_forget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

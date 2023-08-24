@@ -12,12 +12,33 @@ import me.hgj.jetpackmvvm.network.AppException
 import me.hgj.jetpackmvvm.network.BaseResponse
 import me.hgj.jetpackmvvm.network.ExceptionHandle
 
-
 /**
  * - Author: Charles
  * - Date: 2023/8/19
  * - Description:
  */
+fun <T> BaseViewModel.requestForError(
+    block: suspend () -> BaseResponse<T>,
+    resultState: MutableLiveData<MyResultState<T>>,
+    isShowDialog: Boolean = false,
+    loadingMessage: String = "请求网络中..."
+): Job {
+    return viewModelScope.launch {
+        runCatching {
+            if (isShowDialog) resultState.value = MyResultState.onAppLoading(loadingMessage)
+            //请求体
+            block()
+        }.onSuccess {
+            resultState.paresResult(result = it)
+        }.onFailure {
+            it.message?.loge()
+            //打印错误栈信息
+            it.printStackTrace()
+            resultState.paresException(e = it)
+        }
+    }
+}
+
 fun <T> BaseViewModel.requestForFresh(
     block: suspend () -> BaseResponse<T>,
     resultState: MutableLiveData<MyResultState<T>>,
@@ -60,7 +81,7 @@ sealed class MyResultState<out T> {
  * 处理返回值
  * @param result 请求结果
  */
-fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean, result: BaseResponse<T>) {
+fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean = true, result: BaseResponse<T>) {
     value = when {
         result.isSucces() -> {
             MyResultState.onAppSuccess(isRefresh, result.getResponseData())
@@ -81,10 +102,9 @@ fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean, result
 /**
  * 异常转换异常处理
  */
-fun <T> MutableLiveData<MyResultState<T>>.paresException(isRefresh: Boolean, e: Throwable) {
+fun <T> MutableLiveData<MyResultState<T>>.paresException(isRefresh: Boolean = true, e: Throwable) {
     this.value = MyResultState.onAppError(isRefresh, ExceptionHandle.handleException(e))
 }
-
 
 fun <T> BaseVmActivity<*>.parseMyState(
     resultState: MyResultState<T>,

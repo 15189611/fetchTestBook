@@ -46,6 +46,7 @@
     <string name="me_reg_protocol3">及</string>
     <string name="me_reg_protocol4">隐私政策</string>
     <string name="me_reg_to_login">已经有帐号？登录</string>
+    <string name="me_reg_to_login2">已经有帐号？</string>
     <string name="me_tip_inconsistent">两次密码不一致</string>
     <string name="me_tip_pwd">请输入8–20位字符密码</string>
     <string name="me_帮助中心">帮助中心</string>
@@ -197,5 +198,16 @@
     <string name="task_pop_content1">每日分享海报至您的社交媒体即可完成任务</string>
     <string name="task_pop_content2">观看视频广告即可完成任务</string>
     <string name="task_查询景点">查询景点</string>
+
+
+    <!--新增的文案需要适配国际化文案-->
+    <string name="forget_activity_title">重置登录密码</string>
+    <string name="forget_activity_input_account">请输入账户</string>
+    <string name="forget_activity_account">注册账户*</string>
+    <string name="forget_activity_new_pwd">设置新登录密码*</string>
+    <string name="forget_activity_pwd">登录密码</string>
+    <string name="forget_gong_xi">恭喜</string>
+    <string name="forget_set_pwd_success_tip">您成功设置了新的密码</string>
+    <string name="forget_start_login">开始登录</string>
 
 </resources>

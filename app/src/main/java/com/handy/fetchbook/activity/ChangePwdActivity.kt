@@ -1,37 +1,29 @@
 package com.handy.fetchbook.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import androidx.lifecycle.lifecycleScope
 import coil.load
-import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
-import com.handy.fetchbook.databinding.ActivitySplashBinding
+import com.handy.fetchbook.app.util.CacheUtil
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.databinding.MeActivityChangePwdBinding
-import com.handy.fetchbook.databinding.MeActivityQrBinding
 import com.handy.fetchbook.utils.TimeCount
-import com.handy.fetchbook.viewModel.state.HomeViewModel
-import com.handy.fetchbook.viewModel.state.MainViewModel
 import com.handy.fetchbook.viewModel.state.RegViewModel
 import kotlinx.android.synthetic.main.me_activity_change_pwd.*
-import kotlinx.android.synthetic.main.me_activity_qr.*
 import kotlinx.android.synthetic.main.me_activity_qr.back
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 启动页
- *
- * @author Handy
- * @since 2023/7/28 9:47 下午
+ *   修改密码
+ * - Author: Charles
+ * - Date: 2023/8/18
+ * - Description:
  */
 @SuppressLint("CustomSplashScreen")
 class ChangePwdActivity : BaseActivity<RegViewModel, MeActivityChangePwdBinding>() {
@@ -39,16 +31,17 @@ class ChangePwdActivity : BaseActivity<RegViewModel, MeActivityChangePwdBinding>
     private var showPassword = true
     private var showPasswordNew = true
     private var showPasswordConfirm = true
-
+    private var oldPassWord: String = ""
+    private var newPassWord: String = ""
+    private var confirmPassWord: String = ""
     private var mTimeCount: TimeCount? = null
+
     override fun initView(savedInstanceState: Bundle?) {
         back.setOnClickListener { finish() }
 
         sendCode.setOnClickListener {
-            mViewModel.sendCode()
-            mTimeCount = TimeCount(60000, 1000,sendCode) //第一个参数表示总时间，第二个参数表示时间间隔
-            mTimeCount!!.start()
-
+            if (!checkPassWord()) return@setOnClickListener
+            mViewModel.sendCodeForget()
         }
 
         aivEye.setOnClickListener {
@@ -92,35 +85,66 @@ class ChangePwdActivity : BaseActivity<RegViewModel, MeActivityChangePwdBinding>
             }
         }
 
-
-
         btnChange.setOnClickListener {
-            mViewModel.password.value = aetConfirmPwd.text.toString()
-            var oldpwd = aetPwd.text.toString()
-            var newpwd = aetNewPwd.text.toString()
-            var confirmpwd = aetConfirmPwd.text.toString()
-            if (TextUtils.isEmpty(oldpwd) || oldpwd.length <= 8 || oldpwd.length >= 20) {
-                ToastUtils.showShort(getString(R.string.me_tip_pwd))
-                return@setOnClickListener
-            }
-
-            if (TextUtils.isEmpty(newpwd) || newpwd.length <= 8 || newpwd.length >= 20) {
-                ToastUtils.showShort(getString(R.string.me_tip_pwd))
-                return@setOnClickListener
-            }
-
-            if (TextUtils.isEmpty(confirmpwd) || confirmpwd.length <= 8 || confirmpwd.length >= 20) {
-                ToastUtils.showShort(getString(R.string.me_tip_pwd))
-                return@setOnClickListener
-            }
-
-            if (newpwd == confirmpwd) {
+            if (!checkPassWord()) return@setOnClickListener
+            mViewModel.changeCode.value = aetCode.text.toString()
+            if (newPassWord == confirmPassWord) {
+                mViewModel.passWordNew.value = aetNewPwd.text.toString()
+                mViewModel.passWordNewConfirm.value = aetConfirmPwd.text.toString()
                 mViewModel.changePassword()
-            }else{
+            } else {
                 ToastUtils.showShort(getString(R.string.me_tip_inconsistent))
                 return@setOnClickListener
             }
         }
+
+        mViewModel.changePasswordResult.observe(this) {
+            parseState(it, {
+                BooKLogger.d("修改密码->成功")
+                //成功之后，清空登录,重新去登录界面
+                CacheUtil.clearUserAll()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }, { errorData ->
+                BooKLogger.d("修改密码->失败")
+                ToastUtils.showShort(errorData.message)
+            })
+        }
+
+        mViewModel.changeForGetCodeResult.observe(this) { it ->
+            parseState(it, onSuccess = {
+                BooKLogger.d("修改密码->发送验证码成功")
+                ToastUtils.showShort(it.toString())
+                mTimeCount = TimeCount(60000, 1000, sendCode) //第一个参数表示总时间，第二个参数表示时间间隔
+                mTimeCount?.start()
+            }, onError = { errorData ->
+                if (errorData.errCode != 0) {
+                    BooKLogger.d("修改密码->发送验证码失败 = ${errorData.message}")
+                    ToastUtils.showShort(errorData.message)
+                }
+            })
+        }
+    }
+
+    private fun checkPassWord(): Boolean {
+        oldPassWord = aetPwd.text.toString()
+        newPassWord = aetNewPwd.text.toString()
+        confirmPassWord = aetConfirmPwd.text.toString()
+        if (TextUtils.isEmpty(oldPassWord) || oldPassWord.length < 8 || oldPassWord.length > 20) {
+            ToastUtils.showShort(getString(R.string.me_tip_pwd))
+            return false
+        }
+
+        if (TextUtils.isEmpty(newPassWord) || newPassWord.length < 8 || newPassWord.length > 20) {
+            ToastUtils.showShort(getString(R.string.me_tip_pwd))
+            return false
+        }
+
+        if (TextUtils.isEmpty(confirmPassWord) || confirmPassWord.length < 8 || confirmPassWord.length > 20) {
+            ToastUtils.showShort(getString(R.string.me_tip_pwd))
+            return false
+        }
+        return true
     }
 
 }

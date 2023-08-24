@@ -22,11 +22,9 @@ import com.handy.fetchbook.activity.LoginActivity
 import com.handy.fetchbook.activity.MemberUpgradeActivity
 import com.handy.fetchbook.activity.RegActivity
 import com.handy.fetchbook.app.base.BaseFragment
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
+import com.handy.fetchbook.app.util.*
 import com.handy.fetchbook.databinding.DrawFragmentDrawBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.draw_dialog_lucky_lottery_rules.view.root
 import kotlinx.android.synthetic.main.draw_fragment_draw.*
 import kotlinx.android.synthetic.main.draw_view_lucky.view.*
 import me.hgj.jetpackmvvm.ext.parseState
@@ -34,7 +32,7 @@ import java.util.*
 
 
 /**
- * 首页Fragment
+ * 抽奖fragment
  *
  * @author Handy
  * @since 2023/8/1 11:46 下午
@@ -113,7 +111,8 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
 
 
         //会员类型 0=普通会员, 1=拓展会员, 2=福袋会员
-        if (SpUtils.getInt(SpKey.USER_TYPE, 0) == 2) {
+        val userType = CacheUtil.getUserInfo()?.type ?: 0
+        if (userType == 2) {
             mDatabind.aivUpgrade.visibility = View.GONE
             mDatabind.btnAction.visibility = View.VISIBLE
         }
@@ -127,7 +126,8 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
 
         //旅游抽奖次数
-        if (SpUtils.getInt(SpKey.USER_LUCKY_TICKET, 0) != 0) {
+        val luckyTicket = CacheUtil.getUserInfo()?.luckyTicket ?: 0
+        if (luckyTicket != 0) {
             mDatabind.btnAction.setOnClickListener {
                 if (isGameRunning) {
                     mDatabind.luckyPanel.startGame()
@@ -141,7 +141,8 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
 
         mDatabind.rlRight.root.rl_start.setOnClickListener {
             //福袋抽奖次数
-            if (SpUtils.getInt(SpKey.USER_LUCKY_BAG, 0) != 0) {
+            val luckyBag = CacheUtil.getUserInfo()?.luckyBag ?: 0
+            if (luckyBag != 0) {
                 // 未抽过奖并有抽奖的机会
                 if (isRunning) {
                     mStartAnimation!!.reset()
@@ -154,8 +155,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             }
         }
 
-
-        val level = SpUtils.getInt(SpKey.USER_LEVEL, 0)
+        val level = CacheUtil.getUserInfo()?.level ?: 0
         var bg = R.drawable.draw_lucky_bg1
         var startbg = R.drawable.draw_lucky_go1
 

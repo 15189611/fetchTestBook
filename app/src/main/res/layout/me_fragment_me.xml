@@ -8,7 +8,6 @@
     </data>
 
     <com.google.android.material.circularreveal.CircularRevealLinearLayout
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -44,13 +43,13 @@
                         android:src="@drawable/common_customer_service" />
 
                     <androidx.appcompat.widget.AppCompatImageView
-                        android:visibility="gone"
                         android:id="@+id/me_aiv_message"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_margin="10dp"
-                        android:src="@drawable/me_message" />
+                        android:src="@drawable/me_message"
+                        android:visibility="gone" />
                 </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
             </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
@@ -62,21 +61,21 @@
             android:layout_height="match_parent"
             android:layout_marginStart="15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginBottom="65dp">
+            android:layout_marginEnd="15dp">
 
             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-
+                <!-- 头部用户信息-->
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:id="@+id/crll_userinfo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    bind:visibility="visible">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="wrap_content"
@@ -88,7 +87,7 @@
                             android:id="@+id/aivHead"
                             android:layout_width="72dp"
                             android:layout_height="72dp"
-                            app:srcCompat="@drawable/me_avator" />
+                            bind:src="@drawable/me_avator" />
 
                         <androidx.appcompat.widget.AppCompatTextView
                             android:id="@+id/atvAgent"
@@ -120,7 +119,7 @@
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/common_color_ffffff"
                                 android:textSize="18sp"
-                                tools:text="美花金念" />
+                                bind:text="美花金念" />
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:id="@+id/aivEdit"
@@ -144,24 +143,26 @@
                                 android:gravity="center_horizontal"
                                 android:textColor="@color/common_color_ffffff"
                                 android:textSize="18sp"
-                                tools:text="ID/推荐码 : zWzBCL" />
+                                bind:text="ID/推荐码 : zWzBCL" />
 
                             <androidx.appcompat.widget.AppCompatImageView
-                                android:visibility="invisible"
                                 android:id="@+id/aivQr"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="10dp"
+                                android:visibility="invisible"
                                 app:srcCompat="@drawable/me_share" />
                         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
                     </com.google.android.material.circularreveal.CircularRevealLinearLayout>
                 </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
+                <!-- 帮助中心-->
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:id="@+id/crrl_help"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    bind:visibility="gone">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="match_parent"
@@ -202,7 +203,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="100dp"
                             android:layout_marginTop="20dp"
-                            tools:listitem="@layout/me_item_help_center" />
+                            bind:listitem="@layout/me_item_help_center" />
                     </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
                     <com.google.android.material.circularreveal.CircularRevealRelativeLayout
@@ -235,12 +236,14 @@
                     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
+                <!-- 我的钱包-->
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:id="@+id/crrl_wallet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    bind:visibility="visible">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="match_parent"
@@ -250,7 +253,6 @@
                         android:gravity="center_horizontal">
 
                         <com.google.android.material.circularreveal.CircularRevealLinearLayout
-                            android:visibility="gone"
                             android:id="@+id/crllWalletItem1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -258,7 +260,8 @@
                             android:layout_marginStart="15dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/me_item_bg"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatTextView
                                 android:id="@+id/atvWallet1"
@@ -359,24 +362,26 @@
                     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
+                <!-- 我的应用-->
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:id="@+id/crrl_market"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    bind:visibility="visible">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="60dp"
-                        android:background="@drawable/me_market_bg">
+                        android:background="@drawable/me_market_bg"
+                        android:gravity="center_horizontal">
 
                         <com.google.android.material.circularreveal.CircularRevealLinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
-                            android:layout_marginStart="55dp"
                             android:layout_marginBottom="20dp"
-
                             android:background="@drawable/me_item_bg"
                             android:orientation="vertical">
 
@@ -398,14 +403,14 @@
                         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
                         <com.google.android.material.circularreveal.CircularRevealLinearLayout
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
                             android:layout_marginStart="10dp"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/me_item_bg"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
@@ -445,12 +450,13 @@
                     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
-
+                <!-- 我的团队-->
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/crrl_team"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    bind:visibility="visible">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="match_parent"
@@ -513,7 +519,6 @@
                         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
                         <com.google.android.material.circularreveal.CircularRevealLinearLayout
-                            android:visibility="gone"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="bottom"
@@ -522,7 +527,8 @@
                             android:layout_marginBottom="20dp"
                             android:layout_weight="1"
                             android:background="@drawable/me_item_bg"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:visibility="gone">
 
                             <androidx.appcompat.widget.AppCompatImageView
                                 android:layout_width="wrap_content"
@@ -563,13 +569,14 @@
                     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
-
+                <!-- 我的设置-->
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:id="@+id/crrl_setting"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
-                    android:visibility="gone">
+                    android:visibility="gone"
+                    bind:visibility="visible">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
                         android:layout_width="match_parent"

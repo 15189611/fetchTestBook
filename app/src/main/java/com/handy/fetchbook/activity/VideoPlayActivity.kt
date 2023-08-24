@@ -4,24 +4,14 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import androidx.lifecycle.lifecycleScope
 import coil.load
-import com.blankj.utilcode.util.ActivityUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
-import com.handy.fetchbook.databinding.ActivitySplashBinding
-import com.handy.fetchbook.databinding.MeActivityQrBinding
 import com.handy.fetchbook.databinding.MeActivityVideoPlayBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import com.handy.fetchbook.viewModel.state.MainViewModel
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
 import kotlinx.android.synthetic.main.me_activity_qr.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * 启动页

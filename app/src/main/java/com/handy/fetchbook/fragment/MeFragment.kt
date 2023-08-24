@@ -1,36 +1,31 @@
 package com.handy.fetchbook.fragment
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.PopupWindow
-import android.widget.TextView
+import android.view.*
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
+import coil.load
+import coil.transform.CircleCropTransformation
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
 import com.handy.fetchbook.adapter.HelpCenterAdapter
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.ext.languageSet
 import com.handy.fetchbook.app.util.CacheUtil
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
+import com.handy.fetchbook.data.bean.me.UserInfoBean
 import com.handy.fetchbook.databinding.MeFragmentMeBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.layout_no_login.view.*
 import kotlinx.android.synthetic.main.me_fragment_me.*
 import me.hgj.jetpackmvvm.ext.parseState
 
-
 /**
- * 首页Fragment
+ * 我的Fragment
  *
  * @author Handy
  * @since 2023/8/1 11:46 下午
@@ -38,129 +33,70 @@ import me.hgj.jetpackmvvm.ext.parseState
 class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
     override fun layoutId(): Int = R.layout.me_fragment_me
 
-
     private var logoutPop: PopupWindow? = null
     private var logoutPopView: View? = null
-
-
     private lateinit var helpCenterAdapter: HelpCenterAdapter
 
+    @SuppressLint("SetTextI18n")
     override fun initView(savedInstanceState: Bundle?) {
-
-
+        //编辑中心
         mDatabind.crllUserinfo.setOnClickListener {
             startActivity(Intent(context, EditUserInfoActivity::class.java))
         }
+        //推荐QR
         mDatabind.aivQr.setOnClickListener {
             startActivity(Intent(context, QrActivity::class.java))
         }
-        mDatabind. noLogin.crrlBtnLogin.setOnClickListener {
-            startActivity(Intent(context, LoginActivity::class.java))
-        }
-        mDatabind. noLogin.crrlBtnReg.setOnClickListener {
-            startActivity(Intent(context, RegActivity::class.java))
-        }
-
-        mDatabind. crllWalletItem1.setOnClickListener {
-            startActivity(Intent(context, WalletActivity::class.java))
-        }
-
-        mDatabind. crllWalletItem2.setOnClickListener {
-            startActivity(Intent(context, WalletBalanceActivity::class.java))
-        }
-
-
+        //登录
         mDatabind.noLogin.crrlBtnLogin.setOnClickListener {
             startActivity(Intent(context, LoginActivity::class.java))
         }
+        //注册
         mDatabind.noLogin.crrlBtnReg.setOnClickListener {
             startActivity(Intent(context, RegActivity::class.java))
         }
-        if (TextUtils.isEmpty(SpUtils.getString(SpKey.TOKEN, ""))) {
-            mDatabind.noLogin.crlNoLogin.visibility = View.VISIBLE
-            mDatabind.crllUserinfo.visibility = View.GONE
-        } else {
-            mDatabind.atvNick.text = SpUtils.getString(SpKey.LOGINNAME, "")
-            mDatabind.atvShare.text = "ID/推荐码 : " + 0
-            mViewModel.helpCenter()
-            mViewModel.wallet()
-            mViewModel.userinfo()
-            mDatabind.toolbar.visibility = View.VISIBLE
-            mDatabind.noLogin.crlNoLogin.visibility = View.GONE
-            mDatabind.crllUserinfo.visibility = View.VISIBLE
-            mDatabind.crrlWallet.visibility = View.VISIBLE
-//            mDatabind.crrlMarket.visibility = View.VISIBLE
-//            mDatabind.crrlTeam.visibility = View.VISIBLE
-            mDatabind.crrlSetting.visibility = View.VISIBLE
-//            mDatabind.crrlHelp.visibility = View.VISIBLE
+        //人民币钱包
+        mDatabind.crllWalletItem1.setOnClickListener {
+            startActivity(Intent(context, WalletActivity::class.java))
         }
-
+        //旅游钱包
+        mDatabind.crllWalletItem2.setOnClickListener {
+            startActivity(Intent(context, WalletBalanceActivity::class.java))
+        }
+        //更多
         atvMore.setOnClickListener {
-            var intent = Intent(context, HelpCenterActivity::class.java)
+            val intent = Intent(context, HelpCenterActivity::class.java)
             startActivity(intent)
         }
-
+        //修改密码
         crllChangePwd.setOnClickListener {
-            var intent = Intent(context, ChangePwdActivity::class.java)
+            val intent = Intent(context, ChangePwdActivity::class.java)
             startActivity(intent)
         }
-
+        //退出
         crllLogout.setOnClickListener {
             showLogout()
         }
-
+        //语言设置
         crllLanguage.setOnClickListener {
             languageSet(crllLanguage)
         }
-
-
     }
 
-    override fun onResume() {
-        super.onResume()
-
-        if (TextUtils.isEmpty(SpUtils.getString(SpKey.TOKEN, ""))) {
-            mDatabind.noLogin.root.visibility = View.VISIBLE
-        } else {
-            mDatabind.noLogin.root.visibility = View.GONE
-        }
-
+    @SuppressLint("SetTextI18n")
+    override fun initData() {
+        super.initData()
         mViewModel.walletResult.observe(this) { resultState ->
             parseState(resultState, {
+                val cny = it.cnyBalance.orEmpty().toFloat()
+                mDatabind.crllWalletItem1.isVisible = cny > 0
                 mDatabind.atvWallet1.text = it.cnyBalance
                 mDatabind.atvWallet2.text = it.invest
             })
         }
         mViewModel.userinfoResult.observe(this) { resultState ->
             parseState(resultState, {
-                mDatabind.atvNick.text = it.account
-                mDatabind.atvShare.text = "ID/推荐码 : " + it.id
-
-                var agent = getString(R.string.me_福袋会员)
-
-                when (it.level) {
-                    1 -> {
-                        agent = getString(R.string.me_福袋会员)
-                    }
-                    2 -> {
-                        agent = getString(R.string.me_超级福袋会员)
-                    }
-                    3 -> {
-                        agent = getString(R.string.me_黄金会员)
-                    }
-                    4 -> {
-                        agent = getString(R.string.me_荣耀会员)
-                    }
-                    5 -> {
-                        agent = getString(R.string.me_王者会员)
-                    }
-                    6 -> {
-                        agent = getString(R.string.me_至尊会员)
-                    }
-
-                }
-
-                mDatabind.atvAgent.text = agent
+                updateUserInfo(it)
             })
         }
 
@@ -171,10 +107,9 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         }
 
 
-
         helpCenterAdapter.apply {
             setOnItemClickListener { adapter, view, position ->
-                var intent = Intent(context, VideoPlayActivity::class.java)
+                val intent = Intent(context, VideoPlayActivity::class.java)
                 intent.putExtra("thumbnail", (adapter.data[position] as HelpCenterBean).thumbnail)
                 intent.putExtra("url", (adapter.data[position] as HelpCenterBean).video)
                 intent.putExtra("title", (adapter.data[position] as HelpCenterBean).title)
@@ -187,7 +122,68 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
                 helpCenterAdapter.setNewData(it)
             })
         }
+    }
 
+    @SuppressLint("SetTextI18n")
+    private fun updateUserInfo(userInfo: UserInfoBean?) {
+        userInfo ?: return
+        mDatabind.atvNick.text = if (userInfo.nickname?.isEmpty() == true) userInfo.account.orEmpty() else userInfo.nickname.orEmpty()
+        mDatabind.atvShare.text = "ID/推荐码 : ${userInfo.id}"
+        if (userInfo.avatar?.isEmpty() == true) {
+            mDatabind.aivHead.load(R.drawable.me_avator)
+        } else {
+            mDatabind.aivHead.load(userInfo.avatar.orEmpty()) {
+                transformations(CircleCropTransformation())
+            }
+        }
+        var agent = getString(R.string.me_福袋会员)
+        when (userInfo.level) {
+            1 -> {
+                agent = getString(R.string.me_福袋会员)
+            }
+
+            2 -> {
+                agent = getString(R.string.me_超级福袋会员)
+            }
+
+            3 -> {
+                agent = getString(R.string.me_黄金会员)
+            }
+
+            4 -> {
+                agent = getString(R.string.me_荣耀会员)
+            }
+
+            5 -> {
+                agent = getString(R.string.me_王者会员)
+            }
+
+            6 -> {
+                agent = getString(R.string.me_至尊会员)
+            }
+
+        }
+
+        mDatabind.atvAgent.text = agent
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mDatabind.noLogin.crlNoLogin.isVisible = !CacheUtil.isLogin()
+        mDatabind.toolbar.isVisible = CacheUtil.isLogin()
+        mDatabind.crllUserinfo.isVisible = CacheUtil.isLogin()
+        mDatabind.crrlWallet.isVisible = CacheUtil.isLogin()
+        mDatabind.crrlMarket.isVisible = CacheUtil.isLogin()
+        mDatabind.crrlSetting.isVisible = CacheUtil.isLogin()
+        if (CacheUtil.isLogin()) {
+            mViewModel.helpCenter()
+            mViewModel.wallet()
+            if (CacheUtil.getUserInfo() != null) {
+                updateUserInfo(CacheUtil.getUserInfo())
+            } else {
+                mViewModel.userinfo()
+            }
+        }
     }
 
     private fun showLogout() {
@@ -204,8 +200,8 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         )
         logoutPopView!!.findViewById<TextView>(R.id.atvOpen).setOnClickListener {
             logoutPop!!.dismiss()
-            CacheUtil.setIsLogin(false)
-            var intent = Intent(context, LoginActivity::class.java)
+            CacheUtil.clearUserAll()
+            val intent = Intent(context, LoginActivity::class.java)
             startActivity(intent)
         }
 

@@ -1,5 +1,6 @@
 package com.handy.fetchbook.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,13 +8,16 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.activity.viewModels
 import coil.load
+import com.blankj.utilcode.util.GsonUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.app.network.ApiService
 import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.app.util.SpUtils
 import com.handy.fetchbook.basic.util.BooKLogger
-import com.handy.fetchbook.constant.SpKey
+import com.handy.fetchbook.app.util.SpKey
+import com.handy.fetchbook.data.bean.model.TokenInfoModel
 import com.handy.fetchbook.databinding.MeActivityLoginBinding
 import com.handy.fetchbook.net.Configuration
 import com.handy.fetchbook.view.BlockPuzzleDialog
@@ -21,10 +25,11 @@ import com.handy.fetchbook.viewModel.state.LoginViewModel
 import kotlinx.android.synthetic.main.home_activity_detail.back
 import kotlinx.android.synthetic.main.me_activity_login.*
 import me.hgj.jetpackmvvm.ext.parseState
+import org.json.JSONObject
 
 /**
- * 首页
  *
+ * 登录activity
  * @author Handy
  * @since 2023/7/28 9:50 下午
  */
@@ -41,10 +46,8 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
 
     override fun onResume() {
         super.onResume()
-
-        mViewModel.account.value = SpUtils.getString(SpKey.LOGINNAME, "")
-        mViewModel.password.value = SpUtils.getString(SpKey.LOGINPWD, "")
-
+        mViewModel.account.value = CacheUtil.getTokenInfo()?.userName.orEmpty()
+        mViewModel.password.value = CacheUtil.getTokenInfo()?.userPassword.orEmpty()
         mDatabind.aetPwd.setText(mViewModel.password.value)
         mDatabind.aetAccount.setText(mViewModel.account.value)
     }
@@ -53,20 +56,11 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         back.setOnClickListener { finish() }
-
-        Configuration.server = Configuration.getServer(applicationContext, ApiService.SERVER_URL)
+        //注册
         btn_to_reg.setOnClickListener {
+            startActivity(Intent(this, RegActivity::class.java))
         }
-        blockPuzzleDialog.setOnResultsListener(object : BlockPuzzleDialog.OnResultsListener {
-            override fun onResultsClick(result: String) {
-                //todo 二次校验回调结果
-                val s = result
-                BooKLogger.d("pointJson result = $result -> token = ${Configuration.token}")
-                mViewModel.token.value = Configuration.token
-                mViewModel.pointJson.value = s
-                mViewModel.login()
-            }
-        })
+        //登录
         btnLogin.setOnClickListener {
             mViewModel.account.value = mDatabind.aetAccount.text.toString()
             mViewModel.password.value = mDatabind.aetPwd.text.toString()
@@ -74,29 +68,45 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
                 blockPuzzleDialog.show()
             } catch (e: Exception) {
             }
-
+        }
+        //忘记登录密码
+        login_forget.setOnClickListener {
+            startActivity(Intent(this, ForgetPwdActivity::class.java))
+            finish()
         }
 
-        mViewModel.loginResult.observe(this) { resultState ->
-            parseState(resultState, { it ->
-                CacheUtil.setIsLogin(true)
-                SpUtils.put(SpKey.TOKEN, it)
-                SpUtils.put(SpKey.LOGINNAME, mViewModel.account.value!!)
-                SpUtils.put(SpKey.LOGINPWD, mViewModel.password.value!!)
-                mViewModel.userinfo()
-            })
+        Configuration.server = Configuration.getServer(applicationContext, ApiService.SERVER_URL)
+        blockPuzzleDialog.setOnResultsListener(object : BlockPuzzleDialog.OnResultsListener {
+            override fun onResultsClick(result: String) {
+                //todo 二次校验回调结果
+                val s = result
+                BooKLogger.d("LoginActivity pointJson result = $result -> token = ${Configuration.token}")
+                mViewModel.token.value = Configuration.token
+                mViewModel.pointJson.value = s
+                mViewModel.login()
+            }
+        })
 
+        mViewModel.loginResult.observe(this) { resultState ->
+            parseState(resultState, { data ->
+                val token = data.toString()
+                BooKLogger.d("登录成功 = $data --> $data -> token = $token")
+                CacheUtil.setIsLogin(true)
+                CacheUtil.saveTokenInfo(TokenInfoModel(token, mViewModel.account.value, mViewModel.password.value))
+                mViewModel.userinfo()
+            }, {
+                blockPuzzleDialog.dismiss()
+                ToastUtils.showShort(it.message)
+                BooKLogger.d("登录失败 = ${it.message.orEmpty()}")
+            })
         }
 
         mViewModel.userinfoResult.observe(this) { resultState ->
             parseState(resultState, { user ->
-                SpUtils.put(SpKey.USER_TYPE, user.type!!)
-                SpUtils.put(SpKey.USER_LEVEL, user.level!!)
-                SpUtils.put(SpKey.USER_LUCKY_TICKET, user.luckyTicket!!)
-                SpUtils.put(SpKey.USER_LUCKY_BAG, user.luckyBag!!)
+                CacheUtil.saveUserInfo(user)
+                startActivity(Intent(this, MainActivity::class.java))
                 finish()
             })
-
         }
 
         aetPwd.addTextChangedListener(object : TextWatcher {

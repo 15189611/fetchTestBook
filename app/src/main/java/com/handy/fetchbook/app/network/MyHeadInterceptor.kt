@@ -1,10 +1,7 @@
 package com.handy.fetchbook.app.network
 
-import android.util.Log
 import com.handy.fetchbook.app.ext.getLanguage
 import com.handy.fetchbook.app.util.CacheUtil
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
@@ -18,7 +15,7 @@ class MyHeadInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val builder = chain.request().newBuilder()
         if (CacheUtil.isLogin()) {
-            var token = SpUtils.getString(SpKey.TOKEN, "")
+            val token = CacheUtil.getToken() ?: ""
             builder
                 .addHeader("Accept", "*/*")
                 .addHeader("Authorization", "Bearer $token")

@@ -84,7 +84,7 @@ class DiyStyleTextView : AppCompatTextView {
     private inner class TextViewClickSpan internal constructor(private val clickText: String) :
         ClickableSpan() {
         override fun onClick(widget: View) {
-            TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+            //To change body of created functions use File | Settings | File Templates.
         }
 
         override fun updateDrawState(ds: TextPaint) {

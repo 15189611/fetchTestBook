@@ -18,17 +18,14 @@ import com.handy.fetchbook.activity.MemberUpgradeActivity
 import com.handy.fetchbook.activity.RegActivity
 import com.handy.fetchbook.activity.VideoPlayActivity
 import com.handy.fetchbook.app.base.BaseFragment
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
-import com.handy.fetchbook.data.bean.me.HelpCenterBean
+import com.handy.fetchbook.app.util.*
 import com.handy.fetchbook.databinding.TaskFragmentTaskBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.task_fragment_task.*
 import me.hgj.jetpackmvvm.ext.parseState
 
 
 /**
- * 首页Fragment
+ * 任务Fragment
  *
  * @author Handy
  * @since 2023/8/1 11:46 下午
@@ -63,7 +60,8 @@ class TaskFragment : BaseFragment<HomeViewModel, TaskFragmentTaskBinding>() {
         } else {
             mDatabind.task.visibility = View.VISIBLE
             mDatabind.noLogin.root.visibility = View.GONE
-            if (SpUtils.getInt(SpKey.USER_TYPE, 0) == 0) {
+            val userType = CacheUtil.getUserInfo()?.type ?: 0
+            if (userType == 0) {
                 mDatabind.taskType.root.visibility = View.GONE
                 mDatabind.aivUpgrade.visibility = View.VISIBLE
             } else {

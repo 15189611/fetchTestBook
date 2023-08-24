@@ -12,11 +12,9 @@ import android.widget.PopupWindow
 import android.widget.TextView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.app.util.SpUtils
-import com.handy.fetchbook.constant.SpKey
+import com.handy.fetchbook.app.util.*
 import com.handy.fetchbook.databinding.MeActivityMemberUpgradeBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.me_activity_member_upgrade.*
 import me.hgj.jetpackmvvm.ext.parseState
 
@@ -33,7 +31,6 @@ class MemberUpgradeActivity : BaseActivity<HomeViewModel, MeActivityMemberUpgrad
     private var openPop: PopupWindow? = null
     private var openPopView: View? = null
 
-
     private var noPop: PopupWindow? = null
     private var noPopView: View? = null
 
@@ -43,8 +40,8 @@ class MemberUpgradeActivity : BaseActivity<HomeViewModel, MeActivityMemberUpgrad
         }
 
         atvOpen!!.setOnClickListener {
-            if (SpUtils.getInt(SpKey.USER_TYPE, 0) == 0) {
-
+            val userType = CacheUtil.getUserInfo()?.type ?: 0
+            if (userType == 0) {
                 val inflater = getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
                 openPopView =
                     inflater.inflate(R.layout.me_dialog_open_expand, null)
@@ -62,11 +59,10 @@ class MemberUpgradeActivity : BaseActivity<HomeViewModel, MeActivityMemberUpgrad
                 openPop!!.animationStyle = R.style.common_CustomDialog
                 openPop!!.showAsDropDown(atvOpen)
 
-
             }
         }
 
-        mViewModel.buyMembershipResult.observe(this) {resultState ->
+        mViewModel.buyMembershipResult.observe(this) { resultState ->
             parseState(resultState, {
                 showDialog(true)
             })

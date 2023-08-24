@@ -305,14 +305,14 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/me_login_noaccount"
+                        android:text="@string/me_reg_to_login2"
                         android:textColor="@color/common_color_ABABAB"
                         android:textSize="16sp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/me_注册"
+                        android:text="@string/me_登录"
                         android:textColor="@color/common_color_FBB403"
                         android:textSize="16sp" />
                 </com.google.android.material.circularreveal.CircularRevealLinearLayout>

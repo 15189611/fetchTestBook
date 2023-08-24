@@ -1,12 +1,11 @@
 package com.handy.fetchbook.app.network
 
+import com.handy.fetchbook.data.bean.AnnouncementBean
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.model.ApiResponse
-import com.handy.fetchbook.data.bean.me.HelpCenterBean
-import com.handy.fetchbook.data.bean.me.UserInfoBean
-import com.handy.fetchbook.data.bean.me.WalletBean
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
 import com.handy.fetchbook.data.bean.home.*
+import com.handy.fetchbook.data.bean.me.*
 import com.handy.fetchbook.data.bean.model.BaseApiModel
 import com.handy.fetchbook.data.bean.task.TaskStatusBean
 import retrofit2.http.*
@@ -71,7 +70,7 @@ interface ApiService {
         @Field("password") password: String,
         @Field("code") code: String,
         @Field("invite_code") invite_code: String
-    ): ApiResponse<String>
+    ): ApiResponse<Any>
 
 
     /**
@@ -96,7 +95,7 @@ interface ApiService {
         @Field("password") password: String,
         @Field("token") token: String,
         @Field("pointJson") pointJson: String
-    ): ApiResponse<String>
+    ): ApiResponse<Any>
 
     /**
      * 发送短信 sendCode
@@ -164,13 +163,14 @@ interface ApiService {
 
 
     /**
-     * 滑动验证码检查
+     * 修改密码
      */
     @FormUrlEncoded
     @POST("api/user/changePassword")
     suspend fun changePassword(
         @Field("code") code: String,
-        @Field("password_new") password_new: String
+        @Field("password_new") password_new: String,
+        @Field("password_confirmation") password_confirmation: String
     ): ApiResponse<Any>
 
     /**
@@ -278,4 +278,9 @@ interface ApiService {
     @GET("api/videoList")
     suspend fun videoList(
     ): ApiResponse<String>
+
+    //请求公告
+    @GET("api/notice/announcement")
+    suspend fun announcement():ApiResponse<List<AnnouncementBean>>
+
 }

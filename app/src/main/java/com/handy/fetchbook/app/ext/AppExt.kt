@@ -4,7 +4,6 @@ import android.view.View
 import android.widget.TextView
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LanguageUtils
-import com.handy.fetchbook.R
 import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.app.widget.LanguageSetView
 import com.lxj.xpopup.XPopup
@@ -18,6 +17,32 @@ import java.util.*
  */
 fun languageSet(layoutLanguage: View) {
     val languageSetView = LanguageSetView(ActivityUtils.getTopActivity())
+    languageSetView.confirm = {
+        when (languageSetView.getViewSelectLanguage()) {
+            "English" -> {
+                CacheUtil.setLanguage("enUs")
+                LanguageUtils.applyLanguage(Locale.ENGLISH)
+            }
+            "简体中文" -> {
+                CacheUtil.setLanguage("zhCn")
+                LanguageUtils.applyLanguage(Locale.CHINESE)
+            }
+            "繁體中文" -> {
+                CacheUtil.setLanguage("zhHK")
+                LanguageUtils.applyLanguage(Locale.TRADITIONAL_CHINESE)
+            }
+
+            "한국어" -> {
+                CacheUtil.setLanguage("koKR")
+                LanguageUtils.applyLanguage(Locale.KOREA)
+            }
+        }
+        for (activity in ActivityUtils.getActivityList()) {
+            activity.recreate()
+        }
+    }
+    languageSetView.cancel = {
+    }
     XPopup.Builder(ActivityUtils.getTopActivity())
         .atView(layoutLanguage)
         .hasShadowBg(false)
@@ -32,28 +57,6 @@ fun languageSet(layoutLanguage: View) {
 
             override fun onDismiss(popupView: BasePopupView?) {
                 super.onDismiss(popupView)
-                when (languageSetView.getLanguage()) {
-                    "English" -> {
-                        CacheUtil.setLanguage("enUs")
-                        LanguageUtils.applyLanguage(Locale.ENGLISH)
-                    }
-                    "简体中文" -> {
-                        CacheUtil.setLanguage("zhCn")
-                        LanguageUtils.applyLanguage(Locale.CHINESE)
-                    }
-                    "繁體中文" -> {
-                        CacheUtil.setLanguage("zhHK")
-                        LanguageUtils.applyLanguage(Locale.TRADITIONAL_CHINESE)
-                    }
-
-                    "한국어" -> {
-                        CacheUtil.setLanguage("koKR")
-                        LanguageUtils.applyLanguage(Locale.KOREA)
-                    }
-                }
-                for (activity in ActivityUtils.getActivityList()) {
-                    activity.recreate()
-                }
             }
         })
         .asCustom(languageSetView)
