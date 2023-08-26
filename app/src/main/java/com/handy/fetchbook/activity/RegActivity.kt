@@ -11,9 +11,7 @@ import com.blankj.utilcode.util.ToastUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.app.util.CacheUtil
-import com.handy.fetchbook.app.util.SpUtils
 import com.handy.fetchbook.basic.util.BooKLogger
-import com.handy.fetchbook.app.util.SpKey
 import com.handy.fetchbook.data.bean.model.TokenInfoModel
 import com.handy.fetchbook.databinding.MeActivityRegBinding
 import com.handy.fetchbook.utils.TimeCount

@@ -4,18 +4,12 @@ import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.widget.ImageView
+import coil.load
 import com.handy.fetchbook.R
+import com.handy.fetchbook.activity.HomeDetailActivity
 import com.handy.fetchbook.basic.AbsModuleView
 import com.handy.fetchbook.data.bean.home.Items
-import kotlinx.android.synthetic.main.home_item_senics.view.aivTitle
-import coil.load
-import com.handy.fetchbook.activity.HomeDetailActivity
-import kotlinx.android.synthetic.main.home_item_senics.view.aivImg
-import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel1
-import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel2
-import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel3
-import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel4
-import kotlinx.android.synthetic.main.home_item_senics.view.aivLevel5
+import kotlinx.android.synthetic.main.home_item_senics.view.*
 
 /**
  * - Author: Charles
@@ -38,7 +32,7 @@ class HomeProductItemView @JvmOverloads constructor(
         val plan = model.plan ?: 0
         val must = model.must ?: 0
         val total = plan + must
-        val showCount = (must / total) * 100
+        val showCount = if (must != 0) (must / total) * 100 else 0
         aivLevel1.setImageResource(R.drawable.home_level_y)
         if (showCount > 20) {
             aivLevel2.setImageResource(R.drawable.home_level_y)

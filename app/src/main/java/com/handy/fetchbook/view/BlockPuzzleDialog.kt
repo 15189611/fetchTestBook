@@ -187,4 +187,8 @@ class BlockPuzzleDialog : Dialog {
         this.mOnResultsListener = mOnResultsListener
     }
 
+    fun reset() {
+        dragView.reset()
+        loadCaptcha()
+    }
 }

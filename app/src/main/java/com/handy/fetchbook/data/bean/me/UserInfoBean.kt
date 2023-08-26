@@ -2,9 +2,7 @@ package com.handy.fetchbook.data.bean.me
 
 import com.google.gson.annotations.SerializedName
 
-
 data class UserInfoBean(
-
     @SerializedName("id") var id: Int? = null,
     @SerializedName("avatar") var avatar: String? = null,
     @SerializedName("nickname") var nickname: String? = null,
@@ -26,12 +24,9 @@ data class UserInfoBean(
     @SerializedName("last_at") var lastAt: String? = null,
     @SerializedName("created_at") var createdAt: String? = null,
     @SerializedName("referral") var referral: String? = null
-
 )
 
-
 data class Notification(
-
     @SerializedName("share") var share: Int? = 0,
     @SerializedName("secret") var secret: Int? = null,
     @SerializedName("shareTotal") var shareTotal: Int? = null,

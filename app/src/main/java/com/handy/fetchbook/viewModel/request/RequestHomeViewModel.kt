@@ -11,7 +11,7 @@ import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState
 
 /**
- * 描述　:登录注册的请求ViewModel
+ * 首页Fragment的->ViewModel
  */
 class RequestHomeViewModel : BaseViewModel() {
 

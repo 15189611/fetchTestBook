@@ -2,6 +2,7 @@ package com.handy.fetchbook.viewModel.state
 
 import androidx.lifecycle.MutableLiveData
 import com.handy.fetchbook.app.network.apiService
+import com.handy.fetchbook.data.bean.EditUserInfoBean
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.home.*
@@ -38,12 +39,10 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.buyMembership(type) }, buyMembershipResult)
     }
 
-
     var totalResult = MutableLiveData<ResultState<InfoCenterTotalBean>>()
     fun total() {
         request({ apiService.total() }, totalResult)
     }
-
 
     var getExpoListResult = MutableLiveData<ResultState<ExpoListBean>>()
     fun getExpoList(region: String, page: Int) {
@@ -54,7 +53,6 @@ class HomeViewModel : BaseViewModel() {
     fun socialMedia() {
         request({ apiService.socialMedia() }, socialMediaResult)
     }
-
 
     var messageResult = MutableLiveData<ResultState<SystemInfoBean>>()
     fun message(type: Int, page: Int) {
@@ -71,25 +69,20 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.searchScenic(key, page) }, searchScenicResult)
     }
 
-
     var expoDetailsResult = MutableLiveData<ResultState<ExpoDetailsBean>>()
     fun details(id: Int) {
         request({ apiService.details(id) }, expoDetailsResult)
     }
-
 
     var commentExpoResult = MutableLiveData<ResultState<ArrayList<String>>>()
     fun commentExpo(expo_id:String,comment:String,rating:Int) {
         request({ apiService.commentExpo(expo_id,comment,rating) }, commentExpoResult)
     }
 
-
-
     var drawResult = UnPeekLiveData<ResultState<BaseApiModel>>()
     fun draw() {
         requestNoCheck({ apiService.draw() }, drawResult)
     }
-
 
     var taskStatusResult = UnPeekLiveData<ResultState<TaskStatusBean>>()
     fun taskStatus() {
@@ -104,5 +97,10 @@ class HomeViewModel : BaseViewModel() {
     var videoListResult = UnPeekLiveData<ResultState<String>>()
     fun videoList() {
         request({ apiService.videoList() }, videoListResult)
+    }
+
+    val editUserInfoResult = MutableLiveData<ResultState<EditUserInfoBean>>()
+    fun getEditUserInfo() {
+        request({ apiService.getUserVerified() }, editUserInfoResult)
     }
 }

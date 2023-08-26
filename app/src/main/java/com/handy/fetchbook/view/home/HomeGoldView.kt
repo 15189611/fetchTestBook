@@ -40,28 +40,23 @@ import kotlinx.android.synthetic.main.home_item_gold_view.view.noLogin
  * - Description:
  */
 class HomeGoldView @JvmOverloads constructor(
-        context: Context, attrs: AttributeSet? = null
+    context: Context, attrs: AttributeSet? = null
 ) : AbsModuleView<HomeGoldViewModel>(context, attrs) {
 
     private var lifecycle: LifecycleOwner? = null
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        BooKLogger.d("HomeGoldView ,onAttachedToWindow !!!")
         if (lifecycle == null) {
+            BooKLogger.d("HomeGoldView ,onAttachedToWindow !!!")
             findViewTreeLifecycleOwner()?.let {
                 lifecycle = it
                 it.lifecycle.doOnLifecycle(
-                        onResume = { onResume() },
-                        onPause = { onPause() },
-                        onDestroy = { onDestroy() })
+                    onResume = { onResume() },
+                    onPause = { onPause() },
+                    onDestroy = { onDestroy() })
             }
         }
-    }
-
-    override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        BooKLogger.d("HomeGoldView ,onDetachedFromWindow !!!")
     }
 
     private var activityPop: PopupWindow? = null
@@ -114,13 +109,13 @@ class HomeGoldView @JvmOverloads constructor(
 
     private fun showActivitytFinsh() {
         val inflater =
-                context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         activityPopView = inflater.inflate(R.layout.home_dialog_readme, null)
         activityPop = PopupWindow(
-                activityPopView,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                WindowManager.LayoutParams.MATCH_PARENT,
-                true
+            activityPopView,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            true
         )
         activityPopView?.findViewById<ImageView>(R.id.aiv_close)?.setOnClickListener {
             activityPop?.dismiss()
@@ -136,7 +131,6 @@ class HomeGoldView @JvmOverloads constructor(
     }
 
     private fun onPause() {}
-
 
     private fun onDestroy() {}
 

@@ -1,6 +1,7 @@
 package com.handy.fetchbook.app.network
 
 import com.handy.fetchbook.data.bean.AnnouncementBean
+import com.handy.fetchbook.data.bean.EditUserInfoBean
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.model.ApiResponse
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
@@ -283,4 +284,7 @@ interface ApiService {
     @GET("api/notice/announcement")
     suspend fun announcement():ApiResponse<List<AnnouncementBean>>
 
+    //编辑个人信息接口
+    @GET("api/user/verified")
+    suspend fun getUserVerified():ApiResponse<EditUserInfoBean>
 }

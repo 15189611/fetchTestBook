@@ -79,7 +79,7 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         }
         //语言设置
         crllLanguage.setOnClickListener {
-            languageSet(crllLanguage)
+            languageSet(requireActivity(), crllLanguage)
         }
     }
 
@@ -187,7 +187,6 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
     }
 
     private fun showLogout() {
-
         val inflater =
             context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         logoutPopView =

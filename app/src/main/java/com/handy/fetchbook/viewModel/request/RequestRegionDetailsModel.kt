@@ -8,7 +8,7 @@ import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.state.ResultState
 
 /**
- * 描述　:
+ * 瀑布流详情的viewModel
  */
 class RequestRegionDetailsModel : BaseViewModel() {
 

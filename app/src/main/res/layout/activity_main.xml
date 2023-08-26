@@ -16,7 +16,7 @@
 
 
         <com.handy.fetchbook.basic.widget.ViewNestedScrollableHost
-            android:id="@+id/nestParent"
+            android:id="@+id/nestViewParent"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@+id/vBottomNavigationView"
@@ -29,7 +29,6 @@
 
         </com.handy.fetchbook.basic.widget.ViewNestedScrollableHost>
 
-
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/vBottomNavigationView"
             android:layout_width="match_parent"
@@ -39,7 +38,7 @@
             app:itemTextColor="@drawable/bottom_view_icon_tint_state_list"
             app:labelVisibilityMode="labeled"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nestParent"
+            app:layout_constraintTop_toBottomOf="@+id/vViewPager"
             app:menu="@menu/main_menu_nav" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

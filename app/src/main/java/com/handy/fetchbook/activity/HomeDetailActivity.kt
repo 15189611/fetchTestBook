@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.home_activity_detail.*
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 首页
+ * 瀑布流详情
  *
  * @author Handy
  * @since 2023/7/28 9:50 下午

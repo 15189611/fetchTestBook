@@ -32,7 +32,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
-
         // 底部导航栏设置
         vBottomNavigationView.run {
             itemIconTintList = null

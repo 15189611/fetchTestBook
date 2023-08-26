@@ -1,35 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.circularreveal.CircularRevealLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="170dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
     android:layout_marginEnd="5dp"
-    android:background="@drawable/shape_item_bg"
-    android:orientation="vertical">
+    android:background="@drawable/shape_item_bg">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/topCardView"
         android:layout_width="match_parent"
         android:layout_height="130dp"
         android:layout_centerHorizontal="true"
         app:cardCornerRadius="10dp"
-        app:cardElevation="0dp">
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/aivImg"
             android:layout_width="match_parent"
             android:layout_height="130dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/home_item_img"
             tools:ignore="MissingClass" />
 
-        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
             android:layout_margin="5dp"
-            tools:ignore="RtlHardcoded">
+            android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/aivLevel1"
@@ -65,9 +66,8 @@
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/home_level_n" />
-        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
-
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/aivTitle"
@@ -82,7 +82,9 @@
         android:singleLine="true"
         android:textColor="@color/common_color_282828"
         android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topCardView"
         tools:text="石林风景名胜区" />
 
-
-</com.google.android.material.circularreveal.CircularRevealLinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

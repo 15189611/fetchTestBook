@@ -15,7 +15,6 @@ import kotlinx.android.synthetic.main.popup_language.view.*
 
 /**
  * Description: 语言设置弹窗
- * Create by Summer, at 2022/2/21
  */
 class LanguageSetView(context: Context) : FullScreenPopupView(context) {
     var confirm: OnPopupViewConfirm? = null
@@ -27,7 +26,7 @@ class LanguageSetView(context: Context) : FullScreenPopupView(context) {
 
     private var currentList: MutableList<LanguageModel>? = null
 
-    var pos = -1
+    private var pos = -1
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate() {
@@ -54,7 +53,8 @@ class LanguageSetView(context: Context) : FullScreenPopupView(context) {
             dismiss()
         }
         atvOK.setOnClickListener {
-            confirm?.invoke()
+            val languageModels = currentList ?: return@setOnClickListener
+            confirm?.invoke(languageModels[pos])
         }
     }
 
@@ -63,19 +63,13 @@ class LanguageSetView(context: Context) : FullScreenPopupView(context) {
         return mutableListOf(
             LanguageModel("English", language == "en"),
             LanguageModel("简体中文", language == "zh_CN"),
-            LanguageModel("繁體中文", (language == "zhHK" || language == "zhTW")),
+            LanguageModel("繁體中文", (language == "zh_TW")),
             LanguageModel("한국어", language == "ko"),
-        )
-    }
-
-    fun getViewSelectLanguage(): String {
-        return if (pos != -1) {
-            getData()[pos].language
-        } else {
-            ""
+        ).apply {
+            pos = indexOfFirst { it.isSelect }
         }
     }
 }
 
-typealias OnPopupViewConfirm = () -> Unit
+typealias OnPopupViewConfirm = (LanguageModel) -> Unit
 typealias OnPopupViewCancel = () -> Unit

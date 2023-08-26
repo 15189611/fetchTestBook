@@ -22,9 +22,7 @@ import com.handy.fetchbook.data.bean.home.Banner
 import com.handy.fetchbook.model.home.HomeGoldViewModel
 import com.handy.fetchbook.model.home.HomePagerViewModel
 import com.handy.fetchbook.model.home.HomeTabPageItemModel
-import com.handy.fetchbook.view.home.HomeGoldView
-import com.handy.fetchbook.view.home.HomeProductItemView
-import com.handy.fetchbook.view.home.HomeTabPagerView
+import com.handy.fetchbook.view.home.*
 import com.handy.fetchbook.viewModel.request.RequestHomeViewModel
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
@@ -36,8 +34,6 @@ import me.hgj.jetpackmvvm.ext.parseState
 /**
  * 首页Fragment
  *
- * @author Handy
- * @since 2023/8/1 11:46 下午
  */
 class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
     //请求tab的参数
@@ -85,6 +81,7 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
     }
 
     override fun initView(savedInstanceState: Bundle?) {
+        BooKLogger.d("HomeFragmentV2 initView")
         getData()
         registerView()
         topViewClick()
@@ -128,7 +125,7 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
 
     private fun topViewClick() {
         aivLang.setOnClickListener {
-            languageSet(aivLang)
+            languageSet(requireActivity(), aivLang)
         }
 
         crrlSearch.setOnClickListener {
@@ -157,6 +154,7 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
     }
 
     override fun initData() {
+        BooKLogger.d("HomeFragmentV2 initData")
         super.initData()
         //banner
         requestHomeViewModel.bannerResult.observe(this) { resultState ->
@@ -213,22 +211,19 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
                 viewSmartLayout.isEnableLoadMore = hasLoadMore
                 viewSmartLayout.onRefreshLoadMoreComplete(isRefresh, hasLoadMore)
                 BooKLogger.d("hasLoadMore  = $hasLoadMore --> currentPage = $currentPage")
-            }, onError = { isRefresh, error ->
+            }, onError = { isRefresh, _ ->
                 if (isRefresh) viewSmartLayout.onRefreshComplete() else
                     viewSmartLayout.onLoadMoreComplete(false)
             })
         }
     }
 
-
     private fun doRefresh(refreshLayout: RefreshLayout) {
-        BooKLogger.d("首页刷新")
         currentPage = 1
         getProductData(true, currentPage, currentRegion)
     }
 
     private fun doLoadMore(refreshLayout: RefreshLayout) {
-        BooKLogger.d("加载更多")
         getProductData(false, currentPage, currentRegion)
     }
 

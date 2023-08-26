@@ -41,8 +41,5 @@ class App : BaseApp() {
         val appConfig = appResources.configuration
         appConfig.setLocale(Locale("kr"))
         Utils.getApp().resources.updateConfiguration(appConfig, appResources.displayMetrics)
-
-
-
     }
 }

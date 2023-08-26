@@ -23,7 +23,6 @@ import com.handy.fetchbook.databinding.TaskFragmentTaskBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import me.hgj.jetpackmvvm.ext.parseState
 
-
 /**
  * 任务Fragment
  *
@@ -54,7 +53,7 @@ class TaskFragment : BaseFragment<HomeViewModel, TaskFragmentTaskBinding>() {
     override fun onResume() {
         super.onResume()
 
-        if (TextUtils.isEmpty(SpUtils.getString(SpKey.TOKEN, ""))) {
+        if (!CacheUtil.isLogin()) {
             mDatabind.task.visibility = View.GONE
             mDatabind.noLogin.root.visibility = View.VISIBLE
         } else {
@@ -99,7 +98,6 @@ class TaskFragment : BaseFragment<HomeViewModel, TaskFragmentTaskBinding>() {
                     startActivity(intent)
                 })
             }
-
 
         }
     }
@@ -158,7 +156,7 @@ class TaskFragment : BaseFragment<HomeViewModel, TaskFragmentTaskBinding>() {
         logoutPop!!.showAsDropDown(mDatabind.taskType.atvShare)
     }
 
-    private fun showGet(content:String) {
+    private fun showGet(content: String) {
 
         val inflater =
             context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater

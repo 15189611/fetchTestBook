@@ -1,9 +1,7 @@
 package com.handy.fetchbook.viewModel.state
 
 import androidx.fragment.app.Fragment
-import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.fragment.DrawFragment
-import com.handy.fetchbook.fragment.HomeFragment
 import com.handy.fetchbook.fragment.HomeFragmentV2
 import com.handy.fetchbook.fragment.MeFragment
 import com.handy.fetchbook.fragment.TaskFragment

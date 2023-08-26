@@ -2,6 +2,7 @@ package com.handy.fetchbook.app.ext
 
 import android.view.View
 import android.widget.TextView
+import androidx.fragment.app.FragmentActivity
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LanguageUtils
 import com.handy.fetchbook.app.util.CacheUtil
@@ -9,40 +10,38 @@ import com.handy.fetchbook.app.widget.LanguageSetView
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.interfaces.SimpleCallback
-import java.util.*
-
+import java.util.Locale
 
 /**
  * 设置语言选择弹窗
  */
-fun languageSet(layoutLanguage: View) {
+fun languageSet(activity: FragmentActivity, layoutLanguage: View) {
     val languageSetView = LanguageSetView(ActivityUtils.getTopActivity())
     languageSetView.confirm = {
-        when (languageSetView.getViewSelectLanguage()) {
+        when (it.language) {
             "English" -> {
                 CacheUtil.setLanguage("enUs")
-                LanguageUtils.applyLanguage(Locale.ENGLISH)
+                LanguageUtils.applyLanguage(Locale.ENGLISH, true)
             }
+
             "简体中文" -> {
                 CacheUtil.setLanguage("zhCn")
-                LanguageUtils.applyLanguage(Locale.CHINESE)
+                LanguageUtils.applyLanguage(Locale.CHINESE, true)
             }
+
             "繁體中文" -> {
                 CacheUtil.setLanguage("zhHK")
-                LanguageUtils.applyLanguage(Locale.TRADITIONAL_CHINESE)
+                LanguageUtils.applyLanguage(Locale.TRADITIONAL_CHINESE, true)
             }
 
             "한국어" -> {
                 CacheUtil.setLanguage("koKR")
-                LanguageUtils.applyLanguage(Locale.KOREA)
+                LanguageUtils.applyLanguage(Locale.KOREA, true)
             }
         }
-        for (activity in ActivityUtils.getActivityList()) {
-            activity.recreate()
-        }
     }
-    languageSetView.cancel = {
-    }
+
+    languageSetView.cancel = {}
     XPopup.Builder(ActivityUtils.getTopActivity())
         .atView(layoutLanguage)
         .hasShadowBg(false)
@@ -61,27 +60,6 @@ fun languageSet(layoutLanguage: View) {
         })
         .asCustom(languageSetView)
         .show()
-}
-
-/**
- * 设置语言选择弹窗
- */
-fun lanSet(tv_lan: TextView) {
-    when (CacheUtil.getLanguage()) {
-        "enUs" -> {
-            tv_lan.text = "English"
-        }
-        "zhHK", "zhTW" -> {
-            tv_lan.text = "繁體中文"
-        }
-        "zhCn" -> {
-            tv_lan.text = "简体中文"
-        }
-
-        "koKR" -> {
-            tv_lan.text = "한국어"
-        }
-    }
 }
 
 /**

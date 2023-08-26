@@ -11,8 +11,6 @@ import com.handy.fetchbook.data.bean.expo.Items
 import com.handy.fetchbook.databinding.ExpoActivityBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import kotlinx.android.synthetic.main.expo_activity.*
-import kotlinx.android.synthetic.main.fragment_region.*
-import kotlinx.android.synthetic.main.me_activity_qr.*
 import kotlinx.android.synthetic.main.me_activity_qr.back
 import me.hgj.jetpackmvvm.ext.parseState
 

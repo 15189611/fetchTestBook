@@ -8,15 +8,12 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import androidx.activity.viewModels
 import coil.load
-import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.app.network.ApiService
 import com.handy.fetchbook.app.util.CacheUtil
-import com.handy.fetchbook.app.util.SpUtils
 import com.handy.fetchbook.basic.util.BooKLogger
-import com.handy.fetchbook.app.util.SpKey
 import com.handy.fetchbook.data.bean.model.TokenInfoModel
 import com.handy.fetchbook.databinding.MeActivityLoginBinding
 import com.handy.fetchbook.net.Configuration
@@ -25,7 +22,6 @@ import com.handy.fetchbook.viewModel.state.LoginViewModel
 import kotlinx.android.synthetic.main.home_activity_detail.back
 import kotlinx.android.synthetic.main.me_activity_login.*
 import me.hgj.jetpackmvvm.ext.parseState
-import org.json.JSONObject
 
 /**
  *
@@ -36,8 +32,6 @@ import org.json.JSONObject
 class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
 
     var id: String = ""
-
-    private val loginModel: LoginViewModel by viewModels()
 
     private var showPassword = true
     private val blockPuzzleDialog: BlockPuzzleDialog by lazy {
@@ -95,6 +89,7 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
                 CacheUtil.saveTokenInfo(TokenInfoModel(token, mViewModel.account.value, mViewModel.password.value))
                 mViewModel.userinfo()
             }, {
+                blockPuzzleDialog.reset()
                 blockPuzzleDialog.dismiss()
                 ToastUtils.showShort(it.message)
                 BooKLogger.d("登录失败 = ${it.message.orEmpty()}")

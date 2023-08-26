@@ -101,7 +101,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             override fun onAnimationEnd(animation: Animation) {}
             override fun onAnimationRepeat(animation: Animation) {}
         })
-        if (TextUtils.isEmpty(SpUtils.getString(SpKey.TOKEN, ""))) {
+        if (!CacheUtil.isLogin()) {
             mDatabind.viewContainer.visibility = View.GONE
             mDatabind.noLogin.root.visibility = View.VISIBLE
         } else {
