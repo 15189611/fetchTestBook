@@ -25,7 +25,7 @@ import kotlinx.android.synthetic.main.me_activity_member_upgrade.*
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 启动页
+ * 拼团列表
  *
  * @author Handy
  * @since 2023/7/28 9:47 下午
