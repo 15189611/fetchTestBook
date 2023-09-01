@@ -5,6 +5,7 @@ import com.handy.fetchbook.app.network.apiService
 import com.handy.fetchbook.data.bean.EditUserInfoBean
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
+import com.handy.fetchbook.data.bean.group.GroupSharingBean
 import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
 import com.handy.fetchbook.data.bean.me.UserInfoBean
@@ -47,6 +48,10 @@ class HomeViewModel : BaseViewModel() {
     var getExpoListResult = MutableLiveData<ResultState<ExpoListBean>>()
     fun getExpoList(region: String, page: Int) {
         request({ apiService.list(region, page) }, getExpoListResult)
+    }
+    var groupSharingBean = MutableLiveData<ResultState<GroupSharingBean>>()
+    fun grouplist( page: Int) {
+        request({ apiService.grouplist( page) }, groupSharingBean)
     }
 
     var socialMediaResult = MutableLiveData<ResultState<List<SocialMediaBean>>>()

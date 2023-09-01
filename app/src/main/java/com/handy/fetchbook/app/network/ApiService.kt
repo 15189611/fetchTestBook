@@ -5,6 +5,7 @@ import com.handy.fetchbook.data.bean.EditUserInfoBean
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.model.ApiResponse
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
+import com.handy.fetchbook.data.bean.group.GroupSharingBean
 import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.*
 import com.handy.fetchbook.data.bean.model.BaseApiModel
@@ -228,6 +229,13 @@ interface ApiService {
         @Query("type") region: Int?,
         @Query("page") page: Int?
     ): ApiResponse<SystemInfoBean>
+    /**
+     * 拼团列表
+     */
+    @GET("api/tour/list")
+    suspend fun grouplist(
+        @Query("page") page: Int?
+    ): ApiResponse<GroupSharingBean>
 
 
     /**
