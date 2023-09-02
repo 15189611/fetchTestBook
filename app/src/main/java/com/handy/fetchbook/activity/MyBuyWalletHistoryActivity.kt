@@ -12,6 +12,7 @@ import com.handy.fetchbook.view.MyBuyWalletHistoryItemView
 import com.handy.fetchbook.view.MyTimePickerView
 import com.handy.fetchbook.viewModel.MyBuyWalletHistoryViewModel
 import kotlinx.android.synthetic.main.activity_my_buy_wallet_history_view.*
+import kotlinx.android.synthetic.main.fragment_home_v2.viewSmartLayout
 import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -29,6 +30,8 @@ class MyBuyWalletHistoryActivity : BaseVmActivity<MyBuyWalletHistoryViewModel>()
     private val adapter = NormalModuleAdapter()
     private var startDate: String? = null
     private var endDate: String? = null
+    private var currentPage = 1
+    private var hasLoadMore = false
 
     override fun showLoading(message: String) {}
 
@@ -40,14 +43,16 @@ class MyBuyWalletHistoryActivity : BaseVmActivity<MyBuyWalletHistoryViewModel>()
 
     override fun initView(savedInstanceState: Bundle?) {
         viewSmartLayout.isEnableRefresh = false
-
+        viewSmartLayout.setDuLoadMoreListener {
+            mViewModel.myBuyHistory(false, startDate.orEmpty(), endDate.orEmpty(), currentPage)
+        }
         startDate = getOldDate(-5)
         endDate = TimeUtils.getNowString(dft)
         BooKLogger.d("old = $startDate -> newDate = $endDate")
         startDataContent.text = startDate
         endContent.text = endDate
 
-        mViewModel.myBuyHistory(true, startDate.orEmpty(), endDate.orEmpty(), 1)
+        mViewModel.myBuyHistory(true, startDate.orEmpty(), endDate.orEmpty(), currentPage)
         registerView()
         walletHistoryRv.itemAnimator = null
         walletHistoryRv.layoutManager = adapter.getGridLayoutManager(this)
@@ -75,7 +80,9 @@ class MyBuyWalletHistoryActivity : BaseVmActivity<MyBuyWalletHistoryViewModel>()
             }
         }
         walletQuery.setOnClickListener {
-            mViewModel.myBuyHistory(true, startDate.orEmpty(), endDate.orEmpty(), 1)
+            hasLoadMore = false
+            currentPage = 1
+            mViewModel.myBuyHistory(true, startDate.orEmpty(), endDate.orEmpty(), currentPage)
         }
     }
 
@@ -86,10 +93,17 @@ class MyBuyWalletHistoryActivity : BaseVmActivity<MyBuyWalletHistoryViewModel>()
     override fun createObserver() {
         mViewModel.myBuyHistoryResult.observe(this) {
             parseMyState(it, onSuccess = { isRefresh, model ->
-                adapter.setItems(model.items ?: emptyList())
-                BooKLogger.d("我的钱包购买记录接口成功-> ${model.items?.size}")
+                val total = model.total
+                if (isRefresh) walletHistoryRv.scrollToPosition(0)
+                if (isRefresh) adapter.setItems(model.items ?: emptyList()) else adapter.appendItems(model.items ?: emptyList())
+                BooKLogger.d("我的钱包购买记录接口成功-> total = $total -> size = ${model.items?.size}")
+                hasLoadMore = adapter.getItems().size < model.total
+                if (hasLoadMore) ++currentPage
+                viewSmartLayout.isEnableLoadMore = hasLoadMore
+                viewSmartLayout.onRefreshLoadMoreComplete(isRefresh, hasLoadMore)
             }, onError = { isRefresh, error ->
                 BooKLogger.d("我的钱包购买记录失败-> ${error.errCode}")
+                viewSmartLayout.onLoadMoreComplete(false)
             })
         }
     }

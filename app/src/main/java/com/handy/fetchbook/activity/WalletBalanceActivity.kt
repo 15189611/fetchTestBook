@@ -66,7 +66,6 @@ class WalletBalanceActivity : BaseActivity<HomeViewModel, MeActivityWalletBalanc
                 BooKLogger.d("我的钱包 兑换接口成功 = $info")
                 showDialog()
                 mViewModel.wallet()
-                popupWindow?.dismiss()
                 startActivity(Intent(this, MyBuyWalletHistoryActivity::class.java))
             }, { error ->
                 BooKLogger.d("我的钱包 兑换接口失败 = ${error.message}")
