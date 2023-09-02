@@ -9,6 +9,7 @@
 
     <com.google.android.material.circularreveal.CircularRevealLinearLayout
         xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/walletRootView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/me_wallet_bg"
@@ -29,6 +30,7 @@
                 android:layout_marginStart="20dp"
                 app:srcCompat="@drawable/common_back" />
             <TextView
+                android:id="@+id/buyHistoryClick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
@@ -112,7 +114,7 @@
                         android:layout_marginStart="20dp"
                         android:background="@color/common_color_00FFFFFF"
                         android:hint="@string/me_最少问换1旅游宝"
-                        android:inputType="text"
+                        android:inputType="numberSigned"
                         android:maxLines="1"
                         android:singleLine="true"
                         android:textColor="@color/common_color_282828"
@@ -122,7 +124,7 @@
                 </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/btnLogin"
+                    android:id="@+id/btnAll"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
@@ -147,6 +149,7 @@
                     android:text="@string/me_账户余额" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/walletBalance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.00美元"
@@ -183,6 +186,8 @@
                     android:text="@string/me_实际到账" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/walletValueOne"
+                    android:layout_marginStart="3dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0.00旅游宝"
@@ -201,8 +206,10 @@
                     android:text="@string/me_需支付金额" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/walletValueTwo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="3dp"
                     android:text="0.00美元"
                     tools:text="0.00美元" />
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -212,7 +219,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/common_btn_login_gradient"
+                android:background="@drawable/common_btn_un_save_gradient"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="@string/me_确定"

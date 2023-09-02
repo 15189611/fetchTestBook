@@ -1,7 +1,6 @@
 package com.handy.fetchbook.app.network
 
-import com.handy.fetchbook.data.bean.AnnouncementBean
-import com.handy.fetchbook.data.bean.EditUserInfoBean
+import com.handy.fetchbook.data.bean.*
 import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.model.ApiResponse
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
@@ -10,6 +9,7 @@ import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.*
 import com.handy.fetchbook.data.bean.model.BaseApiModel
 import com.handy.fetchbook.data.bean.task.TaskStatusBean
+import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**
@@ -46,10 +46,8 @@ interface ApiService {
     @GET("api/home/scenic/{id}")
     suspend fun details(@Path("id") id: String): ApiResponse<ScenicsDetailsBean>
 
-
     @GET("api/notice/total")
     suspend fun total(): ApiResponse<InfoCenterTotalBean>
-
 
     /**
      * 登录 login
@@ -60,7 +58,6 @@ interface ApiService {
         @Field("id") id: String,
         @Field("type") type: Int
     ): ApiResponse<Any>
-
 
     /**
      * 注册 Register
@@ -73,7 +70,6 @@ interface ApiService {
         @Field("code") code: String,
         @Field("invite_code") invite_code: String
     ): ApiResponse<Any>
-
 
     /**
      * 忘记密码 Forgot Password
@@ -109,7 +105,6 @@ interface ApiService {
         @Field("event") event: String
     ): ApiResponse<Any>
 
-
     /**
      * 发送短信 sendCode
      */
@@ -118,7 +113,6 @@ interface ApiService {
     suspend fun sendCodeForget(
         @Field("event") event: String
     ): ApiResponse<Any>
-
 
     /**
      * config
@@ -155,14 +149,11 @@ interface ApiService {
     @GET("api/logout")
     suspend fun logout(): ApiResponse<Any>
 
-
     @GET("api/helpCenter")
     suspend fun helpCenter(): ApiResponse<List<HelpCenterBean>>
 
-
     @GET("api/wallet")
     suspend fun wallet(): ApiResponse<WalletBean>
-
 
     /**
      * 修改密码
@@ -183,7 +174,6 @@ interface ApiService {
     suspend fun buyMembership(
         @Field("type") code: Int
     ): ApiResponse<Any>
-
 
     /**
      * 世博列表
@@ -220,7 +210,6 @@ interface ApiService {
     suspend fun socialMedia(
     ): ApiResponse<List<SocialMediaBean>>
 
-
     /**
      *
      */
@@ -237,7 +226,6 @@ interface ApiService {
         @Query("page") page: Int?
     ): ApiResponse<GroupSharingBean>
 
-
     /**
      *
      */
@@ -245,7 +233,6 @@ interface ApiService {
     suspend fun announcements(
         @Query("page") page: Int?
     ): ApiResponse<NoticeBean>
-
 
     /**
      *
@@ -255,8 +242,6 @@ interface ApiService {
         @Query("keyword") keyword: String?,
         @Query("page") page: Int?
     ): ApiResponse<List<SearchBean>>
-
-
 
     /**
      *
@@ -272,14 +257,12 @@ interface ApiService {
     suspend fun taskStatus(
     ): ApiResponse<TaskStatusBean>
 
-
     /**
      *
      */
     @POST("api/task/share")
     suspend fun taskShare(
     ): BaseApiModel
-
 
     /**
      *
@@ -290,9 +273,31 @@ interface ApiService {
 
     //请求公告
     @GET("api/notice/announcement")
-    suspend fun announcement():ApiResponse<List<AnnouncementBean>>
+    suspend fun announcement(): ApiResponse<List<AnnouncementBean>>
 
     //编辑个人信息接口
     @GET("api/user/verified")
-    suspend fun getUserVerified():ApiResponse<EditUserInfoBean>
+    suspend fun getUserVerified(): ApiResponse<EditUserInfoBean>
+
+    //编辑资料保存接口
+    @POST("api/user/updateProfile")
+    suspend fun updateProfile(@Body body: PostJsonBody): ApiResponse<Any>
+
+    //上传头像
+    @POST("api/user/avatar")
+    suspend fun updateAvatar(@Body body: PostJsonBody): ApiResponse<Any>
+
+    //兑换旅游宝
+    @POST("api/investment/invest")
+    suspend fun invest(@Body body: PostJsonBody): ApiResponse<Any>
+
+    //我的钱包兑换记录
+    @GET("api/wallet/details")
+    suspend fun myBuyHistory(
+        @Query("start_date") start_date: String?,
+        @Query("end_date") end_date: String?,
+        @Query("balance_type") balance_type: String?,
+        @Query("page") page: Int?
+    ): ApiResponse<MyBuyHistoryBean>
+
 }

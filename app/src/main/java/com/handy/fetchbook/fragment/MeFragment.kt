@@ -17,6 +17,7 @@ import com.handy.fetchbook.adapter.HelpCenterAdapter
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.ext.languageSet
 import com.handy.fetchbook.app.util.CacheUtil
+import com.handy.fetchbook.basic.ext.toAvatar
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
 import com.handy.fetchbook.data.bean.me.UserInfoBean
 import com.handy.fetchbook.databinding.MeFragmentMeBinding
@@ -130,12 +131,13 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
     @SuppressLint("SetTextI18n")
     private fun updateUserInfo(userInfo: UserInfoBean?) {
         userInfo ?: return
+        CacheUtil.saveUserInfo(userInfo)
         mDatabind.atvNick.text = if (userInfo.nickname?.isEmpty() == true) userInfo.account.orEmpty() else userInfo.nickname.orEmpty()
         mDatabind.atvShare.text = "ID/推荐码 : ${userInfo.id}"
         if (userInfo.avatar?.isEmpty() == true) {
             mDatabind.aivHead.load(R.drawable.me_avator)
         } else {
-            mDatabind.aivHead.load(userInfo.avatar.orEmpty()) {
+            mDatabind.aivHead.load(userInfo.avatar?.toAvatar().orEmpty()) {
                 transformations(CircleCropTransformation())
             }
         }
@@ -183,9 +185,8 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
             mViewModel.wallet()
             if (CacheUtil.getUserInfo() != null) {
                 updateUserInfo(CacheUtil.getUserInfo())
-            } else {
-                mViewModel.userinfo()
             }
+            mViewModel.userinfo()
         }
     }
 

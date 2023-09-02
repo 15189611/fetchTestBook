@@ -210,5 +210,6 @@
     <string name="forget_gong_xi">恭喜</string>
     <string name="forget_set_pwd_success_tip">您成功设置了新的密码</string>
     <string name="forget_start_login">开始登录</string>
+    <string name="wallet_invest_tip">成功兑换%1$s旅游宝</string>
 
 </resources>

@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:background="@drawable/me_login_head_bg"
         android:orientation="vertical">
 
@@ -51,8 +51,8 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/aivHead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             app:srcCompat="@drawable/me_avata3" />
@@ -61,7 +61,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:paddingBottom="20dp">
 
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
             android:layout_width="match_parent"
@@ -165,24 +168,26 @@
             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/me_edit_userinfo_bg2"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_radius_bg"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="30dp"
-                    android:visibility="gone"
+                    android:layout_marginTop="20dp"
                     android:text="@string/me_注册电话号码或电子邮件"
                     android:textColor="@color/common_color_282828"
-                    android:textSize="14dp" />
+                    android:textSize="14dp"
+                    android:visibility="gone" />
 
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
-                    android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/common_input_6a7180">
 
@@ -208,7 +213,9 @@
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_margin="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/common_input_6a7180">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -238,14 +245,16 @@
             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/me_edit_userinfo_bg3"
-                android:orientation="vertical">
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_radius_bg"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
 
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/common_input_6a7180">
 
@@ -314,7 +323,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
-                    android:layout_marginEnd="20dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="10dp">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -365,6 +376,7 @@
                         android:textSize="14dp" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/birthdayContext"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -381,7 +393,9 @@
                     android:id="@+id/locationParent"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_margin="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/common_input_6a7180">
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -405,7 +419,24 @@
                         android:textSize="14dp"
                         tools:text="北京" />
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/editSaveBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/common_btn_un_save_gradient"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/me_保存"
+                android:textColor="@color/common_color_282828"
+                android:textSize="16sp" />
+
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
     </androidx.core.widget.NestedScrollView>
 
