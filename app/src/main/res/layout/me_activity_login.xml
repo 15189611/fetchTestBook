@@ -158,6 +158,8 @@
                     android:layout_weight="1"
                     android:background="@color/common_color_00FFFFFF"
                     android:hint="@string/me_login_pwd_hint"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="@color/common_color_282828"
                     android:textColorHint="@color/common_color_282828"
                     android:textSize="14sp" />

@@ -6,15 +6,16 @@
         android:icon="@drawable/main_nav_home_selector"
         android:title="@string/main_nav_home" />
     <item
-        android:id="@+id/vNavDraw"
-        android:enabled="true"
-        android:icon="@drawable/main_nav_draw_selector"
-        android:title="@string/main_nav_draw" />
-    <item
         android:id="@+id/vNavTask"
         android:enabled="true"
         android:icon="@drawable/main_nav_task_selector"
         android:title="@string/main_nav_task" />
+    <item
+        android:id="@+id/vNavDraw"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_draw_selector"
+        android:title="@string/main_nav_draw" />
+
     <item
         android:id="@+id/vNavMe"
         android:enabled="true"

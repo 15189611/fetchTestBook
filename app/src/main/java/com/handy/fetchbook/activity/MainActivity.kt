@@ -38,8 +38,8 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             setOnItemSelectedListener {
                 when (it.itemId) {
                     R.id.vNavHome -> vViewPager.currentItem = INDEX_HOME
-                    R.id.vNavDraw -> vViewPager.currentItem = INDEX_DRAW
                     R.id.vNavTask -> vViewPager.currentItem = INDEX_TASK
+                    R.id.vNavDraw -> vViewPager.currentItem = INDEX_DRAW
                     R.id.vNavMe -> vViewPager.currentItem = INDEX_ME
                 }
                 true
@@ -56,8 +56,9 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                     val menu = vBottomNavigationView.menu
                     when (position) {
                         INDEX_HOME -> menu.getItem(INDEX_HOME).isChecked = true
-                        INDEX_DRAW -> menu.getItem(INDEX_DRAW).isChecked = true
                         INDEX_TASK -> menu.getItem(INDEX_TASK).isChecked = true
+                        INDEX_DRAW -> menu.getItem(INDEX_DRAW).isChecked = true
+
                         INDEX_ME -> menu.getItem(INDEX_ME).isChecked = true
                     }
                 }

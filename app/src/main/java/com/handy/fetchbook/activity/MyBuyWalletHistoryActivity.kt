@@ -51,7 +51,7 @@ class MyBuyWalletHistoryActivity : BaseVmActivity<MyBuyWalletHistoryViewModel>()
         BooKLogger.d("old = $startDate -> newDate = $endDate")
         startDataContent.text = startDate
         endContent.text = endDate
-
+        back.setOnClickListener { finish() }
         mViewModel.myBuyHistory(true, startDate.orEmpty(), endDate.orEmpty(), currentPage)
         registerView()
         walletHistoryRv.itemAnimator = null
