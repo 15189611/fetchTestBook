@@ -1,7 +1,11 @@
 package com.handy.fetchbook.activity
 
+import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationBarView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.ViewPagerAdapter
@@ -58,12 +62,27 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
                         INDEX_HOME -> menu.getItem(INDEX_HOME).isChecked = true
                         INDEX_TASK -> menu.getItem(INDEX_TASK).isChecked = true
                         INDEX_DRAW -> menu.getItem(INDEX_DRAW).isChecked = true
-
                         INDEX_ME -> menu.getItem(INDEX_ME).isChecked = true
                     }
                 }
             })
         }
+    }
+
+//    private fun disableShiftMode() {
+//        val menuView = vBottomNavigationView.getChildAt(0) as? BottomNavigationMenuView ?: return
+//        val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
+//        shiftingMode.isAccessible = true
+//        shiftingMode.setBoolean(menuView, false)
+//        shiftingMode.isAccessible = false
+//        for (i in menuView.childCount) {
+//            val item = menuView.getChildAt(i) as BottomNavigationMenuView
+//            item.setChecked(item.getItemData().isChecked());
+//        }
+//    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
     }
 
 }

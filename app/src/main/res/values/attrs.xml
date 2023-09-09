@@ -23,4 +23,13 @@
         <attr name="common_svb_targetRotateY" format="float"/>
         <attr name="common_svb_animation" format="reference"/>
     </declare-styleable>
+
+
+
+
+
+    <declare-styleable name="LuckyMonkeyPanelView">
+        <attr name="prizeImg" format="reference"/>
+        <attr name="prizeName" format="string|reference"/>
+    </declare-styleable>
 </resources>

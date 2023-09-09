@@ -13,10 +13,12 @@ import coil.load
 import coil.transform.CircleCropTransformation
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
+import com.handy.fetchbook.activity.test.CircleTurntableActivity
 import com.handy.fetchbook.adapter.HelpCenterAdapter
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.ext.languageSet
 import com.handy.fetchbook.app.util.CacheUtil
+import com.handy.fetchbook.basic.ext.appCompatActivity
 import com.handy.fetchbook.basic.ext.toAvatar
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
 import com.handy.fetchbook.data.bean.me.UserInfoBean
@@ -41,8 +43,18 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
     @SuppressLint("SetTextI18n")
     override fun initView(savedInstanceState: Bundle?) {
         //编辑中心
-        mDatabind.crllUserinfo.setOnClickListener {
+        mDatabind.myNameParent.setOnClickListener {
             startActivity(Intent(context, EditUserInfoActivity::class.java))
+        }
+        mDatabind.aivHead.setOnClickListener {
+            //startActivity(Intent(context, CircleTurntableActivity::class.java))
+            startActivity(Intent(context, EditUserInfoActivity::class.java))
+        }
+        //客服中心
+        mDatabind.meAivCustomerService.setOnClickListener {
+            val intent = Intent(context, H5Activity::class.java)
+            intent.putExtra("url", "https://happycat.ladesk.com/scripts/generateWidget.php?v=5.37.2.18&t=1680352328&cwid=0rfm205n&cwrt=C&cwt=chat_popout")
+            startActivity(intent)
         }
         //推荐QR
         mDatabind.aivQr.setOnClickListener {

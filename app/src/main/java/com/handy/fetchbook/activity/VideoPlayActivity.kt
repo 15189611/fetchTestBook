@@ -7,11 +7,13 @@ import android.widget.ImageView
 import coil.load
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.databinding.MeActivityVideoPlayBinding
+import com.handy.fetchbook.eventBus.EventVideoPlayOver
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import com.shuyu.gsyvideoplayer.GSYVideoManager
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils
-import kotlinx.android.synthetic.main.me_activity_qr.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  * 启动页
@@ -28,8 +30,6 @@ class VideoPlayActivity : BaseActivity<HomeViewModel, MeActivityVideoPlayBinding
     var title: String? = null
     var thumbnail: String? = null
     override fun initView(savedInstanceState: Bundle?) {
-        back.setOnClickListener { finish() }
-
         url = intent.getStringExtra("url").toString()
         title = intent.getStringExtra("title").toString()
         thumbnail = intent.getStringExtra("thumbnail").toString()
@@ -54,6 +54,13 @@ class VideoPlayActivity : BaseActivity<HomeViewModel, MeActivityVideoPlayBinding
                 //orientationUtils.resolveByClick();
                 finish()
             })
+        mDatabind.videoPlayer.setGSYVideoProgressListener { progress, secProgress, currentPosition, duration ->
+            BooKLogger.d("视频播放进度 = $progress --> total = $duration")
+            if (progress >= 98) {
+                EventBus.getDefault().post(EventVideoPlayOver())
+                finish()
+            }
+        }
         //是否可以滑动调整
         mDatabind.videoPlayer.setIsTouchWiget(true)
         //设置返回按键功能
@@ -74,8 +81,8 @@ class VideoPlayActivity : BaseActivity<HomeViewModel, MeActivityVideoPlayBinding
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         GSYVideoManager.releaseAllVideos()
+        super.onDestroy()
         if (orientationUtils != null) orientationUtils!!.releaseListener()
     }
 

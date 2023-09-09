@@ -202,6 +202,7 @@
 
 
     <!--新增的文案需要适配国际化文案-->
+    <string name="login_input_tips">请输入账户或者登录密码</string>
     <string name="forget_activity_title">重置登录密码</string>
     <string name="forget_activity_input_account">请输入账户</string>
     <string name="forget_activity_account">注册账户*</string>
@@ -211,5 +212,22 @@
     <string name="forget_set_pwd_success_tip">您成功设置了新的密码</string>
     <string name="forget_start_login">开始登录</string>
     <string name="wallet_invest_tip">成功兑换%1$s旅游宝</string>
+    <string name="qr_copy_text">已复制</string>
+    <string name="qr_long_click_success">长按保存图片成功</string>
+
+
+
+
+
+
+
+
+    <string name="iphone_8">iPhone 8</string>
+    <string name="lucky_bead">周大福转运珠</string>
+    <string name="beats_headset">Beats 耳机</string>
+    <string name="xiaomi_scales">小米体重秤</string>
+    <string name="baofeng_vr_glasses">暴风魔镜VR眼镜</string>
+    <string name="iqiyi_month_card">爱奇艺月卡会员</string>
+    <string name="iqiyi_month_card_no">爱奇艺月卡激活码</string>
 
 </resources>

@@ -1,12 +1,15 @@
 package com.handy.fetchbook.app.base
 
 import android.os.Bundle
+import android.view.*
 import androidx.databinding.ViewDataBinding
 import com.blankj.utilcode.util.KeyboardUtils
 import com.handy.fetchbook.app.ext.dismissLoadingExt
 import com.handy.fetchbook.app.ext.showLoadingExt
+import com.handy.fetchbook.eventBus.BaseEvent
 import me.hgj.jetpackmvvm.base.fragment.BaseVmDbFragment
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
+import org.greenrobot.eventbus.*
 
 /**
  * 描述　: 你项目中的Fragment基类，在这里实现显示弹窗，吐司，还有自己的需求操作 ，如果不想用Databind，请继承
@@ -15,6 +18,12 @@ import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
  */
 abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDbFragment<VM, DB>() {
 
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
     /**
      * 当前Fragment绑定的视图布局
      */
@@ -67,5 +76,16 @@ abstract class BaseFragment<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
      */
     override fun lazyLoadTime(): Long {
         return 300
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this)
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun baseEvent(event: BaseEvent) {
     }
 }

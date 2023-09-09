@@ -16,6 +16,7 @@ import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.data.bean.me.UserInfoBean
 import com.handy.fetchbook.view.MyTimePickerView
 import com.handy.fetchbook.viewModel.state.HomeViewModel
+import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.me_activity_edit_userinfo.*
 import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import me.hgj.jetpackmvvm.ext.parseState
@@ -104,9 +105,15 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
 
         editSaveBtn.setOnClickListener {
             val params = mutableMapOf<String, String>()
-            params["birthday"] = birthday.orEmpty()
-            params["nickname"] = nickname.orEmpty()
-            params["gender"] = gender.orEmpty()
+            if (birthday?.isNotEmpty() == true) {
+                params["birthday"] = birthday.orEmpty()
+            }
+            if (nickname?.isNotEmpty() == true) {
+                params["nickname"] = nickname.orEmpty()
+            }
+            if (gender?.isNotEmpty() == true) {
+                params["gender"] = gender.orEmpty()
+            }
             params["avatar"] = avatar.orEmpty()
             mViewModel.updateAvatar(avatar.orEmpty())
             mViewModel.updateProfile(params)
@@ -152,12 +159,16 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
     override fun createObserver() {
         atvAccount.text = userInfo?.account.orEmpty()
         val membershipAt = userInfo?.membershipAt.orEmpty()
-        val split = membershipAt.split("-")
-        val first = split[0]
-        val second = split[1]
-        val third = split[2].substring(0, 2)
-        val finallyMember = "$first-$second-$third"
-        BooKLogger.d("finallyMember = $finallyMember")
+        var finallyMember: String? = null
+
+        if (membershipAt.isNotEmpty()) {
+            val split = membershipAt.split("-")
+            val first = split[0]
+            val second = split[1]
+            val third = split[2].substring(0, 2)
+            finallyMember = "$first-$second-$third"
+            BooKLogger.d("finallyMember = $finallyMember")
+        }
 
         oldNikeName = userInfo?.nickname.orEmpty()
         nickname = oldNikeName
@@ -165,10 +176,11 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
         birthday = oldBirthday
         oldAvatar = userInfo?.avatar.orEmpty()
         avatar = oldAvatar
-        oldGender = userInfo?.gender.toString()
+        oldGender = userInfo?.gender.orEmpty()
         gender = oldGender
 
         atvMembershipAt.text = if (userInfo?.membershipAt?.isNotEmpty() == true) finallyMember else "未开通"
+        atvMembershipAt.setTextColor(if (userInfo?.membershipAt?.isNotEmpty() == true) Color.parseColor("#00D125") else Color.parseColor("#f25252"))
         atvVerify.setTextColor(if (userInfo?.verify == 1) Color.parseColor("#00D125") else Color.parseColor("#f25252"))
         atvVerify.text = if (userInfo?.verify == 1) "已认证" else "未完成"
         locationParent.isVisible = (userInfo?.location?.isNotEmpty() == true)
@@ -193,6 +205,7 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
                 BooKLogger.d("编辑个人页面 保存接口成功 = $info")
                 finish()
             }, { error ->
+                ToastUtils.show(error.message)
                 BooKLogger.d("编辑个人页面 保存接口失败 = ${error.message}")
             })
         }
@@ -200,6 +213,7 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
             parseState(it, { info ->
                 BooKLogger.d("编辑个人页面 上传头像成功 = $info")
             }, { error ->
+                ToastUtils.show(error.message)
                 BooKLogger.d("编辑个人页面 上传头像失败 = ${error.message}")
             })
         }

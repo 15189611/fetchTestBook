@@ -258,11 +258,36 @@ interface ApiService {
     ): ApiResponse<TaskStatusBean>
 
     /**
-     *
+     * 分享成功任务
      */
     @POST("api/task/share")
     suspend fun taskShare(
     ): BaseApiModel
+
+    /**
+     * 视频播放完成任务
+     */
+    @POST("api/task/secret")
+    suspend fun taskVideo(
+    ): BaseApiModel
+
+    /**
+     * 抽奖的winners
+     */
+    @GET("api/prize/winners")
+    suspend fun getWinners(): ApiResponse<List<String>>
+
+    /**
+     * 抽奖的prize/list2列表
+     */
+    @GET("api/prize/list2")
+    suspend fun getPrizeList():ApiResponse<DrawPrizeListBean>
+
+    /**
+     * 抽奖打开红包
+     */
+    @POST("api/prize/openRedPacket")
+    suspend fun openRedPacket():ApiResponse<DrawOpenRedPacketBean>
 
     /**
      *
@@ -297,7 +322,8 @@ interface ApiService {
         @Query("start_date") start_date: String?,
         @Query("end_date") end_date: String?,
         @Query("balance_type") balance_type: String?,
-        @Query("page") page: Int?
+        @Query("page") page: Int?,
+        @Query("act_type") act_type: String? = null
     ): ApiResponse<MyBuyHistoryBean>
 
 }

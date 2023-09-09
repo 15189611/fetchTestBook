@@ -16,7 +16,7 @@
     <!--  启动页主题  -->
     <style name="main_AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowBackground">@drawable/main_splash_bg</item>
+        <item name="android:windowBackground">@drawable/common_bg</item>
     </style>
 
     <!-- Base application theme. -->

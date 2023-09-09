@@ -101,6 +101,11 @@ class HomeViewModel : BaseViewModel() {
         requestNoCheck({ apiService.taskShare() }, taskShareResult)
     }
 
+    var taskVideoResult = UnPeekLiveData<ResultState<BaseApiModel>>()
+    fun taskVideo() {
+        requestNoCheck({ apiService.taskVideo() }, taskVideoResult)
+    }
+
     var videoListResult = UnPeekLiveData<ResultState<String>>()
     fun videoList() {
         request({ apiService.videoList() }, videoListResult)

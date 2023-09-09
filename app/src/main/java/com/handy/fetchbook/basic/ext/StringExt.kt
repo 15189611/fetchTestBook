@@ -8,5 +8,6 @@ package com.handy.fetchbook.basic.ext
 
 fun String.toAvatar(): String {
     if (this.isEmpty()) return ""
+    if(this.startsWith("https") || this.startsWith("http")) return this
     return "http://p28web.bbq.bet/$this"
 }

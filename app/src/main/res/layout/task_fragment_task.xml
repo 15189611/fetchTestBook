@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:bind="http://schemas.android.com/tools">
+    xmlns:bind="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -15,19 +15,20 @@
         android:orientation="vertical">
 
         <include
-            android:visibility="gone"
             android:id="@+id/no_login"
-            layout="@layout/layout_no_login" />
+            layout="@layout/layout_no_login"
+            android:visibility="gone" />
 
 
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
             android:id="@+id/task"
             android:layout_width="match_parent"
-            android:visibility="gone"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="60dp"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
 
 
             <com.google.android.material.circularreveal.CircularRevealRelativeLayout
@@ -75,8 +76,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
                     android:layout_marginEnd="10dp"
-                    tools:text="5/1050旅游宝"
-                    android:textColor="@color/common_color_282828" />
+                    android:textColor="@color/common_color_282828"
+                    tools:text="5/1050旅游宝" />
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
 
@@ -93,16 +94,16 @@
                 android:textColor="@color/common_color_ABABAB" />
 
             <include
-
-                android:visibility="gone"
                 android:id="@+id/task_type"
-                layout="@layout/layout_task" />
+                layout="@layout/layout_task"
+                android:visibility="gone" />
+
             <androidx.appcompat.widget.AppCompatImageView
-                android:visibility="gone"
                 android:id="@+id/aivUpgrade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:visibility="gone"
                 app:srcCompat="@drawable/task_1050" />
         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 

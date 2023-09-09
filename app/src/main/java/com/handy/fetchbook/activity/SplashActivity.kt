@@ -1,14 +1,13 @@
 package com.handy.fetchbook.activity
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.lifecycle.lifecycleScope
-import com.blankj.utilcode.util.ActivityUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.databinding.ActivitySplashBinding
 import com.handy.fetchbook.viewModel.state.MainViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -23,12 +22,19 @@ class SplashActivity : BaseActivity<MainViewModel, ActivitySplashBinding>() {
     override fun layoutId() = R.layout.activity_splash
 
     override fun initView(savedInstanceState: Bundle?) {
-        lifecycleScope.launch(Dispatchers.Default) {
-            delay(1500)
-            ActivityUtils.startActivity(MainActivity::class.java)
-            delay(200)
+        if (!isTaskRoot) {
+            val intent = intent
+            val action = intent.action
+            if (intent.hasCategory(Intent.CATEGORY_LAUNCHER) && action != null && action == Intent.ACTION_MAIN) {
+                finish()
+                return
+            }
+        }
+
+        lifecycleScope.launch {
+            delay(50)
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
         }
     }
-
 }

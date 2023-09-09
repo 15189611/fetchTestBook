@@ -6,9 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import androidx.activity.viewModels
 import coil.load
-import com.blankj.utilcode.util.ToastUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.base.BaseActivity
 import com.handy.fetchbook.app.network.ApiService
@@ -19,6 +17,7 @@ import com.handy.fetchbook.databinding.MeActivityLoginBinding
 import com.handy.fetchbook.net.Configuration
 import com.handy.fetchbook.view.BlockPuzzleDialog
 import com.handy.fetchbook.viewModel.state.LoginViewModel
+import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.home_activity_detail.back
 import kotlinx.android.synthetic.main.me_activity_login.*
 import me.hgj.jetpackmvvm.ext.parseState
@@ -56,6 +55,7 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
         }
         //登录
         btnLogin.setOnClickListener {
+            if (!check()) return@setOnClickListener
             mViewModel.account.value = mDatabind.aetAccount.text.toString()
             mViewModel.password.value = mDatabind.aetPwd.text.toString()
             try {
@@ -91,7 +91,7 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
             }, {
                 blockPuzzleDialog.reset()
                 blockPuzzleDialog.dismiss()
-                ToastUtils.showShort(it.message)
+                ToastUtils.show(it.message)
                 BooKLogger.d("登录失败 = ${it.message.orEmpty()}")
             })
         }
@@ -134,6 +134,16 @@ class LoginActivity : BaseActivity<LoginViewModel, MeActivityLoginBinding>() {
                 aivEye.load(R.drawable.common_eye_y)
             }
         }
+    }
+
+    private fun check(): Boolean {
+        val account = aetAccount.text.toString()
+        val pwd = aetPwd.text.toString()
+        if (account.isEmpty() || pwd.isEmpty()) {
+            ToastUtils.show(getString(R.string.login_input_tips))
+            return false
+        }
+        return true
     }
 
     override fun onDestroy() {

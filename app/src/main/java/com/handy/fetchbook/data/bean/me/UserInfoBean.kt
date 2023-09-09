@@ -16,14 +16,16 @@ data class UserInfoBean(
     @SerializedName("lucky_ticket") var luckyTicket: String? = null,
     @SerializedName("lucky_bag") var luckyBag: Int? = null,
     @SerializedName("location") var location: String? = null,
-    @SerializedName("gender") var gender: Int? = null,
+    @SerializedName("gender") var gender: String? = null,
     @SerializedName("invest") var invest: String? = null,
     @SerializedName("type") var type: Int? = null,
     @SerializedName("type_desc") var typeDesc: String? = null,
     @SerializedName("level") var level: Int? = null,
+    @SerializedName("wheel_level") var wheel_level: Int? = null,
     @SerializedName("last_at") var lastAt: String? = null,
     @SerializedName("created_at") var createdAt: String? = null,
-    @SerializedName("referral") var referral: String? = null
+    @SerializedName("referral") var referral: String? = null,
+
 )
 
 data class Notification(

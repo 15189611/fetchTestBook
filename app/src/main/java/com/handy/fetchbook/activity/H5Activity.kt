@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.handy.fetchbook.R
-import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.databinding.ExpoActivityH5Binding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.expo_activity_h5.*
-import kotlinx.android.synthetic.main.me_activity_qr.*
-import kotlinx.android.synthetic.main.me_activity_qr.back
-
+import kotlinx.android.synthetic.main.expo_activity_h5.back
+import kotlinx.android.synthetic.main.expo_activity_h5.webview
+import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 
 /**
  * 启动页
@@ -20,8 +17,11 @@ import kotlinx.android.synthetic.main.me_activity_qr.back
  * @since 2023/7/28 9:47 下午
  */
 @SuppressLint("CustomSplashScreen")
-class H5Activity : BaseActivity<HomeViewModel, ExpoActivityH5Binding>() {
+class H5Activity : BaseVmActivity<HomeViewModel>() {
     override fun layoutId() = R.layout.expo_activity_h5
+    override fun showLoading(message: String) {}
+    override fun dismissLoading() {}
+
     var url: String? = null
     @SuppressLint("SetJavaScriptEnabled")
     override fun initView(savedInstanceState: Bundle?) {
@@ -38,6 +38,9 @@ class H5Activity : BaseActivity<HomeViewModel, ExpoActivityH5Binding>() {
                 return super.shouldOverrideUrlLoading(view, url)
             }
         }
+    }
+
+    override fun createObserver() {
     }
 
 }
