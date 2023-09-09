@@ -3,21 +3,26 @@ package com.handy.fetchbook.fragment
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.*
 import android.view.animation.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
 import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.util.CacheUtil
+import com.handy.fetchbook.basic.ext.MyResultState
+import com.handy.fetchbook.basic.ext.parseMyState
 import com.handy.fetchbook.basic.util.BooKLogger
+import com.handy.fetchbook.data.bean.DrawOpenRedPacketBean
 import com.handy.fetchbook.databinding.DrawFragmentDrawBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import kotlinx.android.synthetic.main.draw_fragment_draw.atvTourismLottery
 import kotlinx.android.synthetic.main.draw_view_lucky.view.rl_start
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import me.hgj.jetpackmvvm.ext.parseState
 import java.util.Random
 
@@ -35,8 +40,6 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
     private var mLuckyTurntable: ImageView? = null
     private var isRunning = false
 
-    private var isGameRunning = false
-
     private var message = ""
     private var tabNum = 0
 
@@ -44,9 +47,21 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
 
     private val mItemCount = 7
     //转到转盘的位置，1:代表左边1。2：代表左2 3：代表左3
-    private val mPrizePosition = intArrayOf(1, 2, 3, 4, 5, 6, 7)
+    private val list = mutableListOf<Pair<String, Int>>()
+    private var lastPrizePosition = 1
+    private var currentDrawModel: DrawOpenRedPacketBean? = null
+    private var currentDawMessage: String? = null
 
     override fun initView(savedInstanceState: Bundle?) {
+        list.clear()
+        list.add(Pair("1.5%", 1))
+        list.add(Pair("1.2%", 2))
+        list.add(Pair("0.9%", 3))
+        list.add(Pair("0.5%", 4))
+        list.add(Pair("10%", 5))
+        list.add(Pair("5%", 6))
+        list.add(Pair("3%", 7))
+
         mLuckyTurntable = mDatabind.rlRight.idLuckyTurntable
         mDatabind.noLogin.crrlBtnLogin.setOnClickListener {
             startActivity(Intent(context, LoginActivity::class.java))
@@ -56,7 +71,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
         mDatabind.drawHistoryParent.setOnClickListener {
             //历史记录
-            startActivity(Intent(context,DrawWalletHistoryActivity::class.java))
+            startActivity(Intent(context, DrawWalletHistoryActivity::class.java))
         }
         mDatabind.aivUpgrade.setOnClickListener {
             startActivity(Intent(context, MemberUpgradeActivity::class.java))
@@ -100,30 +115,15 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         })
 
         //旅游抽奖次数
-        val luckyTicket = CacheUtil.getUserInfo()?.luckyTicket ?: 0
-        if (luckyTicket != 0) {
-            mDatabind.btnAction.setOnClickListener {
-                if (isGameRunning) {
-                    mDatabind.luckyPanel.startGame()
-                } else {
-                    showLogout()
-                }
-            }
+        mDatabind.btnAction.setOnClickListener {
+            if (mDatabind.luckyPanel.isGameRunning) return@setOnClickListener
+            mViewModel.draw()
         }
 
         mDatabind.rlRight.root.rl_start.setOnClickListener {
             //福袋抽奖次数
-            val luckyBag = CacheUtil.getUserInfo()?.luckyBag ?: 0
-            if (luckyBag != 0) {
-                // 未抽过奖并有抽奖的机会
-                if (isRunning) {
-                    mStartAnimation?.reset()
-                    mLuckyTurntable?.startAnimation(mStartAnimation)
-                    mEndAnimation?.cancel()
-                }
-            } else {
-                showLogout()
-            }
+            if (isRunning) return@setOnClickListener
+            mViewModel.openRedPacket(mutableMapOf())
         }
 
     }
@@ -133,17 +133,45 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         mViewModel.drawResult.observe(this) { resultState ->
             parseState(resultState, {
                 BooKLogger.d("抽奖draw接口成功-> code = ${it.code} -> message  = ${it.message}")
-                isGameRunning = it.code == 0
-                isRunning = it.code == 0
-                isRunning = true
                 message = it.message
+                if (it.code == 0) {
+                    mDatabind.luckyPanel.setIsGameRunning(true)
+                    mDatabind.luckyPanel.startGame()
+                    lifecycleScope.launch {
+                        delay(1000)
+                        stopLeft()
+                    }
+                } else {
+                    showLogout()
+                }
+            }, { error ->
+                message = error.message.orEmpty()
+                BooKLogger.d("抽奖draw接口失败-> code = ${error.errCode} -> message  = ${error.message}")
+            })
+        }
+        mViewModel.openRedPacketResult.observe(this) {
+            parseMyState(it, onSuccess = { _, model, message ->
+                BooKLogger.d("福袋接口成功->$model")
+                currentDrawModel = model
+                currentDawMessage = message
+                val profit = list.firstOrNull { list -> list.first == model.profit }
+                lastPrizePosition = profit?.second ?: 1
+                if (isRunning) return@parseMyState
+
+                mStartAnimation?.reset()
+                mStartAnimation?.cancel()
+                mLuckyTurntable?.startAnimation(mStartAnimation)
+                isRunning = true
+            }, onError = { _, error ->
+                message = "您今日已开过福袋了"
+                showLogout()
+                BooKLogger.d("福袋接口成功-> code = ${error.errCode} -> message  = ${error.message}")
             })
         }
     }
 
     override fun onResume() {
         super.onResume()
-        mViewModel.draw()
         if (!CacheUtil.isLogin()) {
             mDatabind.viewContainer.visibility = View.GONE
             mDatabind.noLogin.root.visibility = View.VISIBLE
@@ -211,15 +239,14 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
     private var logoutPop: PopupWindow? = null
     private var logoutPopView: View? = null
     private fun showLogout() {
-
         val inflater =
             context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         logoutPopView =
             inflater.inflate(R.layout.draw_dialog_no, null)
         logoutPop = PopupWindow(
             logoutPopView,
-            WindowManager.LayoutParams.FILL_PARENT,
-            WindowManager.LayoutParams.FILL_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             true
         )
         logoutPopView!!.findViewById<TextView>(R.id.atv_content).text = message
@@ -240,7 +267,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
 
     // 结束动画，慢慢停止转动，抽中的奖品定格在指针指向的位置
     private fun endAnimation() {
-        val position: Int = mPrizePosition[0]
+        val position: Int = lastPrizePosition
         val oneDegree = 360 / mItemCount
         val toDegreeMin = oneDegree * (position - 0.5f)
         BooKLogger.d("value = $$toDegreeMin")
@@ -265,12 +292,33 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             override fun onAnimationStart(animation: Animation) {}
             override fun onAnimationEnd(animation: Animation) {
                 isRunning = false
+                drawEndAnimationOver()
             }
 
             override fun onAnimationRepeat(animation: Animation) {}
         })
+        mEndAnimation?.cancel()
         mLuckyTurntable?.startAnimation(mEndAnimation)
-        mStartAnimation?.cancel()
+    }
+    //动画结束弹框
+    private fun drawEndAnimationOver() {
+        val inflater = context?.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val logoutPopView = inflater.inflate(R.layout.dialog_draw_luck_dialog_view, null)
+        val drawPopWindow = PopupWindow(
+            logoutPopView,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            true
+        )
+        val text = currentDawMessage
+            ?: ("恭喜您获得" + currentDrawModel?.profit.orEmpty() + "的福袋奖励,获得" + currentDrawModel?.amount.orEmpty() + "忧旅游宝")
+        logoutPopView.findViewById<TextView>(R.id.drawSuccessDialogContent).text = text
+        logoutPopView.findViewById<ImageView>(R.id.drawClose).setOnClickListener {
+            drawPopWindow.dismiss()
+        }
+        drawPopWindow.setBackgroundDrawable(BitmapDrawable())
+        drawPopWindow.animationStyle = R.style.common_CustomDialog
+        drawPopWindow.showAsDropDown(mDatabind.btnAction)
     }
 
     //停止动画（异常情况，没有奖品）
@@ -278,6 +326,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         //转盘停止回到初始状态
         if (isRunning) {
             mStartAnimation?.cancel()
+            mEndAnimation?.cancel()
             mLuckyTurntable?.clearAnimation()
             isRunning = false
         }
@@ -293,12 +342,13 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             inflater.inflate(R.layout.draw_dialog_lucky_lottery_rules, null)
         logoutPopLucky = PopupWindow(
             logoutPopViewLucky,
-            WindowManager.LayoutParams.FILL_PARENT,
-            WindowManager.LayoutParams.FILL_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             true
         )
         logoutPopViewLucky!!.findViewById<TextView>(R.id.atvJump).setOnClickListener {
             logoutPopLucky!!.dismiss()
+            startActivity(Intent(context, WalletBalanceActivity::class.java))
 //            ARouter.getInstance()
 //                .build(RouteUrl.Me.WalletBalanceActivity)
 //                .navigation()
@@ -323,11 +373,10 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             inflater.inflate(R.layout.draw_dialog_tourism_lottery_rules, null)
         logoutPopTourism = PopupWindow(
             logoutPopViewTourism,
-            WindowManager.LayoutParams.FILL_PARENT,
-            WindowManager.LayoutParams.FILL_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
+            WindowManager.LayoutParams.MATCH_PARENT,
             true
         )
-
 
         logoutPopViewTourism!!.findViewById<ImageView>(R.id.aiv_close).setOnClickListener {
             logoutPopTourism!!.dismiss()

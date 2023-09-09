@@ -42,7 +42,7 @@ fun <T> BaseViewModel.requestForError(
 fun <T> BaseViewModel.requestForFresh(
     block: suspend () -> BaseResponse<T>,
     resultState: MutableLiveData<MyResultState<T>>,
-    isRefresh: Boolean,
+    isRefresh: Boolean = true,
     isShowDialog: Boolean = false,
     loadingMessage: String = "请求网络中..."
 ): Job {
@@ -52,7 +52,7 @@ fun <T> BaseViewModel.requestForFresh(
             //请求体
             block()
         }.onSuccess {
-            resultState.paresResult(isRefresh, it)
+            resultState.paresResult(isRefresh, it, it.getResponseMsg())
         }.onFailure {
             it.message?.loge()
             //打印错误栈信息
@@ -64,8 +64,8 @@ fun <T> BaseViewModel.requestForFresh(
 
 sealed class MyResultState<out T> {
     companion object {
-        fun <T> onAppSuccess(isRefresh: Boolean, data: T): MyResultState<T> =
-            Success(isRefresh, data)
+        fun <T> onAppSuccess(isRefresh: Boolean, data: T, message: String? = null): MyResultState<T> =
+            Success(isRefresh, data, message)
 
         fun <T> onAppLoading(loadingMessage: String): MyResultState<T> = Loading(loadingMessage)
         fun <T> onAppError(isRefresh: Boolean, error: AppException): MyResultState<T> =
@@ -73,7 +73,7 @@ sealed class MyResultState<out T> {
     }
 
     data class Loading(val loadingMessage: String) : MyResultState<Nothing>()
-    data class Success<out T>(val isRefresh: Boolean, val data: T) : MyResultState<T>()
+    data class Success<out T>(val isRefresh: Boolean, val data: T, val message: String? = null) : MyResultState<T>()
     data class Error(val isRefresh: Boolean, val error: AppException) : MyResultState<Nothing>()
 }
 
@@ -81,10 +81,10 @@ sealed class MyResultState<out T> {
  * 处理返回值
  * @param result 请求结果
  */
-fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean = true, result: BaseResponse<T>) {
+fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean = true, result: BaseResponse<T>, message: String? = null) {
     value = when {
         result.isSucces() -> {
-            MyResultState.onAppSuccess(isRefresh, result.getResponseData())
+            MyResultState.onAppSuccess(isRefresh, result.getResponseData(), message)
         }
 
         else -> {
@@ -104,6 +104,55 @@ fun <T> MutableLiveData<MyResultState<T>>.paresResult(isRefresh: Boolean = true,
  */
 fun <T> MutableLiveData<MyResultState<T>>.paresException(isRefresh: Boolean = true, e: Throwable) {
     this.value = MyResultState.onAppError(isRefresh, ExceptionHandle.handleException(e))
+}
+
+
+fun <T> BaseVmActivity<*>.parseMyState(
+    resultState: MyResultState<T>,
+    onSuccess: (Boolean, T, String?) -> Unit,
+    onError: ((Boolean, AppException) -> Unit)? = null,
+    onLoading: (() -> Unit)? = null
+) {
+    when (resultState) {
+        is MyResultState.Loading -> {
+            showLoading(resultState.loadingMessage)
+            onLoading?.run { this }
+        }
+
+        is MyResultState.Success -> {
+            dismissLoading()
+            onSuccess(resultState.isRefresh, resultState.data, resultState.message)
+        }
+
+        is MyResultState.Error -> {
+            dismissLoading()
+            onError?.run { this(resultState.isRefresh, resultState.error) }
+        }
+    }
+}
+
+fun <T> BaseVmFragment<*>.parseMyState(
+    resultState: MyResultState<T>,
+    onSuccess: (Boolean, T, String?) -> Unit,
+    onError: ((Boolean, AppException) -> Unit)? = null,
+    onLoading: (() -> Unit)? = null
+) {
+    when (resultState) {
+        is MyResultState.Loading -> {
+            showLoading(resultState.loadingMessage)
+            onLoading?.run { this }
+        }
+
+        is MyResultState.Success -> {
+            dismissLoading()
+            onSuccess(resultState.isRefresh, resultState.data, resultState.message)
+        }
+
+        is MyResultState.Error -> {
+            dismissLoading()
+            onError?.run { this(resultState.isRefresh, resultState.error) }
+        }
+    }
 }
 
 fun <T> BaseVmActivity<*>.parseMyState(

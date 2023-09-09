@@ -287,10 +287,10 @@ interface ApiService {
      * 抽奖打开红包
      */
     @POST("api/prize/openRedPacket")
-    suspend fun openRedPacket():ApiResponse<DrawOpenRedPacketBean>
+    suspend fun openRedPacket(@Body body: PostJsonBody):ApiResponse<DrawOpenRedPacketBean>
 
     /**
-     *
+     * 获取视频任务链接
      */
     @GET("api/videoList")
     suspend fun videoList(

@@ -18,6 +18,9 @@ import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.state.ResultState
 import com.handy.fetchbook.app.network.postBodyOf
+import com.handy.fetchbook.basic.ext.MyResultState
+import com.handy.fetchbook.basic.ext.requestForFresh
+import com.handy.fetchbook.data.bean.DrawOpenRedPacketBean
 
 class HomeViewModel : BaseViewModel() {
 
@@ -133,4 +136,13 @@ class HomeViewModel : BaseViewModel() {
         val body = postBodyOf(params)
         request({ apiService.invest(body) }, investResult)
     }
+
+    val openRedPacketResult = MutableLiveData<MyResultState<DrawOpenRedPacketBean>>()
+    fun openRedPacket(params: Map<String, Any>) {
+        val body = postBodyOf(params)
+        requestForFresh({ apiService.openRedPacket(body) }, openRedPacketResult)
+
+    }
+
+
 }
