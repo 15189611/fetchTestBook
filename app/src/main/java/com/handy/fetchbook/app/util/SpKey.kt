@@ -46,6 +46,7 @@ object SpKey {
     const val IS_LOG_IN = "login"
     const val LANGUAGE = "language"
     const val TRANSLATE = "translate"
+    const val LANGUAGES_BEAN = "languages_bean"
 
 
     const val USER_TYPE = "user_type"//会员类型 0=普通会员, 1=拓展会员, 2=福袋会员

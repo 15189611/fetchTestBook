@@ -1,9 +1,8 @@
 package com.handy.fetchbook.app.network
 
 import com.handy.fetchbook.data.bean.*
-import com.handy.fetchbook.data.bean.expo.ExpoListBean
+import com.handy.fetchbook.data.bean.expo.*
 import com.handy.fetchbook.data.bean.model.ApiResponse
-import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
 import com.handy.fetchbook.data.bean.group.GroupSharingBean
 import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.*
@@ -186,6 +185,22 @@ interface ApiService {
     ): ApiResponse<ExpoListBean>
 
     /**
+     * api/expo/search?keyword=123&page=1
+     * expo列表头部搜索接口
+     */
+    @GET("api/expo/search")
+    suspend fun expoSearchList(
+        @Query("keyword") keyword: String?,
+        @Query("page") page: Int?
+    ): ApiResponse<Data>
+
+    /**
+     * 获取expo头部banner
+     */
+    @GET("api/expo/expoBanner")
+    suspend fun getExpoBanner(): ApiResponse<Any>
+
+    /**
      * 世博列表
      *
      */
@@ -193,7 +208,7 @@ interface ApiService {
     suspend fun details(@Path("id") id: Int): ApiResponse<ExpoDetailsBean>
 
     /**
-     * 登录 login
+     * 反馈接口
      */
     @FormUrlEncoded
     @POST("api/expo/commentExpo")
@@ -201,7 +216,7 @@ interface ApiService {
         @Field("expo_id") expo_id: String,
         @Field("comment") comment: String,
         @Field("rating") rating: Int
-    ): ApiResponse<ArrayList<String>>
+    ): ApiResponse<Any>
 
     /**
      *
@@ -211,13 +226,20 @@ interface ApiService {
     ): ApiResponse<List<SocialMediaBean>>
 
     /**
-     *
+     * 获取系统消息(type=0),个人信息(type=1)
      */
     @GET("api/notice/message")
     suspend fun message(
         @Query("type") region: Int?,
         @Query("page") page: Int?
     ): ApiResponse<SystemInfoBean>
+
+    /**
+     * 消息点击读取状态
+     */
+    @GET("api/notice/messageRead")
+    suspend fun messageRead(@Query("uuid") uuid: String): BaseApiModel
+
     /**
      * 拼团列表
      */
@@ -227,12 +249,18 @@ interface ApiService {
     ): ApiResponse<GroupSharingBean>
 
     /**
-     *
+     * 公告消息
      */
-    @GET("api/notice/message")
+    @GET("api/notice/announcements")
     suspend fun announcements(
         @Query("page") page: Int?
     ): ApiResponse<NoticeBean>
+
+    /**
+     * 公告消息阅读
+     */
+    @GET("api/notice/read")
+    suspend fun noticeRead(@Query("uuid") uuid: String): BaseApiModel
 
     /**
      *
@@ -281,13 +309,13 @@ interface ApiService {
      * 抽奖的prize/list2列表
      */
     @GET("api/prize/list2")
-    suspend fun getPrizeList():ApiResponse<DrawPrizeListBean>
+    suspend fun getPrizeList(): ApiResponse<List<DrawPrizeItemBean>>
 
     /**
      * 抽奖打开红包
      */
     @POST("api/prize/openRedPacket")
-    suspend fun openRedPacket(@Body body: PostJsonBody):ApiResponse<DrawOpenRedPacketBean>
+    suspend fun openRedPacket(@Body body: PostJsonBody): ApiResponse<DrawOpenRedPacketBean>
 
     /**
      * 获取视频任务链接

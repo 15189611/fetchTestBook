@@ -12,18 +12,14 @@ import kotlinx.android.synthetic.main.me_activity_qr.back
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 启动页
- *
- * @author Handy
- * @since 2023/7/28 9:47 下午
+ * 消息中心列表
  */
 class InfoCenterActivity : BaseActivity<HomeViewModel, HomeActivityInformationCenterBinding>() {
     override fun layoutId() = R.layout.home_activity_information_center
     override fun initView(savedInstanceState: Bundle?) {
         back.setOnClickListener { finish() }
-        
-        mViewModel.total()
-        mViewModel.totalResult.observe(this){resultState ->
+
+        mViewModel.totalResult.observe(this) { resultState ->
             parseState(resultState, {
                 if (it.announcement!! > 0) {
                     mDatabind.atvNotice.text = it.announcement.toString()
@@ -43,19 +39,21 @@ class InfoCenterActivity : BaseActivity<HomeViewModel, HomeActivityInformationCe
                 }
             })
 
-
         }
         crllSystem.setOnClickListener {
-            startActivity(Intent(this,SystemInfoActivity::class.java))
+            startActivity(Intent(this, SystemInfoActivity::class.java))
         }
         crllNotice.setOnClickListener {
-            startActivity(Intent(this,NoticeActivity::class.java))
+            startActivity(Intent(this, NoticeActivity::class.java))
         }
 
         crllUser.setOnClickListener {
-            startActivity(Intent(this,UserMessageActivity::class.java))
+            startActivity(Intent(this, UserMessageActivity::class.java))
         }
-
     }
 
+    override fun onResume() {
+        super.onResume()
+        mViewModel.total()
+    }
 }

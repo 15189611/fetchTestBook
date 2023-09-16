@@ -10,14 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.handy.fetchbook.R;
+import com.handy.fetchbook.data.bean.DrawPrizeItemBean;
 
-
-/**
- * Created by jeanboy on 2017/4/20.
- */
+import java.util.ArrayList;
+import java.util.List;
 
 public class LuckyMonkeyPanelView extends FrameLayout {
-
 
     private ImageView bg_1;
     private ImageView bg_2;
@@ -64,6 +62,13 @@ public class LuckyMonkeyPanelView extends FrameLayout {
     protected void onDetachedFromWindow() {
         stopMarquee();
         super.onDetachedFromWindow();
+    }
+
+    private final List<DrawPrizeItemBean> currentList = new ArrayList<>();
+
+    public void setItems(List<DrawPrizeItemBean> list) {
+        currentList.clear();
+        currentList.addAll(list);
     }
 
     private void setupView() {

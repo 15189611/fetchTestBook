@@ -1,27 +1,17 @@
 package com.handy.fetchbook.activity
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.WindowManager
-import android.widget.ImageView
 import android.widget.PopupWindow
-import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.handy.fetchbook.R
-import com.handy.fetchbook.adapter.RegionAdapter
 import com.handy.fetchbook.adapter.UpgradeAdapter
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.app.util.*
-import com.handy.fetchbook.data.bean.expo.Items
 import com.handy.fetchbook.databinding.MeActivityMemberUpgradeBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.expo_activity.aetK
-import kotlinx.android.synthetic.main.expo_activity.expoRv
-import kotlinx.android.synthetic.main.me_activity_member_upgrade.*
+import kotlinx.android.synthetic.main.me_activity_member_upgrade.back
+import kotlinx.android.synthetic.main.me_activity_member_upgrade.upgradeRv
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**

@@ -25,7 +25,6 @@ class FeedbackAdapter (layoutResId: Int, data: List<ExpoComments?>?) : BaseQuick
             .findViewById<AndRatingBar>(R.id.arbRating).rating = item.rating?.toFloat()!!
         holder.itemView
             .findViewById<TextView>(R.id.atvContent).text = item.comment
-
     }
 
 

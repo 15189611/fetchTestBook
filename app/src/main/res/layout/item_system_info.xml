@@ -2,6 +2,7 @@
 <com.google.android.material.circularreveal.CircularRevealLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/systemInfoViewParent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
@@ -20,25 +21,26 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:singleLine="true"
-            android:textStyle="bold"
             android:textColor="@color/common_color_000000"
+            android:textStyle="bold"
             tools:text="任务通知" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/atvUnread"
-            android:text="未读"
-            android:layout_marginEnd="20dp"
-            android:textColor="@color/common_color_f25252"
-            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"
+            android:text="未读"
+            android:textColor="@color/common_color_f25252" />
     </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/atvContent"
-        android:layout_marginStart="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/common_color_282828"
@@ -46,11 +48,11 @@
         tools:text="石林风景名胜区" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:layout_marginBottom="10dp"
         android:id="@+id/atvTime"
-        android:layout_marginStart="20dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="10dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="@color/common_color_282828"

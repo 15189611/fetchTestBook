@@ -2,26 +2,25 @@ package com.handy.fetchbook.fragment
 
 import android.content.Intent
 import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
 import com.handy.fetchbook.adapter.ImageBannerAdapter
 import com.handy.fetchbook.app.ext.languageSet
 import com.handy.fetchbook.basic.VLModuleAdapter
+import com.handy.fetchbook.basic.ext.dp
 import com.handy.fetchbook.basic.ext.parseMyState
 import com.handy.fetchbook.basic.listener.OnViewRefreshLoadMoreListener
 import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.basic.vlayout.VLDelegateAdapter
 import com.handy.fetchbook.basic.vlayout.VLVirtualLayoutManager
 import com.handy.fetchbook.data.bean.home.Banner
-import com.handy.fetchbook.model.home.HomeGoldViewModel
-import com.handy.fetchbook.model.home.HomePagerViewModel
-import com.handy.fetchbook.model.home.HomeTabPageItemModel
+import com.handy.fetchbook.model.home.*
 import com.handy.fetchbook.view.home.*
 import com.handy.fetchbook.viewModel.request.RequestHomeViewModel
 import com.handy.fetchbook.viewModel.state.HomeViewModel
@@ -82,6 +81,11 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         BooKLogger.d("HomeFragmentV2 initView")
+        infoCenterRed.background = GradientDrawable().apply {
+            setBounds(0, 0, 8.dp(), 8.dp())
+            cornerRadius = 5.dp().toFloat()
+            setColor(Color.RED)
+        }
         getData()
         registerView()
         topViewClick()
@@ -135,10 +139,10 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
         aivShare.setOnClickListener {
             startActivity(Intent(context, SocialMediaActivity::class.java))
         }
+        //消息中心
         aivInfoCenter.setOnClickListener {
             startActivity(Intent(context, InfoCenterActivity::class.java))
         }
-
     }
 
     private fun initAdapter() {
@@ -156,6 +160,19 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
     override fun initData() {
         BooKLogger.d("HomeFragmentV2 initData")
         super.initData()
+
+        //红心
+        mViewModel.totalResult.observe(this) { resultState ->
+            parseState(resultState, { model ->
+                val announcement = model.announcement ?: 0
+                val message = model.message ?: 0
+                val system = model.system ?: 0
+                infoCenterRed.isVisible = announcement > 0 || message > 0 || system > 0
+            }, {
+                infoCenterRed.isVisible = false
+            })
+        }
+
         //banner
         requestHomeViewModel.bannerResult.observe(this) { resultState ->
             parseState(resultState, {
@@ -233,5 +250,6 @@ class HomeFragmentV2 : BaseVmFragment<HomeViewModel>() {
 
     override fun onResume() {
         super.onResume()
+        mViewModel.total()
     }
 }

@@ -2,9 +2,6 @@ package com.handy.fetchbook.viewModel.state
 
 import androidx.lifecycle.MutableLiveData
 import com.handy.fetchbook.app.network.apiService
-import com.handy.fetchbook.data.bean.EditUserInfoBean
-import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
-import com.handy.fetchbook.data.bean.expo.ExpoListBean
 import com.handy.fetchbook.data.bean.group.GroupSharingBean
 import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.HelpCenterBean
@@ -18,9 +15,9 @@ import me.hgj.jetpackmvvm.ext.request
 import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.state.ResultState
 import com.handy.fetchbook.app.network.postBodyOf
-import com.handy.fetchbook.basic.ext.MyResultState
-import com.handy.fetchbook.basic.ext.requestForFresh
-import com.handy.fetchbook.data.bean.DrawOpenRedPacketBean
+import com.handy.fetchbook.basic.ext.*
+import com.handy.fetchbook.data.bean.*
+import com.handy.fetchbook.data.bean.expo.*
 
 class HomeViewModel : BaseViewModel() {
 
@@ -49,9 +46,19 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.total() }, totalResult)
     }
 
-    var getExpoListResult = MutableLiveData<ResultState<ExpoListBean>>()
-    fun getExpoList(region: String, page: Int) {
-        request({ apiService.list(region, page) }, getExpoListResult)
+    var getExpoListResult = MutableLiveData<MyResultState<ExpoListBean>>()
+    fun getExpoList(isRefresh: Boolean, region: String, page: Int) {
+        requestForFresh({ apiService.list(region, if (isRefresh) 1 else page) }, getExpoListResult, isRefresh)
+    }
+
+    var expoSearchListResult = MutableLiveData<MyResultState<Data>>()
+    fun expoSearchList(isRefresh: Boolean, keyword: String, page: Int) {
+        requestForFresh({ apiService.expoSearchList(keyword, if (isRefresh) 1 else page) }, expoSearchListResult, isRefresh)
+    }
+
+    var getExpoBannerResult = MutableLiveData<ResultState<Any>>()
+    fun getExpoBanner() {
+        request({ apiService.getExpoBanner() }, getExpoBannerResult)
     }
 
     var groupSharingBean = MutableLiveData<ResultState<GroupSharingBean>>()
@@ -64,14 +71,24 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.socialMedia() }, socialMediaResult)
     }
 
-    var messageResult = MutableLiveData<ResultState<SystemInfoBean>>()
-    fun message(type: Int, page: Int) {
-        request({ apiService.message(type, page) }, messageResult)
+    var messageResult = MutableLiveData<MyResultState<SystemInfoBean>>()
+    fun message(isRefresh: Boolean, type: Int, page: Int) {
+        requestForFresh({ apiService.message(type, if (isRefresh) 1 else page) }, messageResult, isRefresh)
     }
 
-    var noticeResult = MutableLiveData<ResultState<NoticeBean>>()
-    fun announcements(page: Int) {
-        request({ apiService.announcements(page) }, noticeResult)
+    var messageReadResult = UnPeekLiveData<ResultState<BaseApiModel>>()
+    fun messageRead(uuid: String) {
+        requestNoCheck({ apiService.messageRead(uuid) }, messageReadResult)
+    }
+
+    var noticeResult = MutableLiveData<MyResultState<NoticeBean>>()
+    fun announcements(isRefresh: Boolean, page: Int) {
+        requestForFresh({ apiService.announcements(if (isRefresh) 1 else page) }, noticeResult, isRefresh)
+    }
+
+    var noticeReadResult = UnPeekLiveData<ResultState<BaseApiModel>>()
+    fun noticeRead(uuid: String) {
+        requestNoCheck({ apiService.noticeRead(uuid) }, noticeReadResult)
     }
 
     var searchScenicResult = MutableLiveData<ResultState<List<SearchBean>>>()
@@ -84,9 +101,9 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.details(id) }, expoDetailsResult)
     }
 
-    var commentExpoResult = MutableLiveData<ResultState<ArrayList<String>>>()
+    var commentExpoResult = MutableLiveData<MyResultState<Any>>()
     fun commentExpo(expo_id: String, comment: String, rating: Int) {
-        request({ apiService.commentExpo(expo_id, comment, rating) }, commentExpoResult)
+        requestForFresh({ apiService.commentExpo(expo_id, comment, rating) }, commentExpoResult)
     }
 
     var drawResult = UnPeekLiveData<ResultState<BaseApiModel>>()
@@ -141,8 +158,15 @@ class HomeViewModel : BaseViewModel() {
     fun openRedPacket(params: Map<String, Any>) {
         val body = postBodyOf(params)
         requestForFresh({ apiService.openRedPacket(body) }, openRedPacketResult)
-
     }
 
+    val priceListResult = MutableLiveData<ResultState<List<DrawPrizeItemBean>>>()
+    fun getPrizeList() {
+        request({ apiService.getPrizeList() }, priceListResult)
+    }
 
+    val drawWinnersResult = MutableLiveData<ResultState<List<String>>>()
+    fun getWinners() {
+        request({ apiService.getWinners() }, drawWinnersResult)
+    }
 }

@@ -21,7 +21,7 @@ class ImageBannerAdapter(var mContext: Context, mDatas: List<Banner?>?) :
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
-        imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+        imageView.scaleType = ImageView.ScaleType.FIT_XY
         return BannerViewHolder(imageView)
     }
 

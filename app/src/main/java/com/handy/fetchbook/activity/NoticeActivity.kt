@@ -2,54 +2,93 @@ package com.handy.fetchbook.activity
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.handy.fetchbook.R
-import com.handy.fetchbook.adapter.NoticeAdapter
-import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.databinding.HomeActivityNoticeBinding
-import com.handy.fetchbook.databinding.HomeActivitySystemInfoBinding
+import com.handy.fetchbook.basic.NormalModuleAdapter
+import com.handy.fetchbook.basic.ext.parseMyState
+import com.handy.fetchbook.basic.util.BooKLogger
+import com.handy.fetchbook.data.bean.home.NoticeItems
+import com.handy.fetchbook.view.NoticeItemView
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.expo_activity.*
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.home_activity_sociamedia.*
-import kotlinx.android.synthetic.main.me_activity_wallet.*
-import kotlinx.android.synthetic.main.me_activity_wallet.back
+import com.hjq.toast.ToastUtils
+import kotlinx.android.synthetic.main.home_activity_notice.*
+import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 启动页
- *
- * @author Handy
- * @since 2023/7/28 9:47 下午
+ * 公告信息Activity
  */
 @SuppressLint("CustomSplashScreen")
-class NoticeActivity : BaseActivity<HomeViewModel, HomeActivityNoticeBinding>() {
+class NoticeActivity : BaseVmActivity<HomeViewModel>() {
     override fun layoutId() = R.layout.home_activity_notice
-    var page=1
+    override fun showLoading(message: String) {
+    }
 
-    private lateinit var noticeAdapter: NoticeAdapter
+    override fun dismissLoading() {
+    }
+
+    private var currentPage = 1
+    private var hasLoadMore = false
+    private val adapter = NormalModuleAdapter()
+    private var lastPosition = 0
+    private var lastClickModel: NoticeItems? = null
+
     override fun initView(savedInstanceState: Bundle?) {
+        getData(true)
         back.setOnClickListener { finish() }
-
-        noticeAdapter = NoticeAdapter(R.layout.item_notice, null)
-        rv.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = noticeAdapter
+        viewSmartLayout.isEnableRefresh = false
+        viewSmartLayout.setDuLoadMoreListener {
+            getData(false)
         }
+        registerView()
+        rv.itemAnimator = null
+        rv.layoutManager = adapter.getGridLayoutManager(this)
+        rv.adapter = adapter
+    }
 
-        noticeAdapter.apply {
-            setOnItemClickListener { adapter, view, position ->
-
+    private fun registerView() {
+        adapter.register {
+            NoticeItemView(it.context) { position, model ->
+                mViewModel.noticeRead(model.uuid.toString() ?: "0")
+                lastPosition = position
+                lastClickModel = model
             }
-
         }
-        mViewModel.announcements(page)
-        mViewModel.noticeResult.observe(this){ resultState ->
-            parseState(resultState, {
-                noticeAdapter.setNewData(it.items)
+    }
+
+    private fun getData(isRefresh: Boolean) {
+        mViewModel.announcements(isRefresh, currentPage)
+    }
+
+    override fun createObserver() {
+        mViewModel.noticeReadResult.observe(this) { model ->
+            parseState(model, {
+                BooKLogger.d("公告更新状态接口成功 = $it")
+                if (it.code == 0) {
+                    lastClickModel?.readStatus = 1
+                    adapter.notifyItemChanged(lastPosition)
+                } else {
+                    ToastUtils.show(it.message)
+                }
+            }, onError = {
+                BooKLogger.d("公告更新状态接口失败 = ${it.message}")
             })
         }
 
+        mViewModel.noticeResult.observe(this) { resultState ->
+            parseMyState(resultState, { isRefresh, model ->
+                val total = model.total ?: 0
+                if (isRefresh) rv.scrollToPosition(0)
+                if (isRefresh) adapter.setItems(model.items) else adapter.appendItems(model.items)
+                BooKLogger.d("公告接口成功-> total = $total -> size = ${model.items.size} -> isRefresh = $isRefresh")
+                hasLoadMore = adapter.getItems().size < total
+                if (hasLoadMore) ++currentPage
+                viewSmartLayout.isEnableLoadMore = hasLoadMore
+                viewSmartLayout.onRefreshLoadMoreComplete(isRefresh, hasLoadMore)
+            }, onError = { isRefresh, error ->
+                BooKLogger.d("公告接口失败-> ${error.message}")
+                viewSmartLayout.onLoadMoreComplete(false)
+            })
+        }
     }
 
 }

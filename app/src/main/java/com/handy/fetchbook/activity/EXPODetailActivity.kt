@@ -1,86 +1,79 @@
 package com.handy.fetchbook.activity
 
 import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
-import android.view.View
-import android.view.WindowManager
-import android.widget.ImageView
-import android.widget.PopupWindow
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.FeedbackAdapter
-import com.handy.fetchbook.adapter.ImageBannerAdapter
 import com.handy.fetchbook.adapter.ImageStringAdapter
-import com.handy.fetchbook.adapter.SearchAdapter
-import com.handy.fetchbook.app.base.BaseActivity
+import com.handy.fetchbook.basic.ext.parseMyState
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.data.bean.expo.ExpoDetailsBean
-import com.handy.fetchbook.data.bean.home.Banner
-import com.handy.fetchbook.data.bean.home.ScenicsDetailsBean
-import com.handy.fetchbook.databinding.ExpoActivityExpoDetailBinding
-import com.handy.fetchbook.databinding.HomeActivityDetailBinding
-import com.handy.fetchbook.viewModel.request.RequestRegionDetailsModel
 import com.handy.fetchbook.viewModel.state.HomeViewModel
+import com.hjq.toast.ToastUtils
 import com.youth.banner.indicator.CircleIndicator
 import com.zzhoujay.richtext.RichText
 import com.zzhoujay.richtext.callback.OnUrlClickListener
 import kotlinx.android.synthetic.main.expo_activity_expo_detail.*
-import kotlinx.android.synthetic.main.expo_activity_expo_detail.vBanner
-import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.home_activity_detail.*
-import kotlinx.android.synthetic.main.home_activity_detail.back
-import kotlinx.android.synthetic.main.home_activity_sociamedia.*
+import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import me.hgj.jetpackmvvm.ext.parseState
 
 /**
- * 首页
+ * EXPO详情activity
  *
- * @author Handy
- * @since 2023/7/28 9:50 下午
  */
-class EXPODetailActivity : BaseActivity<HomeViewModel, ExpoActivityExpoDetailBinding>() {
+class EXPODetailActivity : BaseVmActivity<HomeViewModel>() {
 
+    private var id: Int = 0
 
-    var id: Int = 0
-
-    lateinit var feedbackAdapter: FeedbackAdapter
+    private lateinit var feedbackAdapter: FeedbackAdapter
 
     override fun layoutId(): Int = R.layout.expo_activity_expo_detail
+    override fun showLoading(message: String) {
+    }
+
+    override fun dismissLoading() {}
 
     override fun initView(savedInstanceState: Bundle?) {
         back.setOnClickListener { finish() }
         id = intent.getIntExtra("id", 0)
-
-
         mViewModel.details(id)
-
         atvSumbit.setOnClickListener {
-            if (TextUtils.isEmpty(mDatabind.aetContent.text.toString())) {
+            if (TextUtils.isEmpty(aet_content.text.toString())) {
+                ToastUtils.show("反馈不能空!")
                 return@setOnClickListener
             }
             mViewModel.commentExpo(
                 id.toString(),
-                mDatabind.aetContent.text.toString(),
+                aet_content.text.toString(),
                 arbRatingEdit.rating.toInt()
             )
+        }
+    }
+
+    override fun createObserver() {
+        mViewModel.commentExpoResult.observe(this) {
+            parseMyState(it, onSuccess = { _, model, message ->
+                BooKLogger.d("反馈评论成功 = $model -> message = $message")
+                ToastUtils.show(message.orEmpty())
+                mViewModel.details(id)
+            }, onError = { _, error ->
+                BooKLogger.d("反馈评论失败 message = ${error.message}")
+                ToastUtils.show(error.message.orEmpty())
+            })
         }
         mViewModel.expoDetailsResult.observe(this) { resultState ->
             parseState(resultState, {
                 load(it)
             })
-
         }
     }
 
-
     private fun load(bean: ExpoDetailsBean) {
-
         vBanner.setLoopTime(5000)
         vBanner.addBannerLifecycleObserver(this@EXPODetailActivity)
             .setAdapter(ImageStringAdapter(this, bean.banner)).indicator =
@@ -88,9 +81,9 @@ class EXPODetailActivity : BaseActivity<HomeViewModel, ExpoActivityExpoDetailBin
         vBanner.setIndicatorNormalColor(Color.DKGRAY)
         vBanner.setIndicatorSelectedColor(Color.RED)
 
-        mDatabind.aivLogo.apply { load(bean.logo) }
-        mDatabind.atvTitle.apply { text = bean.title }
-        mDatabind.arbRating.apply { rating = bean.rating!!.toFloat() }
+        aivLogo.load(bean.logo)
+        atvTitle.apply { text = bean.title }
+        arbRating.apply { rating = bean.rating!!.toFloat() }
         RichText.initCacheDir(this)
         RichText.debugMode = true
 
@@ -107,17 +100,17 @@ class EXPODetailActivity : BaseActivity<HomeViewModel, ExpoActivityExpoDetailBin
                 }
                 false
             })
-            .into(mDatabind.atvContent)
+            .into(atvContent)
 
+        expoUserFeedBackTv.isVisible = bean.expoComments.isNotEmpty()
+        expoRv.isVisible = bean.expoComments.isNotEmpty()
         feedbackAdapter = FeedbackAdapter(R.layout.expo_item_feedback, null)
         expoRv.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = feedbackAdapter
         }
-
         feedbackAdapter.setNewData(bean.expoComments)
 
     }
-
 
 }

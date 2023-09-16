@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="60dp"
             android:orientation="vertical"
             android:visibility="gone"
             tools:visibility="visible">
@@ -79,7 +78,6 @@
                     android:textColor="@color/common_color_282828"
                     tools:text="5/1050旅游宝" />
             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
-
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"

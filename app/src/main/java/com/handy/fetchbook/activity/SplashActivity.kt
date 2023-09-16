@@ -3,19 +3,17 @@ package com.handy.fetchbook.activity
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.lifecycle.lifecycleScope
 import com.handy.fetchbook.R
+import com.handy.fetchbook.app.App
 import com.handy.fetchbook.app.base.BaseActivity
+import com.handy.fetchbook.app.util.CacheUtil
+import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.databinding.ActivitySplashBinding
 import com.handy.fetchbook.viewModel.state.MainViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 
 /**
  * 启动页
  *
- * @author Handy
- * @since 2023/7/28 9:47 下午
  */
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<MainViewModel, ActivitySplashBinding>() {
@@ -30,11 +28,24 @@ class SplashActivity : BaseActivity<MainViewModel, ActivitySplashBinding>() {
                 return
             }
         }
+        mViewModel.getLanguageContent()
+        mViewModel.languageContentResult.observe(this) {
+            if (it == null) {
+                startHomeActivity()
+                return@observe
+            }
 
-        lifecycleScope.launch {
-            delay(50)
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
+            BooKLogger.d("获取语言接口成功")
+            App.appViewModelInstance.setLanguageContent(it)
+            startHomeActivity()
         }
+    }
+
+    private fun startHomeActivity() {
+        val count = CacheUtil.getInt("first_page_finish", 0) ?: 0
+        if (count >= 50) return
+        CacheUtil.putInt("first_page_finish", count.plus(1))
+        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+        finish()
     }
 }

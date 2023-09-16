@@ -2,6 +2,7 @@ package com.handy.fetchbook.app.util
 
 import android.text.TextUtils
 import com.google.gson.Gson
+import com.handy.fetchbook.data.bean.LanguageBean
 import com.handy.fetchbook.data.bean.me.UserInfoBean
 import com.handy.fetchbook.data.bean.model.TokenInfoModel
 import com.tencent.mmkv.MMKV
@@ -52,6 +53,25 @@ object CacheUtil {
         }
     }
 
+    fun saveLanguageInfo(info: LanguageBean?) {
+        val kv = MMKV.mmkvWithID("app")
+        if (info == null) {
+            kv.encode(SpKey.LANGUAGES_BEAN, "")
+        } else {
+            kv.encode(SpKey.LANGUAGES_BEAN, Gson().toJson(info))
+        }
+    }
+
+    fun getLanguageInfo(): LanguageBean? {
+        val kv = MMKV.mmkvWithID("app")
+        val userInfoString = kv.decodeString(SpKey.LANGUAGES_BEAN)
+        return if (TextUtils.isEmpty(userInfoString)) {
+            null
+        } else {
+            Gson().fromJson(userInfoString, LanguageBean::class.java)
+        }
+    }
+
     fun getToken(): String? {
         val kv = MMKV.mmkvWithID("app")
         return kv.decodeString(SpKey.TOKEN, "")
@@ -89,7 +109,7 @@ object CacheUtil {
      */
     fun getLanguage(): String {
         val kv = MMKV.mmkvWithID("app")
-        return kv.decodeString(SpKey.LANGUAGE, "kr").toString()
+        return kv.decodeString(SpKey.LANGUAGE, "").toString()
     }
 
     /**

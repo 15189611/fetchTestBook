@@ -70,7 +70,6 @@
         <activity android:name=".activity.EXPODetailActivity" />
         <activity android:name=".activity.ForgetPwdActivity" />
         <activity android:name=".activity.MyBuyWalletHistoryActivity" />
-        <activity android:name=".activity.test.SudokuTurnTableActivity" />
         <activity android:name=".activity.test.CircleTurntableActivity" />
         <activity android:name=".activity.DrawWalletHistoryActivity" />
     </application>

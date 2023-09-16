@@ -96,7 +96,6 @@ class HomeGoldView @JvmOverloads constructor(
             appCompatActivity().startActivity(intent)
         }
 
-
         atvNoBtn.setOnClickListener {
             if (CacheUtil.isLogin()) return@setOnClickListener
             appCompatActivity().startActivity(Intent(context, LoginActivity::class.java))

@@ -5,9 +5,6 @@ package com.handy.fetchbook.data.bean
  * - Date: 2023/9/9
  * - Description:
  */
-data class DrawPrizeListBean(
-    val list: List<DrawPrizeItemBean>? = null
-)
 
 data class DrawPrizeItemBean(
     val uuid: String? = null,

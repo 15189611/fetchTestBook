@@ -3,6 +3,7 @@ package com.handy.fetchbook.fragment
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.text.TextUtils
 import android.util.Log
 import android.view.*
 import android.view.animation.*
@@ -11,29 +12,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.handy.fetchbook.R
 import com.handy.fetchbook.activity.*
-import com.handy.fetchbook.app.base.BaseFragment
 import com.handy.fetchbook.app.util.CacheUtil
-import com.handy.fetchbook.basic.ext.MyResultState
 import com.handy.fetchbook.basic.ext.parseMyState
 import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.data.bean.DrawOpenRedPacketBean
-import com.handy.fetchbook.databinding.DrawFragmentDrawBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel
-import kotlinx.android.synthetic.main.draw_fragment_draw.atvTourismLottery
-import kotlinx.android.synthetic.main.draw_view_lucky.view.rl_start
+import kotlinx.android.synthetic.main.draw_fragment_draw.*
+import kotlinx.android.synthetic.main.draw_view_lucky.id_lucky_turntable
+import kotlinx.android.synthetic.main.draw_view_lucky.view.*
+import kotlinx.android.synthetic.main.layout_no_login.crrlBtnLogin
+import kotlinx.android.synthetic.main.layout_no_login.crrlBtnReg
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import me.hgj.jetpackmvvm.base.fragment.BaseVmFragment
 import me.hgj.jetpackmvvm.ext.parseState
 import java.util.Random
 
 /**
  * 抽奖fragment
  *
- * @author Handy
- * @since 2023/8/1 11:46 下午
  */
-class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
+class DrawFragment : BaseVmFragment<HomeViewModel>() {
     override fun layoutId(): Int = R.layout.draw_fragment_draw
+    override fun lazyLoadData() {}
 
     private var mStartAnimation: Animation? = null
     private var mEndAnimation: Animation? = null
@@ -52,7 +53,13 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
     private var currentDrawModel: DrawOpenRedPacketBean? = null
     private var currentDawMessage: String? = null
 
+    private fun getData() {
+        mViewModel.getPrizeList()
+        mViewModel.getWinners()
+    }
+
     override fun initView(savedInstanceState: Bundle?) {
+        getData()
         list.clear()
         list.add(Pair("1.5%", 1))
         list.add(Pair("1.2%", 2))
@@ -62,21 +69,21 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         list.add(Pair("5%", 6))
         list.add(Pair("3%", 7))
 
-        mLuckyTurntable = mDatabind.rlRight.idLuckyTurntable
-        mDatabind.noLogin.crrlBtnLogin.setOnClickListener {
+        mLuckyTurntable = id_lucky_turntable
+        crrlBtnLogin.setOnClickListener {
             startActivity(Intent(context, LoginActivity::class.java))
         }
-        mDatabind.noLogin.crrlBtnReg.setOnClickListener {
+        crrlBtnReg.setOnClickListener {
             startActivity(Intent(context, RegActivity::class.java))
         }
-        mDatabind.drawHistoryParent.setOnClickListener {
+        drawHistoryParent.setOnClickListener {
             //历史记录
             startActivity(Intent(context, DrawWalletHistoryActivity::class.java))
         }
-        mDatabind.aivUpgrade.setOnClickListener {
+        aivUpgrade.setOnClickListener {
             startActivity(Intent(context, MemberUpgradeActivity::class.java))
         }
-        mDatabind.atvTourismLottery.setOnClickListener {
+        atvTourismLottery.setOnClickListener {
             if (tabNum == 0) {
                 showTourism()
             } else {
@@ -84,24 +91,24 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
             }
         }
 
-        mDatabind.crlLeft.setOnClickListener {
-            mDatabind.iconTitle.setImageResource(R.drawable.draw_icon_title)
-            mDatabind.rlRight.root.visibility = View.GONE
-            mDatabind.rlLeft.visibility = View.VISIBLE
+        crl_left.setOnClickListener {
+            icon_title.setImageResource(R.drawable.draw_icon_title)
+            rl_right.visibility = View.GONE
+            rl_left.visibility = View.VISIBLE
             tabNum = 0
             atvTourismLottery.text = getText(R.string.draw_旅游抽奖规则说明)
-            mDatabind.crlLeft.setBackgroundResource(R.drawable.draw_btn_bg)
-            mDatabind.crlRight.setBackgroundResource(R.drawable.draw_white_bg)
+            crl_left.setBackgroundResource(R.drawable.draw_btn_bg)
+            crl_right.setBackgroundResource(R.drawable.draw_white_bg)
         }
 
-        mDatabind.crlRight.setOnClickListener {
-            mDatabind.iconTitle.setImageResource(R.drawable.draw_icon_title1)
-            mDatabind.rlRight.root.visibility = View.VISIBLE
-            mDatabind.rlLeft.visibility = View.GONE
+        crl_right.setOnClickListener {
+            icon_title.setImageResource(R.drawable.draw_icon_title1)
+            rl_right.visibility = View.VISIBLE
+            rl_left.visibility = View.GONE
             tabNum = 1
             atvTourismLottery.text = getText(R.string.draw_福袋抽奖规则说明)
-            mDatabind.crlRight.setBackgroundResource(R.drawable.draw_btn_bg)
-            mDatabind.crlLeft.setBackgroundResource(R.drawable.draw_white_bg)
+            crl_right.setBackgroundResource(R.drawable.draw_btn_bg)
+            crl_left.setBackgroundResource(R.drawable.draw_white_bg)
         }
 
         mStartAnimation = AnimationUtils.loadAnimation(context, R.anim.rotate_anim)
@@ -115,12 +122,12 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         })
 
         //旅游抽奖次数
-        mDatabind.btnAction.setOnClickListener {
-            if (mDatabind.luckyPanel.isGameRunning) return@setOnClickListener
+        btn_action.setOnClickListener {
+            if (lucky_panel.getGameRunning()) return@setOnClickListener
             mViewModel.draw()
         }
 
-        mDatabind.rlRight.root.rl_start.setOnClickListener {
+        rl_right.rl_start.setOnClickListener {
             //福袋抽奖次数
             if (isRunning) return@setOnClickListener
             mViewModel.openRedPacket(mutableMapOf())
@@ -128,15 +135,49 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
 
     }
 
+    override fun createObserver() {
+
+    }
+
+    override fun dismissLoading() {
+    }
+
     override fun initData() {
         super.initData()
+        mViewModel.priceListResult.observe(this) {
+            parseState(it, { model ->
+                BooKLogger.d("旅游抽奖list接口成功 = ${model.size}")
+                lifecycleScope.launch {
+                    lucky_panel.setItems(model)
+                }
+            }, onError = { error ->
+                BooKLogger.d("旅游抽奖list接口失败 = ${error.message}")
+            })
+        }
+
+        mViewModel.drawWinnersResult.observe(this) {
+            parseState(it, { model ->
+                BooKLogger.d("旅游抽奖通知notice接口成功 = ${model.size}")
+                var showContent = ""
+                for (content in model) {
+                    if (!TextUtils.isEmpty(content)) {
+                        showContent = "$showContent          $content"
+                    }
+                }
+                drawNotice.isSelected = true
+                drawNotice.text = showContent
+            }, onError = { error ->
+                BooKLogger.d("旅游抽奖通知notice接口失败 = ${error.message}")
+            })
+        }
+
         mViewModel.drawResult.observe(this) { resultState ->
             parseState(resultState, {
                 BooKLogger.d("抽奖draw接口成功-> code = ${it.code} -> message  = ${it.message}")
                 message = it.message
                 if (it.code == 0) {
-                    mDatabind.luckyPanel.setIsGameRunning(true)
-                    mDatabind.luckyPanel.startGame()
+                    lucky_panel.setIsGameRunning(true)
+                    lucky_panel.startGame()
                     lifecycleScope.launch {
                         delay(1000)
                         stopLeft()
@@ -173,19 +214,23 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
     override fun onResume() {
         super.onResume()
         if (!CacheUtil.isLogin()) {
-            mDatabind.viewContainer.visibility = View.GONE
-            mDatabind.noLogin.root.visibility = View.VISIBLE
+            view_container.visibility = View.GONE
+            no_login.visibility = View.VISIBLE
         } else {
-            mDatabind.viewContainer.visibility = View.VISIBLE
-            mDatabind.noLogin.root.visibility = View.GONE
+            view_container.visibility = View.VISIBLE
+            no_login.visibility = View.GONE
         }
         //会员类型 0=普通会员, 1=拓展会员, 2=福袋会员
         val userType = CacheUtil.getUserInfo()?.type ?: 0
         if (userType == 2) {
-            mDatabind.aivUpgrade.visibility = View.GONE
-            mDatabind.btnAction.visibility = View.VISIBLE
+            aivUpgrade.visibility = View.GONE
+            btn_action.visibility = View.VISIBLE
         }
         showLevelUi()
+    }
+
+    override fun showLoading(message: String) {
+        TODO("Not yet implemented")
     }
 
     private fun showLevelUi() {
@@ -231,9 +276,9 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
                 agent = getString(R.string.me_至尊会员)
             }
         }
-        mDatabind.rlRight.tvLevel.text = agent
-        mDatabind.rlRight.drawLuckViewBg.setBackgroundResource(bg)
-        mDatabind.rlRight.rlStart.setImageResource(startbg)
+        rl_right.tvLevel.text = agent
+        rl_right.drawLuckViewBg.setBackgroundResource(bg)
+        rl_right.rl_start.setImageResource(startbg)
     }
 
     private var logoutPop: PopupWindow? = null
@@ -256,13 +301,13 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
         logoutPop!!.setBackgroundDrawable(BitmapDrawable())
         logoutPop!!.animationStyle = R.style.common_CustomDialog
-        logoutPop!!.showAsDropDown(mDatabind.btnAction)
+        logoutPop!!.showAsDropDown(btn_action)
     }
 
     private fun stopLeft() {
         val stayIndex = Random().nextInt(8)
         Log.e("LuckyMonkeyPanelView", "====stay===$stayIndex")
-        mDatabind.luckyPanel.tryToStop(stayIndex)
+        lucky_panel.tryToStop(stayIndex)
     }
 
     // 结束动画，慢慢停止转动，抽中的奖品定格在指针指向的位置
@@ -318,7 +363,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
         drawPopWindow.setBackgroundDrawable(BitmapDrawable())
         drawPopWindow.animationStyle = R.style.common_CustomDialog
-        drawPopWindow.showAsDropDown(mDatabind.btnAction)
+        drawPopWindow.showAsDropDown(btn_action)
     }
 
     //停止动画（异常情况，没有奖品）
@@ -349,10 +394,6 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         logoutPopViewLucky!!.findViewById<TextView>(R.id.atvJump).setOnClickListener {
             logoutPopLucky!!.dismiss()
             startActivity(Intent(context, WalletBalanceActivity::class.java))
-//            ARouter.getInstance()
-//                .build(RouteUrl.Me.WalletBalanceActivity)
-//                .navigation()
-
         }
 
         logoutPopViewLucky!!.findViewById<ImageView>(R.id.aiv_close).setOnClickListener {
@@ -360,7 +401,7 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
         logoutPopLucky!!.setBackgroundDrawable(BitmapDrawable())
         logoutPopLucky!!.animationStyle = R.style.common_CustomDialog
-        logoutPopLucky!!.showAsDropDown(mDatabind.viewContainer)
+        logoutPopLucky!!.showAsDropDown(view_container)
     }
 
     private var logoutPopTourism: PopupWindow? = null
@@ -383,6 +424,6 @@ class DrawFragment : BaseFragment<HomeViewModel, DrawFragmentDrawBinding>() {
         }
         logoutPopTourism!!.setBackgroundDrawable(BitmapDrawable())
         logoutPopTourism!!.animationStyle = R.style.common_CustomDialog
-        logoutPopTourism!!.showAsDropDown(mDatabind.viewContainer)
+        logoutPopTourism!!.showAsDropDown(view_container)
     }
 }

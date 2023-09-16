@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import com.google.android.material.navigation.NavigationBarView
@@ -41,15 +42,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             itemIconTintList = null
             setOnItemSelectedListener {
                 when (it.itemId) {
-                    R.id.vNavHome -> vViewPager.currentItem = INDEX_HOME
-                    R.id.vNavTask -> vViewPager.currentItem = INDEX_TASK
-                    R.id.vNavDraw -> vViewPager.currentItem = INDEX_DRAW
-                    R.id.vNavMe -> vViewPager.currentItem = INDEX_ME
+                    R.id.vNavHome -> vViewPager.setCurrentItem(INDEX_HOME, false)
+                    R.id.vNavTask -> vViewPager.setCurrentItem(INDEX_TASK, false)
+                    R.id.vNavDraw -> vViewPager.setCurrentItem(INDEX_DRAW, false)
+                    R.id.vNavMe -> vViewPager.setCurrentItem(INDEX_ME, false)
                 }
                 true
             }
         }
         // ViewPager2设置
+        (vViewPager.getChildAt(0) as? RecyclerView)?.itemAnimator = null
+        vViewPager.setPageTransformer(null)
         vViewPager.isUserInputEnabled = false
         vViewPager.run {
             adapter = mVPAdapter
@@ -68,18 +71,6 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>() {
             })
         }
     }
-
-//    private fun disableShiftMode() {
-//        val menuView = vBottomNavigationView.getChildAt(0) as? BottomNavigationMenuView ?: return
-//        val shiftingMode = menuView.javaClass.getDeclaredField("mShiftingMode")
-//        shiftingMode.isAccessible = true
-//        shiftingMode.setBoolean(menuView, false)
-//        shiftingMode.isAccessible = false
-//        for (i in menuView.childCount) {
-//            val item = menuView.getChildAt(i) as BottomNavigationMenuView
-//            item.setChecked(item.getItemData().isChecked());
-//        }
-//    }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
