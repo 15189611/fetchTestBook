@@ -353,5 +353,16 @@ interface ApiService {
         @Query("page") page: Int?,
         @Query("act_type") act_type: String? = null
     ): ApiResponse<MyBuyHistoryBean>
-
+    @GET("api/tour/details")
+    suspend fun memberItemDetail(
+        @Query("package_uid") package_uid: String? = null
+    ): ApiResponse<MemberItemDetailBean>
+    @GET("api/tour/userList")
+    suspend fun memberUpHistory(
+        @Query("start_date") start_date: String?,
+        @Query("end_date") end_date: String?,
+        @Query("balance_type") balance_type: String?,
+        @Query("page") page: Int?,
+        @Query("act_type") act_type: String? = null
+    ): ApiResponse<MemberUpHistoryBean>
 }

@@ -72,6 +72,8 @@
         <activity android:name=".activity.MyBuyWalletHistoryActivity" />
         <activity android:name=".activity.test.CircleTurntableActivity" />
         <activity android:name=".activity.DrawWalletHistoryActivity" />
+        <activity android:name=".activity.MemberUpHistoryActivity" />
+        <activity android:name=".activity.MemberItemMoreDetailActivity" />
     </application>
 
 </manifest>
