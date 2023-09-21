@@ -19,6 +19,7 @@ import com.handy.fetchbook.adapter.ImageStringAdapter
 import com.handy.fetchbook.basic.ext.parseMyState
 import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.viewModel.MemberItemMoreDetailViewModel
+import com.hjq.toast.ToastUtils
 import com.youth.banner.indicator.CircleIndicator
 import kotlinx.android.synthetic.main.activity_my_buy_wallet_history_view.back
 import kotlinx.android.synthetic.main.expo_activity_expo_detail.vBanner
@@ -107,7 +108,13 @@ class MemberItemMoreDetailActivity : BaseVmActivity<MemberItemMoreDetailViewMode
             scrollToEnd();
         }
         btn_ok.setOnClickListener {
-            showPing(btn_ok);
+
+            if (price!! > balance.toString()){
+                showPing(btn_ok);
+            }else{
+                ToastUtils.show("余额不足!")
+            }
+
         }
         mViewModel.wallet()
         mViewModel.walletResult.observe(this){ resultState ->
