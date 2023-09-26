@@ -4,7 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.FrameLayout
 import android.widget.ImageView
-import androidx.core.view.forEachIndexed
 import coil.ImageLoader
 import coil.request.ImageRequest
 import com.handy.fetchbook.R

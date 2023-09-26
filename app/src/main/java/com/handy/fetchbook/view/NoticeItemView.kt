@@ -8,7 +8,6 @@ import com.handy.fetchbook.app.App
 import com.handy.fetchbook.basic.AbsModuleView
 import com.handy.fetchbook.basic.viewLayoutPosition
 import com.handy.fetchbook.data.bean.home.NoticeItems
-import com.handy.fetchbook.data.bean.home.SystemInfoItems
 import kotlinx.android.synthetic.main.item_notice.view.*
 
 /**

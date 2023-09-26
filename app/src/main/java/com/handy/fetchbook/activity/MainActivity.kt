@@ -1,13 +1,9 @@
 package com.handy.fetchbook.activity
 
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.graphics.Color
 import android.os.Bundle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.bottomnavigation.BottomNavigationMenuView
-import com.google.android.material.navigation.NavigationBarView
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.ViewPagerAdapter
 import com.handy.fetchbook.app.base.BaseActivity

@@ -6,8 +6,6 @@ import com.handy.fetchbook.basic.ext.MyResultState
 import com.handy.fetchbook.basic.ext.requestForFresh
 import com.handy.fetchbook.data.bean.MyBuyHistoryBean
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
-import me.hgj.jetpackmvvm.ext.request
-import me.hgj.jetpackmvvm.state.ResultState
 
 /**
  * - Author: Charles

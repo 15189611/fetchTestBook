@@ -1,12 +1,10 @@
 package com.handy.fetchbook.activity
 
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.PopupWindow

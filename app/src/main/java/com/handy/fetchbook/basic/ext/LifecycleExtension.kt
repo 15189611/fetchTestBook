@@ -1,11 +1,7 @@
 package com.handy.fetchbook.basic.ext
 
-import android.os.Looper
-import android.os.MessageQueue
 import android.view.View
-import androidx.core.view.doOnAttach
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner

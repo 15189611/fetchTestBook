@@ -5,7 +5,6 @@ import com.handy.fetchbook.app.network.apiService
 import com.handy.fetchbook.basic.ext.MyResultState
 import com.handy.fetchbook.basic.ext.requestForFresh
 import com.handy.fetchbook.data.bean.MemberUpHistoryBean
-import com.handy.fetchbook.data.bean.MemberUpHistoryItemBean
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 class MemberUpHistoryViewModel : BaseViewModel() {

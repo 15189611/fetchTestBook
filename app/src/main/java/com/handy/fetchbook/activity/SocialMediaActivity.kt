@@ -3,7 +3,6 @@ package com.handy.fetchbook.activity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.SocialMediaAdapter
 import com.handy.fetchbook.app.base.BaseActivity

@@ -9,10 +9,8 @@ import com.handy.fetchbook.basic.NormalModuleAdapter
 import com.handy.fetchbook.basic.ext.parseMyState
 import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.view.MemberUpHistoryItemView
-import com.handy.fetchbook.view.MyBuyWalletHistoryItemView
 import com.handy.fetchbook.view.MyTimePickerView
 import com.handy.fetchbook.viewModel.MemberUpHistoryViewModel
-import com.handy.fetchbook.viewModel.MyBuyWalletHistoryViewModel
 import kotlinx.android.synthetic.main.activity_my_buy_wallet_history_view.back
 import kotlinx.android.synthetic.main.activity_my_buy_wallet_history_view.endContent
 import kotlinx.android.synthetic.main.activity_my_buy_wallet_history_view.startDataContent

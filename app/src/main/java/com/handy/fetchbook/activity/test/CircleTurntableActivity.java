@@ -14,8 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.handy.fetchbook.R;
 
-import java.util.Random;
-
 public class CircleTurntableActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Animation mStartAnimation;

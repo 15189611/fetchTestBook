@@ -8,7 +8,6 @@ import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.*
 import com.handy.fetchbook.data.bean.model.BaseApiModel
 import com.handy.fetchbook.data.bean.task.TaskStatusBean
-import okhttp3.RequestBody
 import retrofit2.http.*
 
 /**

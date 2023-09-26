@@ -103,6 +103,10 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         super.initData()
         mViewModel.walletResult.observe(this) { resultState ->
             parseState(resultState, {
+//                val cny = it.cnyBalance.orEmpty().toFloat()
+//                mDatabind.crllWalletItem1.isVisible = cny > 0
+//                mDatabind.atvWallet1.text = it.cnyBalance
+//                mDatabind.atvWallet2.text = it.invest
                 val cny = (it.cnyBalance ?: "0").toFloat()
                 mDatabind.crllWalletItem1.isVisible = cny > 0
                 mDatabind.atvWallet1.text = it.cnyBalance

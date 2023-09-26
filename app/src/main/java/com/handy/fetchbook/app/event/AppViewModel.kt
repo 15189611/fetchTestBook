@@ -1,7 +1,6 @@
 package com.handy.fetchbook.app.event
 
 import com.handy.fetchbook.data.bean.LanguageBean
-import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
 
 class AppViewModel : BaseViewModel() {

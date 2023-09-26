@@ -1,11 +1,9 @@
 package com.handy.fetchbook.basic.manager;
 
 import android.content.Context;
-import android.graphics.Color;
 
 import androidx.annotation.NonNull;
 
-import com.handy.fetchbook.basic.widget.ViewSmartLayout;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;

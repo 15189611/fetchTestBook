@@ -1,7 +1,6 @@
 package com.handy.fetchbook.adapter
 
 import android.widget.ImageView
-import android.widget.TextView
 import coil.load
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder

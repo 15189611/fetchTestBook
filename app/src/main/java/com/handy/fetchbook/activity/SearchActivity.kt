@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.handy.fetchbook.R
 import com.handy.fetchbook.adapter.SearchAdapter
 import com.handy.fetchbook.app.base.BaseActivity
-import com.handy.fetchbook.data.bean.home.Items
 import com.handy.fetchbook.data.bean.home.SearchBean
 import com.handy.fetchbook.databinding.HomeActivitySearchBinding
 import com.handy.fetchbook.viewModel.state.HomeViewModel

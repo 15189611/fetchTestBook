@@ -1,7 +1,6 @@
 package com.handy.fetchbook.app.ext
 
 import android.view.View
-import android.widget.TextView
 import androidx.fragment.app.FragmentActivity
 import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.LanguageUtils

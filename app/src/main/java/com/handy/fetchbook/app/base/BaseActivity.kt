@@ -5,9 +5,7 @@ import androidx.databinding.ViewDataBinding
 import com.drake.statusbar.immersive
 import com.handy.fetchbook.app.ext.dismissLoadingExt
 import com.handy.fetchbook.app.ext.showLoadingExt
-import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.eventBus.BaseEvent
-import com.handy.fetchbook.eventBus.EventVideoPlayOver
 
 import me.hgj.jetpackmvvm.base.activity.BaseVmDbActivity
 import me.hgj.jetpackmvvm.base.viewmodel.BaseViewModel
