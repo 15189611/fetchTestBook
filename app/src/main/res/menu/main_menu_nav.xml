@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/vNavHome"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_home_selector"
+        android:title="@string/main_nav_home" />
+
+    <item
+        android:id="@+id/vNavExpo"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_task_selector"
+        android:title="@string/main_nav_tab_expo" />
+    <item
+        android:id="@+id/vNavAiTravel"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_draw_selector"
+        android:title="@string/main_nav_ai_travel" />
+
+    <item
+        android:id="@+id/vNavGroupBuy"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_draw_selector"
+        android:title="@string/main_nav_group_buy" />
+
+    <!--    <item-->
+    <!--        android:id="@+id/vNavTask"-->
+    <!--        android:enabled="true"-->
+    <!--        android:icon="@drawable/main_nav_task_selector"-->
+    <!--        android:title="@string/main_nav_task" />-->
+    <!--    <item-->
+    <!--        android:id="@+id/vNavDraw"-->
+    <!--        android:enabled="true"-->
+    <!--        android:icon="@drawable/main_nav_draw_selector"-->
+    <!--        android:title="@string/main_nav_draw" />-->
+
+    <item
+        android:id="@+id/vNavMe"
+        android:enabled="true"
+        android:icon="@drawable/main_nav_me_selector"
+        android:title="@string/main_nav_me" />
+</menu>

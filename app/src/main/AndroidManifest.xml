@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.handy.fetchbook">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+
+    <uses-permission
+        android:name="android.permission.CHANGE_CONFIGURATION"
+        tools:ignore="ProtectedPermissions" />
+
+    <application
+        android:name="com.handy.fetchbook.app.App"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:screenOrientation="portrait"
+        android:supportsRtl="true"
+        android:theme="@style/common_AppTheme"
+        tools:ignore="UnusedAttribute"
+        tools:replace="android:networkSecurityConfig,android:label">
+
+        <activity
+            android:name="com.handy.fetchbook.activity.SplashActivity"
+            android:configChanges="orientation|keyboard|keyboardHidden|screenSize|locale"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:theme="@style/main_AppTheme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.handy.fetchbook.activity.MainActivity"
+            android:launchMode="singleTask" />
+        <activity android:name="com.handy.fetchbook.activity.HomeDetailActivity" />
+        <activity android:name="com.handy.fetchbook.activity.LoginActivity" />
+        <activity android:name="com.handy.fetchbook.activity.RegActivity" />
+        <activity android:name="com.handy.fetchbook.activity.MemberUpgradeActivity" />
+        <activity android:name="com.handy.fetchbook.activity.WalletActivity" />
+        <activity android:name="com.handy.fetchbook.activity.WalletBalanceActivity" />
+        <activity android:name="com.handy.fetchbook.activity.WalletRewardBalanceActivity" />
+        <activity android:name="com.handy.fetchbook.activity.QrActivity" />
+        <activity
+            android:name="com.handy.fetchbook.activity.VideoPlayActivity"
+            android:screenOrientation="fullSensor" />
+        <activity android:name="com.handy.fetchbook.activity.HelpCenterActivity" />
+        <activity android:name="com.handy.fetchbook.activity.ChangePwdActivity" />
+        <activity android:name="com.handy.fetchbook.activity.EditUserInfoActivity" />
+        <activity android:name="com.handy.fetchbook.activity.H5Activity" />
+        <activity android:name="com.handy.fetchbook.activity.InfoCenterActivity" />
+        <activity android:name="com.handy.fetchbook.activity.SocialMediaActivity" />
+        <activity android:name="com.handy.fetchbook.activity.SystemInfoActivity" />
+        <activity android:name="com.handy.fetchbook.activity.NoticeActivity" />
+        <activity android:name="com.handy.fetchbook.activity.UserMessageActivity" />
+        <activity android:name="com.handy.fetchbook.activity.SearchActivity" />
+        <activity android:name="com.handy.fetchbook.activity.EXPOActivity" />
+        <activity android:name="com.handy.fetchbook.activity.EXPODetailActivity" />
+        <activity android:name="com.handy.fetchbook.activity.ForgetPwdActivity" />
+        <activity android:name="com.handy.fetchbook.activity.MyBuyWalletHistoryActivity" />
+        <activity android:name="com.handy.fetchbook.activity.test.CircleTurntableActivity" />
+        <activity android:name="com.handy.fetchbook.activity.DrawWalletHistoryActivity" />
+        <activity android:name="com.handy.fetchbook.activity.MemberUpHistoryActivity" />
+        <activity android:name="com.handy.fetchbook.activity.MemberItemMoreDetailActivity" />
+    </application>
+
+</manifest>

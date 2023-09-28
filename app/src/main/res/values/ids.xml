@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="rv_item_holder_tag" type="id" />
+    <item name="rv_item_holder_layout_position" type="id" />
+    <item name="rv_item_holder_group_position" type="id" />
+
+</resources>

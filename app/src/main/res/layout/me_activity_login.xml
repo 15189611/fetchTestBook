@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/me_login_head_bg"
+            android:orientation="vertical">
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/common_back" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/common_customer_service" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    app:srcCompat="@drawable/common_lanugage" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                app:srcCompat="@drawable/me_login_icon" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/me_login_title"
+                android:textColor="@color/common_color_ffffff"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/me_login_account"
+                android:textColor="@color/common_color_282828"
+                android:textSize="16sp" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/common_input_bg"
+                android:minHeight="40dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/me_phone" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/aetAccount"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:background="@color/common_color_00FFFFFF"
+                    android:hint="@string/me_login_account_hint"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/common_color_282828"
+                    android:textColorHint="@color/common_color_282828"
+                    android:textSize="14sp" />
+
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/me_login_pwd"
+                    android:textColor="@color/common_color_282828"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/login_forget"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/me_login_forget"
+                    android:textColor="@color/common_color_FBB403"
+                    android:textSize="16sp" />
+            </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/common_input_bg"
+                android:minHeight="40dp">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/me_pwd_icon" />
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/aetPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:layout_weight="1"
+                    android:background="@color/common_color_00FFFFFF"
+                    android:hint="@string/me_login_pwd_hint"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textColor="@color/common_color_282828"
+                    android:textColorHint="@color/common_color_282828"
+                    android:textSize="14sp" />
+
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivEye"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    app:srcCompat="@drawable/common_eye_y"
+                    tools:src="@drawable/common_eye_y" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="85dp"
+                android:background="@drawable/common_btn_login_gradient"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="@string/me_登录"
+                android:textColor="@color/common_color_282828"
+                android:textSize="16sp" />
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:id="@+id/btn_to_reg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/me_login_noaccount"
+                    android:textColor="@color/common_color_ABABAB"
+                    android:textSize="16sp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/me_注册"
+                    android:textColor="@color/common_color_FBB403"
+                    android:textSize="16sp" />
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+</layout>

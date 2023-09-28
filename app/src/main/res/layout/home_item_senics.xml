@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginEnd="5dp"
+    android:background="@drawable/shape_item_bg">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/topCardView"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_centerHorizontal="true"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/aivImg"
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            tools:ignore="MissingClass" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="5dp"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivLevel1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/home_level_n" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivLevel2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/home_level_n" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivLevel3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/home_level_n" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivLevel4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/home_level_n" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivLevel5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                app:srcCompat="@drawable/home_level_n" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/aivTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="4dp"
+        android:background="@drawable/common_btn_login_gradient"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:padding="5dp"
+        android:singleLine="true"
+        android:textColor="@color/common_color_282828"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topCardView"
+        tools:text="石林风景名胜区" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

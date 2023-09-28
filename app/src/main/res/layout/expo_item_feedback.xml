@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <com.google.android.material.circularreveal.CircularRevealLinearLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:background="@drawable/expo_feddback_item_bg"
+        android:gravity="center_vertical"
+        android:maxHeight="180dp"
+        android:orientation="vertical">
+
+        <com.google.android.material.circularreveal.CircularRevealLinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
+
+            <com.google.android.material.circularreveal.CircularRevealRelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:srcCompat="@drawable/common_avata" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/aivCrown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/common_crown" />
+            </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
+
+            <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/common_color_212121"
+                    tools:text="132****0007 凤飞飞" />
+
+                <com.google.android.material.circularreveal.CircularRevealLinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/atvRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="4.2" />
+
+                    <per.wsj.library.AndRatingBar
+                        android:id="@+id/arbRating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:clickable="false"
+                        android:isIndicator="true"
+                        app:bgColor="@color/common_color_ABABAB"
+                        app:starColor="@color/common_color_FBB403" />
+
+
+                </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+            </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+        </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/atvContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/common_color_212121"
+            android:textSize="14dp"
+            tools:text="说实话，罗伊很奇怪。 昨天他没有修复错误，而是试图在房间里召唤撒旦！ 我是一个不宽容的人，但带一只山羊去办公室太过分了……" />
+
+
+    </com.google.android.material.circularreveal.CircularRevealLinearLayout>
+</layout>

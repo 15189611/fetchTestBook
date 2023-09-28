@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--自定义Dialog背景全透明无边框theme-->
+    <style name="expo_CustomDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色和透明程度-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--是否去除标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+    <!--  启动页主题  -->
+    <style name="main_AppTheme.Splash" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@drawable/common_bg</item>
+    </style>
+
+    <!-- Base application theme. -->
+    <style name="common_AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/common_color_FBB403</item>
+        <item name="colorPrimaryDark">@color/common_color_FBB403</item>
+        <item name="colorAccent">@color/common_color_FBB403</item>
+
+        <item name="android:windowBackground">@color/common_background</item>
+        <item name="android:navigationBarColor">@color/common_background</item>
+    </style>
+
+    <!--自定义RatingBar Drawable-->
+    <style name="common_RatingBar_CustomDrawable" parent="@android:style/Widget.Holo.RatingBar.Indicator">
+        <item name="android:progressDrawable">@drawable/common_layer_live_rating_bar</item>
+        <item name="android:minHeight">15dp</item>
+        <item name="android:maxHeight">15dp</item>
+    </style>
+    <!--toolbar替代actionbar后必须设置主题为NoActionBar-->
+    <style name="common_AppTheme.NoActionBar" >
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <!--控制头部据appbar的样式-->
+    <style name="common_AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"  />
+    <!--用于控制toolbar溢出菜单的样式-->
+    <style name="common_AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"  />
+
+    <!--自定义Dialog背景全透明无边框theme-->
+    <style name="common_CustomDialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色和透明程度-->
+        <item name="android:windowBackground">@color/common_color_636674</item>
+        <!--是否去除标题-->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+
+    <style name="common_AppTheme.PopUpWindowTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="me_dialog" parent="@android:style/Theme.Dialog">
+
+        <item name="android:windowFrame">@null</item>
+
+        <item name="android:windowIsFloating">true</item>
+
+        <item name="android:windowIsTranslucent">true</item>
+
+        <item name="android:windowNoTitle">true</item>
+
+        <item name="android:background">@android:color/transparent</item>
+
+        <item name="android:windowBackground">@android:color/transparent</item>
+
+        <item name="android:backgroundDimEnabled">true</item>
+
+        <item name="android:backgroundDimAmount">0.6</item>
+
+    </style>
+
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowBackground">@drawable/common_bg</item>
+        <!--        <item name="android:background">@mipmap/start_second</item>-->
+    </style>
+
+
+</resources>
