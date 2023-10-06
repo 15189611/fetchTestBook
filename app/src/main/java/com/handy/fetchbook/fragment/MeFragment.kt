@@ -73,7 +73,7 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
         }
         //旅游钱包
         mDatabind.crllWalletItem2.setOnClickListener {
-            startActivity(Intent(context, WalletBalanceActivity::class.java))
+//            startActivity(Intent(context, WalletBalanceActivity::class.java))
         }    //旅游宝应用
         mDatabind.crllWalletItem4.setOnClickListener {
             startActivity(Intent(context, MemberUpgradeActivity::class.java))

@@ -1,5 +1,6 @@
 package com.handy.fetchbook.app.network
 
+import com.handy.fetchbook.data.ChatDataBean
 import com.handy.fetchbook.data.bean.*
 import com.handy.fetchbook.data.bean.expo.*
 import com.handy.fetchbook.data.bean.model.ApiResponse
@@ -198,7 +199,11 @@ interface ApiService {
      */
     @GET("api/expo/expoBanner")
     suspend fun getExpoBanner(): ApiResponse<Any>
-
+    /**
+     * AI對話
+     */
+    @POST("api/chat/sendMessage")
+    suspend fun sendMessage(@Body body: ChatDataBean): ApiResponse<Any>
     /**
      * 世博列表
      *

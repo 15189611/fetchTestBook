@@ -16,6 +16,7 @@ import me.hgj.jetpackmvvm.ext.requestNoCheck
 import me.hgj.jetpackmvvm.state.ResultState
 import com.handy.fetchbook.app.network.postBodyOf
 import com.handy.fetchbook.basic.ext.*
+import com.handy.fetchbook.data.ChatDataBean
 import com.handy.fetchbook.data.bean.*
 import com.handy.fetchbook.data.bean.expo.*
 
@@ -48,12 +49,20 @@ class HomeViewModel : BaseViewModel() {
 
     var getExpoListResult = MutableLiveData<MyResultState<ExpoListBean>>()
     fun getExpoList(isRefresh: Boolean, region: String, page: Int) {
-        requestForFresh({ apiService.list(region, if (isRefresh) 1 else page) }, getExpoListResult, isRefresh)
+        requestForFresh(
+            { apiService.list(region, if (isRefresh) 1 else page) },
+            getExpoListResult,
+            isRefresh
+        )
     }
 
     var expoSearchListResult = MutableLiveData<MyResultState<Data>>()
     fun expoSearchList(isRefresh: Boolean, keyword: String, page: Int) {
-        requestForFresh({ apiService.expoSearchList(keyword, if (isRefresh) 1 else page) }, expoSearchListResult, isRefresh)
+        requestForFresh(
+            { apiService.expoSearchList(keyword, if (isRefresh) 1 else page) },
+            expoSearchListResult,
+            isRefresh
+        )
     }
 
     var getExpoBannerResult = MutableLiveData<ResultState<Any>>()
@@ -61,9 +70,18 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.getExpoBanner() }, getExpoBannerResult)
     }
 
+    var getMessageResult = MutableLiveData<ResultState<Any>>()
+    fun getMessage(message: ChatDataBean) {
+        request({ apiService.sendMessage(message) }, getMessageResult)
+    }
+
     var groupSharingBean = MutableLiveData<MyResultState<GroupSharingBean>>()
     fun grouplist(isRefresh: Boolean = true, page: Int) {
-        requestForFresh({ apiService.grouplist(if (isRefresh) 1 else page) }, groupSharingBean, isRefresh)
+        requestForFresh(
+            { apiService.grouplist(if (isRefresh) 1 else page) },
+            groupSharingBean,
+            isRefresh
+        )
     }
 
     var socialMediaResult = MutableLiveData<ResultState<List<SocialMediaBean>>>()
@@ -73,7 +91,11 @@ class HomeViewModel : BaseViewModel() {
 
     var messageResult = MutableLiveData<MyResultState<SystemInfoBean>>()
     fun message(isRefresh: Boolean, type: Int, page: Int) {
-        requestForFresh({ apiService.message(type, if (isRefresh) 1 else page) }, messageResult, isRefresh)
+        requestForFresh(
+            { apiService.message(type, if (isRefresh) 1 else page) },
+            messageResult,
+            isRefresh
+        )
     }
 
     var messageReadResult = UnPeekLiveData<ResultState<BaseApiModel>>()
@@ -83,7 +105,11 @@ class HomeViewModel : BaseViewModel() {
 
     var noticeResult = MutableLiveData<MyResultState<NoticeBean>>()
     fun announcements(isRefresh: Boolean, page: Int) {
-        requestForFresh({ apiService.announcements(if (isRefresh) 1 else page) }, noticeResult, isRefresh)
+        requestForFresh(
+            { apiService.announcements(if (isRefresh) 1 else page) },
+            noticeResult,
+            isRefresh
+        )
     }
 
     var noticeReadResult = UnPeekLiveData<ResultState<BaseApiModel>>()
