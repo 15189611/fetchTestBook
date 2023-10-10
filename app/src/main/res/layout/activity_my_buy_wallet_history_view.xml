@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:gravity="center_horizontal"
-            android:text="旅游宝历史记录"
+            android:text="美元历史记录"
             android:textColor="#14151A"
             android:textSize="20sp"
             android:textStyle="bold" />

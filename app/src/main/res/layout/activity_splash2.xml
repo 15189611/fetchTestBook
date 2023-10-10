@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<VideoView
+    android:id="@+id/video"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+</FrameLayout>
+        <com.zhuyong.countdownciew.CountDownView
+            android:id="@+id/cd_view3"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cd_animator_time="6"
+            android:layout_marginTop="10dp"
+            app:cd_animator_time_unit=" S"
+            app:cd_arc_color="@color/picture_color_white"
+            app:cd_arc_width="2dp"
+            app:cd_bg_color="@color/cardview_dark_background"
+            app:cd_circle_radius="25dp"
+            app:cd_location="right"
+            app:cd_retreat_type="forward"
+            app:cd_text_color="@color/picture_color_white"
+            app:cd_text_size="14sp" />
+    </RelativeLayout>
+</layout>

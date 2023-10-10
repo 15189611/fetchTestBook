@@ -19,6 +19,7 @@ import com.handy.fetchbook.basic.ext.*
 import com.handy.fetchbook.data.ChatDataBean
 import com.handy.fetchbook.data.bean.*
 import com.handy.fetchbook.data.bean.expo.*
+import okhttp3.MultipartBody
 
 class HomeViewModel : BaseViewModel() {
 
@@ -70,11 +71,14 @@ class HomeViewModel : BaseViewModel() {
         request({ apiService.getExpoBanner() }, getExpoBannerResult)
     }
 
-    var getMessageResult = MutableLiveData<ResultState<Any>>()
-    fun getMessage(message: ChatDataBean) {
+    var getMessageResult = MutableLiveData<ResultState<String>>()
+    fun getMessage(message: ChatDataBeanRequest) {
         request({ apiService.sendMessage(message) }, getMessageResult)
     }
-
+    val uploadResult = MutableLiveData<ResultState<String>>()
+    fun getUpload(parts: List<MultipartBody.Part>) {
+        request({ apiService.upload(parts) }, uploadResult)
+    }
     var groupSharingBean = MutableLiveData<MyResultState<GroupSharingBean>>()
     fun grouplist(isRefresh: Boolean = true, page: Int) {
         requestForFresh(

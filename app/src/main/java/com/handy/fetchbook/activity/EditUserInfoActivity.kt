@@ -3,23 +3,29 @@ package com.handy.fetchbook.activity
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.view.View
+import android.view.View.OnClickListener
 import android.widget.Toast
 import androidx.core.view.isVisible
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.airsaid.pickerviewlibrary.TimePickerView
+import com.blankj.utilcode.util.ObjectUtils
 import com.handy.fetchbook.R
 import com.handy.fetchbook.app.util.CacheUtil
 import com.handy.fetchbook.basic.ext.addListener
 import com.handy.fetchbook.basic.ext.toAvatar
 import com.handy.fetchbook.basic.util.BooKLogger
 import com.handy.fetchbook.data.bean.me.UserInfoBean
+import com.handy.fetchbook.utils.PictureSelectorUtils
 import com.handy.fetchbook.view.MyTimePickerView
 import com.handy.fetchbook.viewModel.state.HomeViewModel
 import com.hjq.toast.ToastUtils
 import kotlinx.android.synthetic.main.me_activity_edit_userinfo.*
 import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 import me.hgj.jetpackmvvm.ext.parseState
+import me.hgj.jetpackmvvm.util.ActivityMessenger.finish
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -53,7 +59,7 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
     private var oldGender: String? = null
     private var oldNikeName: String? = null
     private var oldAvatar: String? = null
-
+    private val arrayList = ArrayList<File>()
     private var birthday: String? = null
     private var gender: String? = null
     private var nickname: String? = null
@@ -61,62 +67,69 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
 
     override fun initView(savedInstanceState: Bundle?) {
         back.setOnClickListener { finish() }
-
+        aivHeadView.setOnClickListener {
+            PictureSelectorUtils.takeMoreAlbum(this@EditUserInfoActivity, 1) { path ->
+                if (ObjectUtils.isNotEmpty(path)) {
+                    val localMedia = path[0]
+                    if (ObjectUtils.isNotEmpty(localMedia.path)) {
+                        arrayList.add(File(PictureSelectorUtils.getPath(localMedia)))
+                    }
+                    userInfo?.avatar = arrayList[0].path
+                    avatar = userInfo?.avatar
+                    aivHeadView.load(avatar) {
+                        transformations(CircleCropTransformation())
+                    }
+                    checkChange()
+                }
+            }
+        }
         ivAvata1.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata1)
+            aivHeadView.setImageResource(R.drawable.me_avata1)
             avatar = avaList[0]
             checkChange()
         }
         ivAvata2.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata2)
+            aivHeadView.setImageResource(R.drawable.me_avata2)
             avatar = avaList[1]
             checkChange()
         }
         ivAvata3.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata3)
+            aivHeadView.setImageResource(R.drawable.me_avata3)
             avatar = avaList[2]
             checkChange()
         }
         ivAvata4.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata4)
+            aivHeadView.setImageResource(R.drawable.me_avata4)
             avatar = avaList[3]
             checkChange()
         }
         ivAvata5.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata5)
+            aivHeadView.setImageResource(R.drawable.me_avata5)
             avatar = avaList[4]
             checkChange()
         }
         ivAvata6.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata6)
+            aivHeadView.setImageResource(R.drawable.me_avata6)
             avatar = avaList[5]
             checkChange()
         }
         ivAvata7.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata7)
+            aivHeadView.setImageResource(R.drawable.me_avata7)
             avatar = avaList[6]
             checkChange()
         }
         ivAvata8.setOnClickListener {
-            aivHead.setImageResource(R.drawable.me_avata8)
+            aivHeadView.setImageResource(R.drawable.me_avata8)
             avatar = avaList[7]
             checkChange()
         }
 
         editSaveBtn.setOnClickListener {
-            val params = mutableMapOf<String, String>()
-            if (birthday?.isNotEmpty() == true) {
-                params["birthday"] = birthday.orEmpty()
+            if (oldAvatar != avatar) {
+                mViewModel.getUpload(PictureSelectorUtils.createFileRequestBody(arrayList).parts)
+            } else {
+                onConfigEvent()
             }
-            if (nickname?.isNotEmpty() == true) {
-                params["nickname"] = nickname.orEmpty()
-            }
-            if (gender?.isNotEmpty() == true) {
-                params["gender"] = gender.orEmpty()
-            }
-            params["avatar"] = avatar.orEmpty()
-            mViewModel.updateAvatar(avatar.orEmpty())
-            mViewModel.updateProfile(params)
         }
 
         atvNick.addListener { s, start, before, count ->
@@ -126,6 +139,7 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
         }
 
         birthdayParent.setOnClickListener {
+
             val timePick = MyTimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY)
             timePick.setCyclic(true)
             timePick.setRange(1949, 2040)
@@ -156,6 +170,22 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
         mViewModel.getEditUserInfo()
     }
 
+    private fun onConfigEvent() {
+        val params = mutableMapOf<String, String>()
+        if (birthday?.isNotEmpty() == true) {
+            params["birthday"] = birthday.orEmpty()
+        }
+        if (nickname?.isNotEmpty() == true) {
+            params["nickname"] = nickname.orEmpty()
+        }
+        if (gender?.isNotEmpty() == true) {
+            params["gender"] = gender.orEmpty()
+        }
+        params["avatar"] = avatar.orEmpty()
+        mViewModel.updateAvatar(avatar.orEmpty())
+        mViewModel.updateProfile(params)
+    }
+
     override fun createObserver() {
         atvAccount.text = userInfo?.account.orEmpty()
         val membershipAt = userInfo?.membershipAt.orEmpty()
@@ -179,20 +209,40 @@ class EditUserInfoActivity : BaseVmActivity<HomeViewModel>() {
         oldGender = userInfo?.gender.orEmpty()
         gender = oldGender
 
-        atvMembershipAt.text = if (userInfo?.membershipAt?.isNotEmpty() == true) finallyMember else "未开通"
-        atvMembershipAt.setTextColor(if (userInfo?.membershipAt?.isNotEmpty() == true) Color.parseColor("#00D125") else Color.parseColor("#f25252"))
-        atvVerify.setTextColor(if (userInfo?.verify == 1) Color.parseColor("#00D125") else Color.parseColor("#f25252"))
+        atvMembershipAt.text =
+            if (userInfo?.membershipAt?.isNotEmpty() == true) finallyMember else "未开通"
+        atvMembershipAt.setTextColor(
+            if (userInfo?.membershipAt?.isNotEmpty() == true) Color.parseColor(
+                "#00D125"
+            ) else Color.parseColor("#f25252")
+        )
+        atvVerify.setTextColor(
+            if (userInfo?.verify == 1) Color.parseColor("#00D125") else Color.parseColor(
+                "#f25252"
+            )
+        )
         atvVerify.text = if (userInfo?.verify == 1) "已认证" else "未完成"
         locationParent.isVisible = (userInfo?.location?.isNotEmpty() == true)
         atvLocation.text = userInfo?.location.orEmpty()
         atvNick.setText(userInfo?.nickname.orEmpty())
-        sexNan.setTextColor(if (oldGender == "1") Color.parseColor("#FBB403") else Color.parseColor("#6A7180"))
+        sexNan.setTextColor(
+            if (oldGender == "1") Color.parseColor("#FBB403") else Color.parseColor(
+                "#6A7180"
+            )
+        )
         sexNv.setTextColor(if (oldGender == "0") Color.parseColor("#FBB403") else Color.parseColor("#6A7180"))
-        aivHead.load(userInfo?.avatar?.toAvatar().orEmpty()) {
+        aivHeadView.load(userInfo?.avatar?.toAvatar().orEmpty()) {
             transformations(CircleCropTransformation())
         }
         birthdayContext.text = oldBirthday
-
+        mViewModel.uploadResult.observe(this) {
+            parseState(it, { info ->
+                avatar = info
+                onConfigEvent()
+            }, { error ->
+                ToastUtils.show(error.errorMsg)
+            })
+        }
         mViewModel.editUserInfoResult.observe(this) {
             parseState(it, { info ->
                 BooKLogger.d("编辑个人页面接口成功 = $info")

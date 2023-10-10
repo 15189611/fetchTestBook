@@ -28,7 +28,7 @@ class GroupBuyItemView @JvmOverloads constructor(
         super.onChanged(model)
         (groupBuyImage as ImageView).load(model.image)
         name.text = model.name
-        name1.text = model.price + " 旅游宝"
+        name1.text = model.price + " 美元 "
         memberUpItemMore.setOnClickListener {
             val intent = Intent(context, MemberItemMoreDetailActivity::class.java);
             intent.putExtra("id", model.uid)

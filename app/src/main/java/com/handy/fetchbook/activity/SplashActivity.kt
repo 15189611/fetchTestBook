@@ -45,7 +45,7 @@ class SplashActivity : BaseActivity<MainViewModel, ActivitySplashBinding>() {
         val count = CacheUtil.getInt("first_page_finish", 0) ?: 0
         if (count >= 50) return
         CacheUtil.putInt("first_page_finish", count.plus(1))
-        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+        startActivity(Intent(this@SplashActivity, SplashActivity2::class.java))
         finish()
     }
 }

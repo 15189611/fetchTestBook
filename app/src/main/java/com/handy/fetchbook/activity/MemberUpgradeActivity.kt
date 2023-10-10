@@ -60,7 +60,7 @@ class MemberUpgradeActivity : BaseActivity<HomeViewModel, MeActivityMemberUpgrad
         mViewModel.walletResult.observe(this){ resultState ->
             parseState(resultState, {
                 //BooKLogger.d("我的钱包购买记录接口成功->" + it.cnyBalance)
-                mDatabind.atvMoney.text = it.invest
+                mDatabind.atvMoney.text = it.usd
             })
         }
 

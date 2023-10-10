@@ -117,8 +117,8 @@ class MemberItemMoreDetailActivity : BaseVmActivity<MemberItemMoreDetailViewMode
         mViewModel.wallet()
         mViewModel.walletResult.observe(this){ resultState ->
             parseState(resultState, {
-                balance = it.invest
-                tv_balance.text = it.invest;
+                balance = it.usd
+                tv_balance.text = it.usd;
             })
         }
     }

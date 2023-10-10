@@ -14,6 +14,7 @@ data class WalletBean(
     @SerializedName("cny_invest") var cnyInvest: String? = null,
     @SerializedName("integral") var integral: String? = null,
     @SerializedName("static") var static: String? = null,
+    @SerializedName("usd") var usd: String? = null,
     @SerializedName("leadership") var leadership: String? = null,
     @SerializedName("activeIncome") var activeIncome: String? = null,
     @SerializedName("team") var team: String? = null,

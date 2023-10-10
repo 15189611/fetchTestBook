@@ -18,7 +18,7 @@ class UpgradeAdapter  (layoutResId: Int, data: List<Items?>?) : BaseQuickAdapter
         holder.itemView
             .findViewById<TextView>(R.id.name).text = item.name
         holder.itemView
-            .findViewById<TextView>(R.id.name1).text = item.price+" 旅游宝"
+            .findViewById<TextView>(R.id.name1).text = item.price+" 美元"
     }
 
 

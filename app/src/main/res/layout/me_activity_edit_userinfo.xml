@@ -49,13 +49,24 @@
             android:textColor="@color/common_color_282828"
             android:textSize="18dp" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/aivHead"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+        <FrameLayout
+            android:layout_width="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            app:srcCompat="@drawable/me_avata3" />
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aivHeadView"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                app:srcCompat="@drawable/me_avata3" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_gravity="right|bottom"
+                android:src="@mipmap/ic_mine_camera" />
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -86,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/me_edit_userinfo_bg1"
                 android:orientation="vertical"
-                tools:visibility="gone">
+                android:visibility="gone">
 
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
@@ -211,12 +222,13 @@
                 </com.google.android.material.circularreveal.CircularRevealRelativeLayout>
 
                 <com.google.android.material.circularreveal.CircularRevealRelativeLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
-                    android:background="@drawable/common_input_6a7180">
+                    android:background="@drawable/common_input_6a7180"
+                    android:visibility="gone">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -341,8 +353,8 @@
                         android:id="@+id/sexNan"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
                         android:layout_weight="1"
+                        android:gravity="center_horizontal"
                         android:paddingVertical="15dp"
                         android:text="@string/me_男"
                         android:textColor="@color/common_color_6A7180"
@@ -350,9 +362,9 @@
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/sexNv"
-                        android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:gravity="center_horizontal"
                         android:paddingVertical="15dp"
                         android:text="@string/me_女"
@@ -428,10 +440,10 @@
                 android:id="@+id/editSaveBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/common_btn_un_save_gradient"
                 android:gravity="center"
                 android:padding="10dp"

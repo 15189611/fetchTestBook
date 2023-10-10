@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="30dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
+
     <ImageView
         android:layout_width="match_parent"
-        android:src="@mipmap/background_ai_bg"
+        android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:layout_height="match_parent"/>
+        android:src="@mipmap/background_ai_bg" />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000000"
-        android:padding="10dp"
         android:gravity="center_horizontal"
-        android:text="AI导游" />
+        android:paddingTop="30dp"
+        android:text="AI导游"
+        android:textColor="#000000" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rl_chat_list"
@@ -24,11 +26,12 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/lin_input"
         android:layout_below="@+id/tv_title"
-        android:layout_marginStart="10dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="5dp" />
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="2dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <include
         android:id="@+id/lin_input"
@@ -36,5 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true" />
-
+    <include
+        android:id="@+id/no_login"
+        layout="@layout/layout_no_login"
+        android:visibility="gone" />
 </RelativeLayout>

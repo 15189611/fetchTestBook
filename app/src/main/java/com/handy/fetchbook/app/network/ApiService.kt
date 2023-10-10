@@ -9,6 +9,7 @@ import com.handy.fetchbook.data.bean.home.*
 import com.handy.fetchbook.data.bean.me.*
 import com.handy.fetchbook.data.bean.model.BaseApiModel
 import com.handy.fetchbook.data.bean.task.TaskStatusBean
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 /**
@@ -203,7 +204,13 @@ interface ApiService {
      * AI對話
      */
     @POST("api/chat/sendMessage")
-    suspend fun sendMessage(@Body body: ChatDataBean): ApiResponse<Any>
+    suspend fun sendMessage(@Body body: ChatDataBeanRequest): ApiResponse<String>
+    /**
+     * 上传头像
+     */
+    @Multipart
+    @POST("api/user/upload")
+    suspend fun upload(@Part parts: List<MultipartBody.Part>): ApiResponse<String>
     /**
      * 世博列表
      *

@@ -72,7 +72,7 @@ class GroupBuyFragment : BaseVmFragment<HomeViewModel>() {
     override fun createObserver() {
         mViewModel.walletResult.observe(this) { resultState ->
             parseState(resultState, {
-                atvMoney.text = it.invest
+                atvMoney.text = it.usd
             })
         }
 

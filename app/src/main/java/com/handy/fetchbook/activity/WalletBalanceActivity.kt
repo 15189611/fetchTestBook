@@ -35,7 +35,7 @@ class WalletBalanceActivity : BaseActivity<HomeViewModel, MeActivityWalletBalanc
         mViewModel.wallet()
         mDatabind.aetAccount.addListener { s, start, before, count ->
             balance = s.toString()
-            mDatabind.walletValueOne.text = "$balance 旅游宝"
+            mDatabind.walletValueOne.text = "$balance 美元"
             mDatabind.walletValueTwo.text = "$balance 美元"
             checkout()
         }
@@ -57,7 +57,7 @@ class WalletBalanceActivity : BaseActivity<HomeViewModel, MeActivityWalletBalanc
         mViewModel.walletResult.observe(this) { resultState ->
             parseState(resultState, {
                 walletBean = it
-                mDatabind.atvMoney.text = it.invest
+                mDatabind.atvMoney.text = it.usd
                 mDatabind.walletBalance.text = it.balance.orEmpty()
             })
         }

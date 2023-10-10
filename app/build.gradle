@@ -185,6 +185,10 @@ dependencies {
     //圆形头像
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.makeramen:roundedimageview:2.3.0'
-
+    implementation('com.github.LuckSiege.PictureSelector:picture_library:v2.4.8') {
+        exclude group: 'com.github.bumptech.glide'
+    }
     implementation 'org.jsoup:jsoup:1.13.1'
+
+    implementation 'com.github.SuperKotlin:CountDownView:1.0.0'
 }

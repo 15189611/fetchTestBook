@@ -110,7 +110,7 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
                 val cny = (it.cnyBalance ?: "0").toFloat()
                 mDatabind.crllWalletItem1.isVisible = cny > 0
                 mDatabind.atvWallet1.text = it.cnyBalance
-                mDatabind.atvWallet2.text = it.invest
+                mDatabind.atvWallet2.text = it.usd
             })
         }
         mViewModel.userinfoResult.observe(this) { resultState ->
@@ -156,35 +156,41 @@ class MeFragment : BaseFragment<HomeViewModel, MeFragmentMeBinding>() {
                 transformations(CircleCropTransformation())
             }
         }
-        var agent = getString(R.string.me_福袋会员)
-        when (userInfo.level) {
-            1 -> {
-                agent = getString(R.string.me_福袋会员)
-            }
-
-            2 -> {
-                agent = getString(R.string.me_超级福袋会员)
-            }
-
-            3 -> {
-                agent = getString(R.string.me_黄金会员)
-            }
-
-            4 -> {
-                agent = getString(R.string.me_荣耀会员)
-            }
-
-            5 -> {
-                agent = getString(R.string.me_王者会员)
-            }
-
-            6 -> {
-                agent = getString(R.string.me_至尊会员)
-            }
-
+        if (userInfo.levelDesc.equals("-")){
+            mDatabind.atvAgent.visibility=View.GONE
+        }else{
+            mDatabind.atvAgent.visibility=View.VISIBLE
+            mDatabind.atvAgent.text = userInfo.levelDesc
         }
+//        var agent = getString(R.string.me_福袋会员)
+//        when (userInfo.level) {
+//            1 -> {
+//                agent = getString(R.string.me_福袋会员)
+//            }
+//
+//            2 -> {
+//                agent = getString(R.string.me_超级福袋会员)
+//            }
+//
+//            3 -> {
+//                agent = getString(R.string.me_黄金会员)
+//            }
+//
+//            4 -> {
+//                agent = getString(R.string.me_荣耀会员)
+//            }
+//
+//            5 -> {
+//                agent = getString(R.string.me_王者会员)
+//            }
+//
+//            6 -> {
+//                agent = getString(R.string.me_至尊会员)
+//            }
+//
+//        }
 
-        mDatabind.atvAgent.text = agent
+
     }
 
     override fun onResume() {
